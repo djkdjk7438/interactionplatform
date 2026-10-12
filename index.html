@@ -47,6 +47,7 @@ button.r{background:none;border:1px solid var(--hi);color:var(--hi)}
 .s-limited{background:var(--lob);border-left:7px solid var(--lo)}
 .s-none{background:var(--grb);border-left:7px solid var(--gr)}
 .s-insufficient{background:var(--bg);border-left:7px dashed var(--sub)}
+.st-row-high{border-left:6px solid var(--hi);padding-left:8px}.st-row-caution{border-left:6px solid var(--mi);padding-left:8px}.st-row-limited{border-left:6px solid var(--lo);padding-left:8px}.st-row-none{border-left:6px solid var(--gr);padding-left:8px}.st-row-insufficient{border-left:6px dashed var(--sub);padding-left:8px}
 .stl{font-size:15px;font-weight:700;margin-top:4px}
 .stt-high{color:var(--hi)}.stt-caution{color:var(--mi)}.stt-limited{color:var(--lo)}.stt-none{color:var(--gr)}.stt-insufficient{color:var(--sub)}
 .drug[class*=" s-"] button.b.g{background:var(--card)}
@@ -82,7 +83,7 @@ hr{border:0;border-top:1px solid var(--bd);margin:12px 0}
   <div class="card" id="pForm"></div>
   <div class="card" id="pMeds">
     <h2>3. 복용 중인 양약 고르기</h2>
-    <div class="note">※ 결과는 5가지 상태로 안내돼요. 📚 KMCRIC 요약본이 메인 자료이고, 🧪 시범 데이터는 판정에 쓰지 않아요. 외부 DB 실시간 조회 기능은 아직 없어요.</div>
+    <details class="ex" id="stateEx"><summary>※ 결과는 5가지 상태로 안내돼요. 눌러서 5가지가 뭔지 보기 ⌄</summary><div class="sub" style="margin:6px 0">📚 KMCRIC 요약본이 메인 자료이고, 🧪 시범 데이터는 판정에 쓰지 않아요. 외부 DB 실시간 조회 기능은 아직 없어요.</div><div id="stateExBody"></div></details>
     <div id="cats"></div>
     <hr>
     <input id="q" placeholder="약 이름 검색 (제품명·성분명·영문명, 일부만 입력해도 돼요)" autocomplete="off" oninput="QN=8;rSearch()">
@@ -442,7 +443,8 @@ ST.caution.easy='함께 먹을 때 확인이나 검사가 필요하다는 안내
 ST.limited.easy='가능성은 있지만 동물·시험관 실험이거나 이론 수준이라, 실제 환자에게 어떤지 분명하지 않을 때예요.';ST.limited.how='위험이 입증됐다는 뜻도, 없다는 뜻도 아니에요.';
 ST.none.easy='이 조합을 직접 조사한 믿을 만한 자료가 충분하고, 문제가 보이지 않았을 때만 써요. 현재는 이 단계를 줄 수 있는 자료가 없어요.';ST.none.how='완전히 안전하다는 뜻은 아니에요.';
 ST.insufficient.easy='이 조합을 판단할 자료를 찾지 못했을 때예요.';ST.insufficient.how='“자료가 없다”는 “문제없다”와 달라요.';
-function explainHtml(){return `<details class="ex"><summary>주의 수준은 어떻게 구분되나요? ⌄</summary>${['high','caution','limited','none','insufficient'].map(k=>`<div class="exi"><b>${ST[k].icon} ${ST[k].label}</b><div>${esc(ST[k].easy)}</div><div class="sub">${esc(ST[k].how)}</div></div>`).join('')}<div class="exi"><b>자료가 없는 것과 “없다고 확인된 것”의 차이</b><div>‘판단할 자료 부족’은 조사된 자료가 없다는 뜻이고, ‘확인된 상호작용 없음’은 믿을 만한 자료가 충분히 조사했는데 문제가 보이지 않았다는 뜻이에요. 어느 쪽이든 안전을 보장하지는 않아요.</div></div><div class="sub">이 5단계는 이 사이트의 내부 분류이며, 검증된 임상 위험도 척도가 아니에요. 문구와 색, 아이콘을 함께 보세요.</div></details>`}
+function explainBody(){return `${['high','caution','limited','none','insufficient'].map(k=>`<div class="exi st-row-${k}"><b>${ST[k].icon} ${ST[k].label}</b><div>${esc(ST[k].easy)}</div><div class="sub">${esc(ST[k].how)}</div></div>`).join('')}<div class="exi"><b>자료가 없는 것과 “없다고 확인된 것”의 차이</b><div>‘판단할 자료 부족’은 조사된 자료가 없다는 뜻이고, ‘확인된 상호작용 없음’은 믿을 만한 자료가 충분히 조사했는데 문제가 보이지 않았다는 뜻이에요. 어느 쪽이든 안전을 보장하지는 않아요.</div></div><div class="sub">이 5단계는 이 사이트의 내부 분류이며, 검증된 임상 위험도 척도가 아니에요. 문구와 색, 아이콘을 함께 보세요.</div>`}
+function explainHtml(){return `<details class="ex"><summary>주의 수준은 어떻게 구분되나요? ⌄</summary>${explainBody()}</details>`}
 // '확인된 상호작용 없음'을 부여할 수 있는 검증 자료 (지금은 비어 있어요). 항목 형식:
 // {herb:'약재명', ing:'양약 성분명', scope:'평가 범위', source:'출처', sufficient:true, noClinicalInteraction:true, conflict:false, verified:true, limitation:'제한점'}
 const NOINT=[];
@@ -613,6 +615,7 @@ window.addEventListener('hashchange',route);
 
 // ===== 환자 화면 =====
 function rP(){
+ if($('stateExBody'))$('stateExBody').innerHTML=explainBody();
  const c=CL(PC)||(!locked?S.clinics[0]:null);
  if(c)PC=c.id;
  let h='';
