@@ -41,6 +41,19 @@ button.r{background:none;border:1px solid var(--hi);color:var(--hi)}
 :root[data-theme="dark"] .sample{background:#2c2540;color:#cdb8ff;border-color:#6d5a99}
 .kmc{background:transparent;color:var(--lo);border:1px solid var(--lo)}
 .ex{border:1px solid var(--bd);border-radius:10px;padding:8px 10px;margin:8px 0;background:var(--card)}.ex summary{font-weight:600;cursor:pointer;min-height:32px}.exi{padding:8px 0;border-top:1px solid var(--bd)}
+.drug{padding:10px 12px;margin-top:8px;border:1px solid var(--bd);border-radius:10px}
+.s-high{background:var(--hib);border-left:7px solid var(--hi)}
+.s-caution{background:var(--mib);border-left:7px solid var(--mi)}
+.s-limited{background:var(--lob);border-left:7px solid var(--lo)}
+.s-none{background:var(--grb);border-left:7px solid var(--gr)}
+.s-insufficient{background:var(--bg);border-left:7px dashed var(--sub)}
+.stl{font-size:15px;font-weight:700;margin-top:4px}
+.stt-high{color:var(--hi)}.stt-caution{color:var(--mi)}.stt-limited{color:var(--lo)}.stt-none{color:var(--gr)}.stt-insufficient{color:var(--sub)}
+.drug[class*=" s-"] button.b.g{background:var(--card)}
+.rc[class*=" s-"]>.rh{background:inherit}
+.rc[class*=" s-"] .rd{background:var(--card);border-top:1px solid var(--bd);padding-top:8px}
+.rc[class*=" s-"] .bd{background:var(--card);border:1px solid currentColor;font-weight:700}
+.chip[class*=" s-"]{border-left-width:5px;font-weight:600}
 .src{border:1px dashed var(--bd);border-radius:8px;padding:8px;margin-top:8px}
 .lk{display:inline-block;margin-top:6px;padding:7px 12px;border:1px solid var(--ac);border-radius:8px;color:var(--ac);text-decoration:none;font-size:13px}
 .rc{border-radius:12px;margin-top:8px;overflow:hidden;border:1px solid var(--bd);background:var(--card)}
@@ -622,7 +635,7 @@ function rForms(){
 function selF(id){PF=id;rForms();rCats();rSearch();$('pRes').innerHTML='';$('chkMsg').textContent=''}
 function item(p){
  const f=F(),j=f?classify(f,p):null,has=MEDS.includes(p.id);
- return `<div class="drug"><div class="di"><b>${esc(p.nm)}</b><div class="sub">${esc(p.desc)}</div>${j?stBadge(j.status):'<span class="bd wait">처방을 먼저 선택해 주세요</span>'}</div><button class="b ${has?'g':''}" ${has?'disabled':''} onclick="addMed('${p.id}')">${has?'추가됨':'+ 추가'}</button></div>`;
+ return `<div class="drug${j?' s-'+j.status:''}"><div class="di"><b>${esc(p.nm)}</b><div class="sub">${esc(p.desc)}</div>${j?stLine(j.status):'<span class="bd wait">처방을 먼저 선택해 주세요</span>'}</div><button class="b ${has?'g':''}" ${has?'disabled':''} onclick="addMed('${p.id}')">${has?'추가됨':'+ 추가'}</button></div>`;
 }
 function rCats(){
  $('cats').innerHTML=CATS.map(k=>`<button class="cat ${OPEN[k.k]?'on':''}" onclick="tog('${k.k}')"><span>${k.ic} <b>${k.nm}</b><small>${k.sub}</small></span><span>${OPEN[k.k]?'▴':'▾'}</span></button>${OPEN[k.k]?PRODUCTS.filter(p=>p.cat===k.k).map(item).join(''):''}`).join('');
@@ -652,7 +665,7 @@ function resItem(r){
   const e=r.e;head=`<b>${esc(e[2]||e[1])}</b> <span class="chip">${e[4]==='c'?'약물군':'성분'}</span>`;
   sub=`${esc(e[1])}${e[3].length?' · 별칭 '+esc(e[3].join(', ')):''}<br>KMCRIC 상호작용 대상 목록 · 기록 ${e[5]}건 (이 약을 쓰는 제품 이름은 아님)`;
  }
- return `<div class="drug"><div class="di">${head}<div class="sub">${sub}</div>${j?stBadge(j.status):'<span class="bd wait">처방을 먼저 선택해 주세요</span>'}</div><button class="b ${has?'g':''}" ${has?'disabled':''} onclick="addMed('${pp.id}')">${has?'추가됨':'+ 추가'}</button></div>`;
+ return `<div class="drug${j?' s-'+j.status:''}"><div class="di">${head}<div class="sub">${sub}</div>${j?stLine(j.status):'<span class="bd wait">처방을 먼저 선택해 주세요</span>'}</div><button class="b ${has?'g':''}" ${has?'disabled':''} onclick="addMed('${pp.id}')">${has?'추가됨':'+ 추가'}</button></div>`;
 }
 function rSearch(){
  const raw=$('q').value.trim(),box=$('qres');
@@ -666,7 +679,7 @@ function addCustom(){const n=$('q').value.trim();if(!n)return;const id='u:'+n;if
 function delMed(i){MEDS.splice(i,1);afterMed()}
 function afterMed(){rCats();rSearch();rMy();$('pRes').innerHTML='';$('chkMsg').textContent=''}
 function rMy(){
- $('my').innerHTML=MEDS.length?MEDS.map((id,i)=>`<span class="chip">${esc(getP(id).nm)} <a href="#" onclick="delMed(${i});return false" aria-label="삭제">✕</a></span>`).join(''):'<p class="sub">아직 등록한 약이 없어요.</p>';
+ const f=F();$('my').innerHTML=MEDS.length?MEDS.map((id,i)=>{const p=getP(id),j=f?classify(f,p):null;return `<span class="chip${j?' s-'+j.status:''}">${j?ST[j.status].icon+' ':''}${esc(p.nm)}${j?' · '+ST[j.status].label:''} <a href="#" onclick="delMed(${i});return false" aria-label="삭제">✕</a></span>`}).join(''):'<p class="sub">아직 등록한 약이 없어요.</p>';
 }
 function josa(w,t){const c=w.charCodeAt(w.length-1),f=c>=0xAC00&&c<=0xD7A3&&(c-0xAC00)%28>0;return {'가':f?'이':'가','는':f?'은':'는','와':f?'과':'와','를':f?'을':'를'}[t]}
 function fill(t,i,sh){return t.replace(/\{H(가|는|와|를)?\}/g,(m,p)=>{const w=sh?i.herb:'처방 속 생약';return w+(p?josa(w,p):'')})}
@@ -691,6 +704,7 @@ function interHtml(i,sh){
  <h4>용어 설명</h4><ul>${i.gloss.map(g=>`<li><b>${esc(g[0])}</b>: ${esc(g[1])}</li>`).join('')}</ul>
  <h4>근거 및 출처</h4>${i.src.map(id=>srcHtml(id,sh)).join('')}</div>`;
 }
+function stLine(s){const t=ST[s];return `<div class="stl stt-${s}">${t.icon} ${t.label}</div>`}
 function stBadge(s){const t=ST[s];return `<span class="bd ${t.cls}">${t.icon} ${t.label}</span>`}
 function check(){
  const f=F(),m=$('chkMsg'),c=CL(PC),sh=!!(c&&c.showHerb);
@@ -714,7 +728,7 @@ function check(){
    <div class="src"><b>${SITES.kmcric.nm}</b><div class="sub">기록 단위 직접 링크가 아니라 검색 페이지예요.</div>${lnk(SITES.kmcric.url,'KMCRIC에서 직접 검색 ↗')}</div>
    <div class="src"><b>${SITES.nedrug.nm}</b><div class="sub">제품 허가사항·성분은 이곳에서 제품명으로 검색해 확인해요 (직접 링크 아님).</div>${lnk(SITES.nedrug.url,'의약품 정보 확인 ↗')}</div>
    <h4>안내</h4><p>복용 중인 약을 임의로 중단하거나 용량을 바꾸지 마세요. 처방한 의료진이나 약사와 상의해 주세요.</p>`;
-  return `<div class="rc"><button class="rh" style="align-items:flex-start" onclick="tgl(this)"><span>${t.icon}</span><span style="flex:1;min-width:0"><b>${esc(p.nm)}</b> ${stBadge(j.status)}
+  return `<div class="rc s-${j.status}"><button class="rh" style="align-items:flex-start" onclick="tgl(this)"><span>${t.icon}</span><span style="flex:1;min-width:0"><b>${esc(p.nm)}</b> ${stBadge(j.status)}
    <span style="display:block;margin-top:4px">${esc(t.msg)}${t.sub?' <span class="sub">'+esc(t.sub)+'</span>':''}</span>
    <span class="sub" style="display:block;margin-top:4px">핵심 이유: ${esc(j.why)}</span><span class="sub" style="display:block;color:var(--ac);margin-top:4px">근거와 출처 자세히 보기 ▾</span></span><span>▾</span></button><div class="rd" hidden>${det}</div></div>`;
  }).join('')+'</div>';
