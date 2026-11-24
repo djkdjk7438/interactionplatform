@@ -3,7 +3,7 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
-<title>한약-양약 상호작용 확인</title>
+<title>한약-양약 상호작용 확인 (v14)</title>
 <style>
 :root{box-sizing:border-box;padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px);
 --bg:#f7f6f2;--card:#fff;--tx:#222;--sub:#6b6b66;--bd:#e1dfd7;--ac:#2f6b4f;--hi:#b3261e;--hib:#fdecea;--mi:#8a5a00;--mib:#fff3d6;--lo:#3a5a80;--lob:#e8f0fa;--gr:#1e6b3a;--grb:#e6f4ea}
@@ -55,6 +55,7 @@ button.r{background:none;border:1px solid var(--hi);color:var(--hi)}
 .rc[class*=" s-"] .rd{background:var(--card);border-top:1px solid var(--bd);padding-top:8px}
 .rc[class*=" s-"] .bd{background:var(--card);border:1px solid currentColor;font-weight:700}
 .chip[class*=" s-"]{border-left-width:5px;font-weight:600}
+.top{display:flex;justify-content:space-between;align-items:flex-start;gap:8px}.nav a{font-size:13px;color:var(--sub);text-decoration:none;border:1px solid var(--bd);border-radius:8px;padding:6px 10px;white-space:nowrap;display:inline-block;margin-top:2px}
 .src{border:1px dashed var(--bd);border-radius:8px;padding:8px;margin-top:8px}
 .lk{display:inline-block;margin-top:6px;padding:7px 12px;border:1px solid var(--ac);border-radius:8px;color:var(--ac);text-decoration:none;font-size:13px}
 .rc{border-radius:12px;margin-top:8px;overflow:hidden;border:1px solid var(--bd);background:var(--card)}
@@ -69,14 +70,34 @@ details{font-size:13px}summary{cursor:pointer;font-weight:600}
 hr{border:0;border-top:1px solid var(--bd);margin:12px 0}
 [hidden]{display:none!important}
 </style>
+
+<style id="reportCss">
+.rp{font-family:"Noto Sans KR","Noto Sans CJK KR","Malgun Gothic","Apple SD Gothic Neo",sans-serif;color:#1d1d1b;font-size:10.5pt;line-height:1.5;background:#fff}
+.rp h2{font-size:12.5pt;margin:14pt 0 6pt;padding-bottom:3pt;border-bottom:1.5pt solid #2f6b4f;color:#1f4d38}
+.rp h3{font-size:11.5pt;margin:10pt 0 4pt}
+.rp-h{border-bottom:2pt solid #2f6b4f;padding-bottom:6pt;margin-bottom:8pt}.rp-t{font-size:17pt;font-weight:700;color:#1f4d38}.rp-s{font-size:9.5pt;color:#555}
+.rp table{width:100%;border-collapse:collapse;margin:4pt 0 6pt;table-layout:auto}
+.rp th,.rp td{border:.6pt solid #b9b7ae;padding:4pt 5pt;vertical-align:top;text-align:left;font-size:9.5pt;word-break:keep-all;overflow-wrap:anywhere}
+.rp th{background:#f1efe8;font-weight:600}.rp .kv th{width:22%}
+.rp thead{display:table-header-group}.rp tr,.rp .blk{page-break-inside:avoid;break-inside:avoid}
+.rp table.dose,.rp table.an{table-layout:fixed}.rp table.dose th:nth-child(1){width:15%}.rp table.dose th:nth-child(2){width:33%}.rp table.dose th:nth-child(3),.rp table.dose th:nth-child(4){width:12%}.rp table.dose th:nth-child(5),.rp table.dose th:nth-child(6){width:14%}.rp table.an th:nth-child(1){width:12%}.rp table.an th:nth-child(2){width:15%}.rp table.an th:nth-child(3){width:13%}.rp table.an th:nth-child(4){width:34%}.rp table.an th:nth-child(5){width:26%}
+.rp .muted{color:#666;font-size:9pt}.rp td.lk{font-size:8.5pt}
+.rp ul{margin:3pt 0;padding-left:16pt}
+.rs{display:inline-block;padding:1pt 6pt;border-radius:3pt;font-weight:600;font-size:9.5pt;border:.8pt solid}
+.rs-high{background:#fdecea;color:#8c1d18;border-color:#e3a5a0}.rs-caution{background:#fff3d6;color:#7a4f00;border-color:#e6c77a}.rs-limited{background:#e8f0fa;color:#2f4f78;border-color:#a9c2e2}.rs-none{background:#e6f4ea;color:#1e6b3a;border-color:#9fd1ae}.rs-insufficient{background:#f1f1ef;color:#555;border-color:#bdbdb8;border-style:dashed}
+@page{size:A4;margin:16mm 14mm 18mm 14mm;@top-left{content:"한약–양약 상호작용 확인 결과";font-size:8.5pt;color:#666}@bottom-center{content:counter(page) " / " counter(pages);font-size:9pt;color:#666}}
+@media screen{#printRoot{display:none}}
+@media print{body.printing>*:not(#printRoot){display:none!important}#printRoot{display:block}body.printing{background:#fff}}
+#rpOverlay{position:fixed;inset:0;z-index:50;background:var(--bg,#fff);overflow:auto}#rpOverlay[hidden]{display:none}
+.rpbar{position:sticky;top:0;background:var(--card,#fff);border-bottom:1px solid var(--bd,#ddd);padding:8px 12px;z-index:2}
+.rpbody{max-width:800px;margin:0 auto;padding:12px;background:#fff;color:#1d1d1b}
+label.tchip{display:inline-block;border:1px solid var(--bd);border-radius:99px;padding:6px 12px;margin:2px 4px 2px 0;font-size:14px}label.tchip input{width:auto;margin-right:4px}
+</style>
 </head>
 <body>
 <main>
-<h1>🌿 한약-양약 상호작용 확인</h1>
-<div id="tabs" class="tabs">
-  <button id="t-p" onclick="setV('p')">환자</button>
-  <button id="t-c" onclick="setV('c')">한의원 관리</button>
-</div>
+<div class="top"><h1>🌿 한약-양약 상호작용 확인</h1>
+<div id="nav" class="nav"></div></div>
 
 <section id="v-p">
   <div class="card" id="pClinic"></div>
@@ -93,16 +114,23 @@ hr{border:0;border-top:1px solid var(--bd);margin:12px 0}
     <div id="my"></div>
     <button class="b" style="width:100%" onclick="check()">상호작용 확인하기</button>
     <div id="chkMsg" class="sub"></div>
+    <details class="ex" id="histBox"><summary>지난 결과 (이 기기에 저장) ⌄</summary><div id="hist"></div></details>
   </div>
   <div id="pRes"></div>
 </section>
 
-<section id="v-c" hidden>
-  <div class="demo">🔓 시연용 관리자 화면이에요. 로그인·권한 같은 실제 보안 기능은 없어요(누구나 열 수 있음).</div>
-  <div class="card" id="aTop"></div>
+<section id="v-c">
+  <div class="demo">🔓 시연용이에요. 로그인 없이 한의원을 고르면 그 한의원 화면이 열려요.</div>
+  <div class="card" id="cTop"></div>
   <div class="card" id="aQr"></div>
-  <div class="card"><h2>처방 목록</h2><div id="aList"></div><button class="b" onclick="openEdit('new')">+ 새 처방 등록</button></div>
+  <div class="card"><h2>처방 목록</h2><div id="aList"></div><button class="b" onclick="openEdit('new')">+ 새 처방 등록</button> <button class="b g" onclick="toggleLib()">📚 기본 처방에서 추가</button><div id="lib" hidden></div></div>
   <div class="card" id="aEdit" hidden></div>
+</section>
+<section id="v-a" hidden>
+  <div class="demo">🔓 시연용 관리자 화면이에요. 로그인·권한 같은 실제 보안 기능은 없어요(누구나 열 수 있음).</div>
+  <div class="card"><h2>한의원 관리</h2><div id="aSum" class="sub"></div><div id="aClinics"></div>
+   <div class="row" style="margin-top:8px"><input id="nn" placeholder="새 한의원 이름" style="max-width:none"><button class="b g" style="margin:0;white-space:nowrap" onclick="newClinic()">+ 한의원 등록</button></div></div>
+  <div class="card" id="aQr2" hidden></div>
   <div class="card" id="aData"></div>
   <div class="card"><details><summary>구현 범위 (작동 / 시연 / 배포 필요 / 서버 필요)</summary>
     <p><b>이 HTML만으로 작동</b><br>한의원·처방·가감방 등록/수정/삭제(이 브라우저의 localStorage 저장), 한의원별 QR 이미지 생성·다운로드·링크 복사, 환자 화면 전체 흐름</p>
@@ -157,7 +185,7 @@ const HERBS={
 // 대표 약품 (cat: cold/cv/chr · chk:1=이번 개발 중 공개 자료로 성분 확인, 0=미확인·재확인 필요)
 const PRODUCTS=[
  {id:'p01',cat:'cold',nm:'슈다페드정',ing:'슈도에페드린',cls:['교감신경흥분제'],desc:'코막힘 완화제 (교감신경 자극 성분)',chk:0},
- {id:'p02',cat:'cold',nm:'알레그라디정',ing:'펙소페나딘',cls:['항히스타민제'],desc:'알레르기 비염·콧물 (항히스타민제)',chk:0},
+ {id:'p02',cat:'cold',nm:'알레그라디정',ing:'펙소페나딘, 슈도에페드린',cls:['항히스타민제','교감신경흥분제'],desc:'알레르기 비염 (항히스타민제+비충혈 제거제 복합제)',chk:1},
  {id:'p03',cat:'cold',nm:'타이레놀콜드-에스정',ing:'아세트아미노펜, 슈도에페드린, 덱스트로메토르판, 클로르페니라민',cls:['교감신경흥분제','항히스타민제'],desc:'종합감기약 (해열진통+코막힘+기침+콧물, 복합제)',chk:1},
  {id:'p04',cat:'cold',nm:'클라리틴정',ing:'로라타딘',cls:['항히스타민제'],desc:'알레르기 비염 (항히스타민제)',chk:0},
  {id:'p05',cat:'cv',nm:'라식스정',ing:'푸로세미드',cls:['이뇨제'],desc:'부종·고혈압 (이뇨제)',chk:0},
@@ -331,28 +359,48 @@ const DRUGMETA={collected:'2026-10-11',products:{source:'작성자 정리(공식
 const PRODUCTS2=[{"id":"q01","cat":"pain","nm":"타이레놀정500mg","ing":"아세트아미노펜","cls":[],"desc":"해열진통제","chk":0},{"id":"q02","cat":"pain","nm":"부루펜정","ing":"이부프로펜","cls":["소염진통제"],"desc":"소염진통제 (NSAIDs)","chk":0},{"id":"q03","cat":"pain","nm":"이지엔6","ing":"이부프로펜","cls":["소염진통제"],"desc":"소염진통제 (NSAIDs)","chk":0},{"id":"q04","cat":"pain","nm":"낙센정","ing":"나프록센","cls":["소염진통제"],"desc":"소염진통제 (NSAIDs)","chk":0},{"id":"q05","cat":"pain","nm":"볼타렌정","ing":"디클로페낙","cls":["소염진통제"],"desc":"소염진통제 (NSAIDs)","chk":0},{"id":"q06","cat":"pain","nm":"쎄레브렉스캡슐","ing":"세레콕시브","cls":["소염진통제"],"desc":"소염진통제 (COX-2 억제제)","chk":0},{"id":"q07","cat":"pain","nm":"울트라셋정","ing":"트라마돌, 아세트아미노펜","cls":[],"desc":"진통제 (복합제)","chk":0},{"id":"q08","cat":"cold","nm":"지르텍정","ing":"세티리진","cls":["항히스타민제"],"desc":"알레르기 비염·두드러기 (항히스타민제)","chk":0},{"id":"q09","cat":"blood","nm":"프라닥사캡슐","ing":"다비가트란","cls":["항응고제"],"desc":"혈전 예방 (항응고제)","chk":0},{"id":"q10","cat":"blood","nm":"엘리퀴스정","ing":"아픽사반","cls":["항응고제"],"desc":"혈전 예방 (항응고제)","chk":0},{"id":"q11","cat":"blood","nm":"자렐토정","ing":"리바록사반","cls":["항응고제"],"desc":"혈전 예방 (항응고제)","chk":0},{"id":"q12","cat":"blood","nm":"릭시아나정","ing":"에독사반","cls":["항응고제"],"desc":"혈전 예방 (항응고제)","chk":0},{"id":"q13","cat":"blood","nm":"프레탈정","ing":"실로스타졸","cls":["항혈소판제"],"desc":"혈액순환 개선 (항혈소판제)","chk":0},{"id":"q14","cat":"cv","nm":"코자정","ing":"로사르탄","cls":["혈압약"],"desc":"고혈압 (안지오텐신 수용체 차단제)","chk":0},{"id":"q15","cat":"cv","nm":"디오반정","ing":"발사르탄","cls":["혈압약"],"desc":"고혈압 (안지오텐신 수용체 차단제)","chk":0},{"id":"q16","cat":"cv","nm":"아모잘탄정","ing":"암로디핀, 로사르탄","cls":["혈압약"],"desc":"고혈압 (복합제)","chk":0},{"id":"q17","cat":"cv","nm":"올메텍정","ing":"올메사르탄","cls":["혈압약"],"desc":"고혈압 (안지오텐신 수용체 차단제)","chk":0},{"id":"q18","cat":"cv","nm":"미카르디스정","ing":"텔미사르탄","cls":["혈압약"],"desc":"고혈압 (안지오텐신 수용체 차단제)","chk":0},{"id":"q19","cat":"cv","nm":"콩코르정","ing":"비소프롤롤","cls":["혈압약"],"desc":"고혈압·심부전 (베타차단제)","chk":0},{"id":"q20","cat":"cv","nm":"테노민정","ing":"아테놀롤","cls":["혈압약"],"desc":"고혈압·협심증 (베타차단제)","chk":0},{"id":"q21","cat":"cv","nm":"알닥톤정","ing":"스피로노락톤","cls":["이뇨제"],"desc":"부종·고혈압 (칼륨보존 이뇨제)","chk":0},{"id":"q22","cat":"lip","nm":"리피토정","ing":"아토르바스타틴","cls":["고지혈증약"],"desc":"고지혈증 (스타틴)","chk":0},{"id":"q23","cat":"lip","nm":"크레스토정","ing":"로수바스타틴","cls":["고지혈증약"],"desc":"고지혈증 (스타틴)","chk":0},{"id":"q24","cat":"lip","nm":"조코정","ing":"심바스타틴","cls":["고지혈증약"],"desc":"고지혈증 (스타틴)","chk":0},{"id":"q25","cat":"lip","nm":"리바로정","ing":"피타바스타틴","cls":["고지혈증약"],"desc":"고지혈증 (스타틴)","chk":0},{"id":"q26","cat":"lip","nm":"제티아정","ing":"에제티미브","cls":["고지혈증약"],"desc":"고지혈증 (콜레스테롤 흡수 억제제)","chk":0},{"id":"q27","cat":"dm","nm":"글루코파지정","ing":"메트포르민","cls":["당뇨약"],"desc":"당뇨병 치료제","chk":0},{"id":"q28","cat":"dm","nm":"자누비아정","ing":"시타글립틴","cls":["당뇨약"],"desc":"당뇨병 치료제 (DPP-4 억제제)","chk":0},{"id":"q29","cat":"dm","nm":"자누메트정","ing":"시타글립틴, 메트포르민","cls":["당뇨약"],"desc":"당뇨병 치료제 (복합제)","chk":0},{"id":"q30","cat":"dm","nm":"트라젠타정","ing":"리나글립틴","cls":["당뇨약"],"desc":"당뇨병 치료제 (DPP-4 억제제)","chk":0},{"id":"q31","cat":"dm","nm":"포시가정","ing":"다파글리플로진","cls":["당뇨약"],"desc":"당뇨병 치료제 (SGLT-2 억제제)","chk":0},{"id":"q32","cat":"abx","nm":"오구멘틴정","ing":"아목시실린, 클라불란산","cls":["항생제"],"desc":"항생제 (복합제)","chk":0},{"id":"q33","cat":"abx","nm":"지스로맥스정","ing":"아지스로마이신","cls":["항생제"],"desc":"항생제 (마크로라이드)","chk":0},{"id":"q34","cat":"abx","nm":"클래리시드정","ing":"클라리스로마이신","cls":["항생제"],"desc":"항생제 (마크로라이드)","chk":0},{"id":"q35","cat":"abx","nm":"시프로바이정","ing":"시프로플록사신","cls":["항생제"],"desc":"항생제 (퀴놀론)","chk":0},{"id":"q36","cat":"abx","nm":"크라비트정","ing":"레보플록사신","cls":["항생제"],"desc":"항생제 (퀴놀론)","chk":0},{"id":"q37","cat":"cns","nm":"졸로푸트정","ing":"서트랄린","cls":["항우울제"],"desc":"우울증·불안장애 (SSRI)","chk":0},{"id":"q38","cat":"cns","nm":"렉사프로정","ing":"에스시탈로프람","cls":["항우울제"],"desc":"우울증·불안장애 (SSRI)","chk":0},{"id":"q39","cat":"cns","nm":"스틸녹스정","ing":"졸피뎀","cls":["수면진정제"],"desc":"불면증 (수면제)","chk":0},{"id":"q40","cat":"cns","nm":"자낙스정","ing":"알프라졸람","cls":["수면진정제"],"desc":"불안장애 (벤조디아제핀)","chk":0},{"id":"q41","cat":"cns","nm":"테그레톨정","ing":"카바마제핀","cls":["항경련제"],"desc":"간질·삼차신경통 (항경련제)","chk":0},{"id":"q42","cat":"cns","nm":"라믹탈정","ing":"라모트리진","cls":["항경련제"],"desc":"간질·양극성장애 (항경련제)","chk":0},{"id":"q43","cat":"gi","nm":"넥시움정","ing":"에스오메프라졸","cls":["위산억제제"],"desc":"위식도역류질환 (프로톤펌프억제제)","chk":0},{"id":"q44","cat":"gi","nm":"로섹캡슐","ing":"오메프라졸","cls":["위산억제제"],"desc":"위산 억제 (프로톤펌프억제제)","chk":0},{"id":"q45","cat":"gi","nm":"가스모틴정","ing":"모사프리드","cls":[],"desc":"소화관 운동 촉진제","chk":0},{"id":"q46","cat":"hor","nm":"덱사메타손정","ing":"덱사메타손","cls":["스테로이드"],"desc":"염증·알레르기 (스테로이드)","chk":0},{"id":"q47","cat":"imm","nm":"네오랄캡슐","ing":"사이클로스포린","cls":["면역억제제"],"desc":"장기이식·자가면역질환 (면역억제제)","chk":0},{"id":"q48","cat":"imm","nm":"셀셉트캡슐","ing":"마이코페놀레이트","cls":["면역억제제"],"desc":"장기이식 (면역억제제)","chk":0},{"id":"q49","cat":"imm","nm":"메토트렉세이트정","ing":"메토트렉세이트","cls":["면역억제제"],"desc":"류마티스관절염·항암 (면역억제·항대사제)","chk":0},{"id":"q50","cat":"misc","nm":"비아그라정","ing":"실데나필","cls":[],"desc":"발기부전 치료제","chk":0},{"id":"q51","cat":"misc","nm":"자이로릭정","ing":"알로푸리놀","cls":[],"desc":"통풍 (요산 생성 억제제)","chk":0}];
 const ING2={"아세트아미노펜":["acetaminophen","paracetamol"],"이부프로펜":["ibuprofen"],"나프록센":["naproxen"],"디클로페낙":["diclofenac"],"세레콕시브":["celecoxib"],"트라마돌":["tramadol"],"세티리진":["cetirizine"],"다비가트란":["dabigatran"],"아픽사반":["apixaban"],"리바록사반":["rivaroxaban"],"에독사반":["edoxaban"],"실로스타졸":["cilostazol"],"로사르탄":["losartan"],"발사르탄":["valsartan"],"올메사르탄":["olmesartan"],"텔미사르탄":["telmisartan"],"비소프롤롤":["bisoprolol"],"아테놀롤":["atenolol"],"스피로노락톤":["spironolactone"],"아토르바스타틴":["atorvastatin"],"로수바스타틴":["rosuvastatin"],"심바스타틴":["simvastatin"],"피타바스타틴":["pitavastatin"],"에제티미브":["ezetimibe"],"시타글립틴":["sitagliptin"],"리나글립틴":["linagliptin"],"다파글리플로진":["dapagliflozin"],"아목시실린":["amoxicillin"],"클라불란산":["clavulanic acid","clavulanate"],"아지스로마이신":["azithromycin"],"클라리스로마이신":["clarithromycin"],"시프로플록사신":["ciprofloxacin"],"레보플록사신":["levofloxacin"],"서트랄린":["sertraline"],"에스시탈로프람":["escitalopram"],"졸피뎀":["zolpidem"],"알프라졸람":["alprazolam"],"카바마제핀":["carbamazepine"],"라모트리진":["lamotrigine"],"에스오메프라졸":["esomeprazole"],"오메프라졸":["omeprazole"],"모사프리드":["mosapride"],"덱사메타손":["dexamethasone"],"사이클로스포린":["cyclosporine","cyclosporin","ciclosporin"],"마이코페놀레이트":["mycophenolate"],"메토트렉세이트":["methotrexate"],"실데나필":["sildenafil"],"알로푸리놀":["allopurinol"],"칸데사르탄":["candesartan"]};
 const ENT=[[0,"2,3-Dimercapto-1-propanesulfonic acid","2,3-디메르캅토-1-프로판설폰산",[],"c",1],[1,"3,4-Methylenedioxymethamphetamine","3,4-메틸렌디옥시메타암페타민",["MDMA","ecstasy"],"c",1],[2,"5-Fluorouracil","5-플루오로우라실",["5-FU"],"d",8],[3,"5-HT receptor agonists","5-HT 수용체 작용물질",["triptans"],"c",1],[4,"5-HT4 agonists","5-HT4 작용제",[],"c",1],[5,"5HT1 agonists","5HT1작용제",["triptans"],"c",1],[6,"A2R blockers","A2R차단제",[],"c",1],[7,"Abortifacients","낙태유발제",[],"c",6],[8,"ACE inhibitor drugs","ACE억제제 약물",[],"c",1],[9,"ACE inhibitors","ACE억제제",[],"c",19],[10,"Acebutolol","아세뷰톨롤",[],"d",1],[11,"Acetaminophen","아세트아미노펜",[],"d",22],[12,"Acetate","아세트산염",[],"d",1],[13,"Acetazolamide","아세타졸아미드",[],"d",3],[14,"Acetohydroxamic acid","아세토히드록삼산",[],"d",1],[15,"Acetylcholinesterase (AChE) inhibitors","아세틸콜린에스테라제 억제제",[],"c",1],[16,"Acetylcholinesterase inhibitors","아세틸콜린에스테라제억제제",[],"c",2],[17,"Acetylsalicylic acid","아세틸살리실산",[],"d",1],[18,"Acidic or basic drugs","산성 또는 염기성 약물",[],"c",1],[19,"Acidifiers","산미제",[],"c",1],[20,"Acidifying agents","산화제",[],"c",2],[21,"Acitretin","아시트레틴",[],"d",1],[22,"Acne medication","여드름 치료제",[],"d",1],[23,"Activated charcoal","활성탄",[],"d",1],[24,"Acyclovir","아사이클로비르",[],"d",1],[25,"Adaptogens","강장제",[],"c",1],[26,"Adefovir dipivoxil","아데포버 디피복실",[],"d",1],[27,"Adenosine","아데노신",[],"d",3],[28,"Adrenal agents","부신호르몬 제제",[],"c",1],[29,"Adriamycin","아드리아마이신",[],"d",1],[30,"Agents that affect clotting","응고에 영향을 미치는 제제",[],"c",1],[31,"Agents that elevate homocysteine levels","호모시스테인 수치를 높이는 제제",[],"c",1],[32,"Agents used to increase bone strength","골강도증가제제",[],"c",1],[33,"Albendazole","알벤다졸",[],"d",1],[34,"Alcohol","알코올",["chronic use","ethanol"],"c",49],[35,"Aldesleukin","알데스류킨",[],"d",1],[36,"Aldose reductase inhibitors","알도스환원효소억제제",[],"c",3],[37,"Aldosterone antagonists","알도스테론길항제",[],"c",1],[38,"Aldosterone receptor antagonists","알도스테론수용체길항제",[],"c",1],[39,"Alendronate","알렌드로네이트",[],"d",1],[40,"Alkalinizing agents","알칼리화제",[],"c",1],[41,"Alkaloid agents","알칼로이드제",[],"c",1],[42,"Allantoin","알란토인",[],"d",1],[43,"Allopurinol","알로푸리놀",[],"d",2],[44,"Alpha-agonists","알파-작용제",[],"c",1],[45,"Alpha-blockers","알파-차단제",[],"c",2],[46,"Alpha-interferon","알파-인터페론",[],"d",1],[47,"Alprazolam","알프라졸람",[],"d",2],[48,"Aluminum","알루미늄",[],"d",1],[49,"Aluminum-containing agents","알루미늄 함유제",[],"c",1],[50,"Alzheimer's agents","알츠하이머제제",[],"c",26],[51,"Amifostine","아미포스틴",[],"d",1],[52,"Amiloride","아밀로라이드",[],"d",1],[53,"Aminoglycoside antibiotics","아미노글리코사이드항생제",[],"c",1],[54,"Aminoglycosides","아미노글리코사이드",[],"c",3],[55,"Aminophylline","아미노필린",[],"d",3],[56,"Aminosalicylic acid","아미노살리실산",[],"d",3],[57,"Amiodarone","아미오다론",[],"d",7],[58,"Amitriptyline","아미트립틸린",[],"d",1],[59,"Amlodipine","암로디핀",[],"d",1],[60,"Amoxicillin","아목시실린",[],"d",3],[61,"Amphetamine","암페타민",[],"d",4],[62,"Amphetamines","암페타민",[],"c",1],[63,"Amphotericin-B","암포테리신-B",[],"d",2],[64,"Amprenavir","암프레나비어",[],"d",2],[65,"Anabolic androgenic steroids","단백동화스테로이드",[],"c",1],[66,"Anabolic steroids","근육강화스테로이드",[],"c",2],[67,"Analgesic agents","진통제",[],"c",1],[68,"Analgesics","진통제",[],"c",68],[69,"Analgesics, narcotic","진통제, 마약",[],"c",3],[70,"Analgesics, topical","국소 진통제",[],"c",1],[71,"Androgenic agents","남성호르몬제",[],"c",1],[72,"Androgens","안드로겐",[],"c",5],[73,"Anesthetics","마취제",[],"c",23],[74,"Angiogenic agents","혈관신생 약물",[],"c",1],[75,"Angiotensin II receptor antagonist","안지오텐신 II 수용체 길항제",["A2R blockers"],"c",2],[76,"Angiotensin II-converting enzyme (ACE) inhibitors and angiotensin-converting enzyme receptor blockers","안지오텐신 II 전환 효소억제제와 안지오텐신전환효소수용체차단제",[],"c",3],[77,"Angiotensin-converting enzyme","ACE",[],"d",1],[78,"Angiotensin-converting enzyme (ACE) inhibitors","안지오텐신 전환 효소 억제제",[],"c",1],[79,"Angiotensin-converting enzyme inhibitors","안지오텐신 전환 효소 억제제",[],"c",1],[80,"Angiotensin-converting enzyme receptor blockers","ACE수용기차단제",["ARBs"],"c",1],[81,"Antacids","제산제",[],"c",19],[82,"Antacids, cimetidine","제산제, 시메티딘",[],"c",1],[83,"Antacids, H2 blockers, proton pump inhibitors","제산제, H2차단제, 양성자 펌프 억제제",[],"c",1],[84,"Anthelminthics","구충제",[],"c",1],[85,"Anthelmintic agents","구충제",[],"c",1],[86,"Anthelmintics","구충제",["e.g. praziqauntel"],"c",11],[87,"Anti-adhesion agents","항유착제",[],"c",1],[88,"Anti-arrhythmia agents","항부정맥제",[],"c",1],[89,"Anti-coagulants and analgesics","혈전방지제와 진통제",["NSAIDs","acetaminophen","aspirin","ibuprofen"],"c",1],[90,"Anti-edema agents","항부종제",[],"c",1],[91,"Anti-histamine agents","항히스타민제",[],"c",1],[92,"Anti-hyperglycemics","항고혈당제",[],"c",1],[93,"Anti-hyperlipidemia drugs","항고지혈증제",[],"c",2],[94,"Anti-hypertensive agents","항고혈압제",[],"c",8],[95,"Anti-inflammatories","항염증제",[],"c",50],[96,"Anti-inflammatoriess","항염증제",[],"c",1],[97,"Anti-inflammatory agent","항염증제",[],"c",1],[98,"Anti-inflammatory agents","항염증제",[],"c",92],[99,"Anti-inflammatory agents, COX-2 inhibitors","항염증제. COX-2 억제제",[],"c",1],[100,"Anti-inflammatory drugs","항염증제",[],"c",2],[101,"Anti-tinea capitis agents","항-머리백선증 제제",[],"c",1],[102,"Antiacne agents","항여드름제",[],"c",4],[103,"Antiadrenergic drugs","항아드레날린제",["alpha-blockers"],"c",1],[104,"Antiadrenergics","항아드레날린성약",[],"c",2],[105,"Antiaging agents","노화 방지제",[],"c",4],[106,"Antiaging drugs","노화방지제",[],"c",1],[107,"Antiallergic agents","항알레르기제",[],"c",5],[108,"Antiallergy agents","항알레르기제",[],"c",6],[109,"Antiallergy drugs","항알레르기제",[],"c",1],[110,"Antiandrogens","항안드로겐제",[],"c",11],[111,"Antiangiogenesis agents","항혈관생성제",[],"c",1],[112,"Antiangiogenic drugs","혈관형성억제제",[],"c",5],[113,"Antiangiogenics","혈관형성억제제",[],"c",2],[114,"Antianxiety agents","항불안제",[],"c",16],[115,"Antianxiety drugs","항불안제",[],"c",8],[116,"Antiarrhythmic agents","항부정맥제",[],"c",17],[117,"Antiarrhythmic drugs","항부정맥제",[],"c",1],[118,"Antiarrhythmics","항부정맥제",[],"c",8],[119,"Antiarsenic agents","Antiarsenic제제",[],"c",1],[120,"Antiarthritic agents","관절염 치료제",[],"c",3],[121,"Antiarthritics","항관절염제",[],"c",16],[122,"Antiasthma agents","항천식제",[],"c",2],[123,"Antiasthma drugs","항천식제",[],"c",6],[124,"Antiasthmatics","항천식제",[],"c",24],[125,"Antibacterials","항균제",[],"c",2],[126,"Antibiotics","항생제",["clarithromycin"],"c",150],[127,"Antibronchospastics","항기관지경련제",[],"c",1],[128,"Anticachexic agents","항악액질제",[],"c",1],[129,"Anticancer agents","항암제",[],"c",1],[130,"Anticancer drugs","항암제",[],"c",1],[131,"Anticarcinogenic agents","항암제",[],"c",1],[132,"Anticataract drugs","녹내장제제",[],"c",1],[133,"Anticholinergics","항콜린제",[],"c",11],[134,"Anticholinesterase inhibitors","항콜린에스테라제억제제",[],"c",1],[135,"Anticoagulant / antiplatelet drugs","항응고제/항혈소판제",[],"c",3],[136,"Anticoagulant / antiplatelets, NSAIDs, aspirin","항응고제/항혈소판제, NSAIDs, 아스피린",[],"c",1],[137,"Anticoagulant agents","항응고제",[],"c",4],[138,"Anticoagulant or antiplatelet agents","항응고제 및 항혈소판제",[],"c",1],[139,"Anticoagulants","항응고제",[],"c",22],[140,"Anticoagulants and antiplatelet agents","항응고제 및 항혈소판제",[],"c",1],[141,"Anticoagulants and antiplatelets","항응고제와 항혈소판제",[],"c",118],[142,"Anticoagulants, anti-platelet agents","항응고제/항혈소판제",[],"c",3],[143,"Anticoagulants, anti-platelet drugs, NSAIDs","항응고제, 항혈소판제, NSAIDs",[],"c",1],[144,"Anticoagulants, antiplatelet agents, NSAIDs","항응고제, 항혈소판제, NSAIDs",[],"c",1],[145,"Anticoagulants, antiplatelet drugs","항응고제, 항혈소판제",[],"c",1],[146,"Anticoagulants, antiplatelets","항응고제, 항혈소판제",[],"c",5],[147,"Anticonvulsant agents","항경련제",[],"c",8],[148,"Anticonvulsants","항경련제",[],"c",25],[149,"Anticonvulsive agents","항경련제",[],"c",1],[150,"Antidepressant agents","항우울제",["MAOIs","SSRIs"],"c",8],[151,"Antidepressant agents, monoamine oxidase inhibitors","항우울제, 모노아민옥시다제억제제",["MAOIs"],"c",12],[152,"Antidepressant agents, selective serotonin reuptake inhibitors","항우울제, 선택적세로토닌재흡수억제제",["SSRIs"],"c",7],[153,"Antidepressant agents, tricyclic","항우울제, 삼환계",["TCAs"],"c",3],[154,"Antidepressants","항우울제",[],"c",15],[155,"Antidepressants, monoamine oxidase inhibitors","항우울제, 모노아민옥시다제억제제",["MAOIs"],"c",7],[156,"Antidepressants, selective serotonin reuptake inhibitors","항우울제, 선택적세로토닌재흡수억제제",["SSRIs"],"c",8],[157,"Antidepressants, tricyclics","항우울제, 트리사이클릭",["TCAs"],"c",1],[158,"Antidepressants: MAOIs","항우울제, 모노아민옥시다제억제제",[],"c",2],[159,"Antidepressants: SSRIs","항우울제, 선택적세로토닌재흡수억제제",[],"c",1],[160,"Antidiabetic agents","항당뇨병제",[],"c",108],[161,"Antidiabetics","항당뇨병제",[],"c",67],[162,"Antidiarrheal agents","지사제",[],"c",1],[163,"Antidiarrheals","지사제",[],"c",23],[164,"Antidotes","해독제",[],"c",1],[165,"Antiemetic agents","항구토제",[],"c",2],[166,"Antiemetics","항구토제",[],"c",11],[167,"Antiepileptic agents","항간질제",[],"c",1],[168,"Antiepileptics","항간질제",[],"c",2],[169,"Antiestrogens","항에스트로겐제",[],"c",7],[170,"Antifungal agents","항진균제",[],"c",14],[171,"Antifungals","항진균제",[],"c",77],[172,"Antigingivitis agents","치은염예방제제",[],"c",1],[173,"Antiglaucoma agents","녹내장 방지제",[],"c",2],[174,"Antigout agents","항통풍제",[],"c",17],[175,"Antihelminthics","구충제",[],"c",8],[176,"Antihelmintics","구충제",[],"c",1],[177,"Antihemorrhage agents","항응고제",[],"c",1],[178,"Antihemorrhoidal agents","항치질제",[],"c",1],[179,"Antihistamines","항히스타민제",[],"c",30],[180,"Antihyperglycemic drugs, insulin, diabetes agents","항고혈당제, 인슐린, 당뇨제",[],"c",1],[181,"Antihyperlipidemics","항고지혈증제",[],"c",1],[182,"Antihypertensive drugs","항고혈압제",[],"c",7],[183,"Antihypertensives","항고혈압제",[],"c",128],[184,"Antihyperuricemic agents","항고뇨산혈증제",[],"c",1],[185,"Antihyperuricemic agents / xanthine oxidase inhibitors","항고요산혈증성제제/잔틴산화요소 억제제",[],"c",1],[186,"Antiinflammatory agents (NSAIDs), COX 2","항염증제, COX 2",[],"c",1],[187,"Antiinflammatory agents, antirheumatic agents","항염증제, 항류마티즘제",[],"c",1],[188,"Antiinflammatory herbs and supplements","항염증성 허브와 보충제",[],"c",1],[189,"Antilipemic agents","항고지혈증제",[],"c",82],[190,"Antilipemic agents, bile acid sequestrants","항고지혈증제, 담즙산 격리제",[],"c",2],[191,"Antilipemic agents, HMG-CoA reductase inhibitors","항고지혈증제, HMG-CoA 환원효소 억제제",[],"c",3],[192,"Antilipemics","항고지혈증제",[],"c",85],[193,"Antimalarial agents","항말라리아제",[],"c",10],[194,"Antimalarials","항말라리아제",[],"c",11],[195,"Antimicrobial agents","항균제",["antibacterials","antifungals","antiparasitics"],"c",3],[196,"Antimicrobials","항균제",[],"c",4],[197,"Antimuscarinics","항무스칼린",[],"c",1],[198,"Antineoplastic agents","항종양제",[],"c",92],[199,"Antineoplastics","항암제",[],"c",106],[200,"Antineoplastics, alkylating agents","항암제, 알킬화제",[],"c",1],[201,"Antiobesity agents","항비만제",[],"c",56],[202,"Antiobesity drugs","항비만제",[],"c",1],[203,"Antioxidant agents","항산화제",[],"c",1],[204,"Antioxidants","산화방지제",[],"c",12],[205,"Antiparasitic agents","항기생충제",[],"c",3],[206,"Antiparasitics","항기생충제",[],"c",16],[207,"Antiparkinson agents","항파킨슨병제",[],"c",3],[208,"Antiparkinsonian agents","항파킨슨증후군 제제",[],"c",1],[209,"Antiparkinsonians","항파킨슨병제",[],"c",1],[210,"Antiplatelet agents","항혈소판제",[],"c",4],[211,"Antiplatelet and anticoagulant agents","항혈소판제와 항응고제",[],"c",1],[212,"Antiplatelets, anticoagulants","항혈소판제, 항응고제",[],"c",2],[213,"Antiprotozoal agents","항원충약제",[],"c",1],[214,"Antiprotozoals","항원충제",[],"c",13],[215,"Antipsychotic agents","항정신제",[],"c",5],[216,"Antipsychotics","항정신제",[],"c",16],[217,"Antipyretic agents","해열제",[],"c",1],[218,"Antipyretics","해열제",[],"c",3],[219,"Antipyrine","안티피린",[],"d",4],[220,"Antiretroviral agents","항레트로바이러스제",["3TC-","Lamivudine -Epivir"],"c",13],[221,"Antiretroviral agents, non nucleoside reverse transcriptase inhibitors","항레트로바이러스제, NNRTIs",["NNRTIs"],"c",1],[222,"Antiretroviral agents, protease inhibitors","항레트로바이러스제, 단백질분해효소억제제",[],"c",4],[223,"Antiretrovirals","항레트로바이러스제",[],"c",15],[224,"Antiretrovirals, protease inhibitors","항레트로바이러스제, 단백질분해효소억제제",[],"c",1],[225,"Antiseizure agents","항발작제",[],"c",1],[226,"Antiseizure drugs","항발작제",[],"c",1],[227,"Antiseptics","살균제",[],"c",1],[228,"Antisickling agents","항겸상세포생성제",[],"c",1],[229,"Antispasmodic agents","경련방지제",[],"c",10],[230,"Antispasmodic drugs","경련방지제",[],"c",1],[231,"Antispasmodics","진경제",[],"c",12],[232,"Antithyroid agents","항갑상선제",[],"c",5],[233,"Antitinnitus agents","항이명제",[],"c",2],[234,"Antituberculosis agents","항결핵제",[],"c",2],[235,"Antitussive agents","진해제",[],"c",3],[236,"Antitussives","진해제",[],"c",5],[237,"Antiulcer agents","위궤양치료제",[],"c",25],[238,"Antiulcer and gastric acid-reducing agents","항궤양제와 위산억제제",[],"c",7],[239,"Antiulcer drugs","항궤양제",[],"c",1],[240,"Antiulcer herbs and supplements","항궤양성허브와 식이보충제",[],"c",1],[241,"Antiurolithiasis agents","항요로결석제제",[],"c",1],[242,"Antivenom agents","해독제",[],"c",1],[243,"Antivertigo agents","항현기증제",[],"c",1],[244,"Antiviral","항바이러스",[],"d",1],[245,"Antiviral agents","항바이러스제",[],"c",37],[246,"Antivirals","항바이러스제",[],"c",46],[247,"Anxiolytics","항불안제",[],"c",6],[248,"Aphrodisiacs","최음제",[],"c",1],[249,"Appetite stimulants","식욕자극제",[],"c",3],[250,"Appetite suppressants","식욕억제제",[],"c",1],[251,"Aprotinin","아프로티닌",[],"d",1],[252,"Aripiprazole","아리피프라졸",[],"d",1],[253,"Aristolochic acid","아리스토로크 산",[],"d",1],[254,"Aromatase inhibitors","방향화효소억제제",[],"c",3],[255,"Arsenic","비소",[],"d",1],[256,"Arthritis agents","관절염제",[],"c",1],[257,"Aspirin","아스피린",[],"d",24],[258,"Athletic performance enhancers","운동능력향상제",[],"c",5],[259,"Athletic performance-enhancing drugs","운동 능력 향상제",[],"c",1],[260,"Atorvastatin","아토르바스타틴",[],"d",2],[261,"Azithromycin","아지트로마이신",[],"d",1],[262,"Bacampicillin","바캄피실린",[],"d",1],[263,"Baclofen","바클로펜",[],"d",1],[264,"Barbituates","바비튜레이트",[],"c",1],[265,"Barbiturates","바르비트루산염",[],"c",6],[266,"Benzodiazepines","벤조디아제핀",[],"c",19],[267,"Benzoic acid","벤조산",[],"d",1],[268,"Beta-agonists","베타-길항제",[],"c",4],[269,"Beta-blockers","베타차단제",["beta-adrenergic antagonists"],"c",17],[270,"Beta-glucan inhibitors","베타–글루칸 억제제",[],"c",1],[271,"Bethanechol","베타니콜",[],"d",1],[272,"Bile acid sequestrants","담즙산격리제",[],"c",4],[273,"Bisphosphonates","비스포스포네이트",[],"c",7],[274,"Bleomycin","블레오마이신",[],"d",1],[275,"Bone agents","골제제",[],"c",6],[276,"Bone marrow suppressants","골수 억제제",[],"c",1],[277,"Bone-formation agents","골형성제제",[],"c",1],[278,"Bosentan","보센탄",[],"d",1],[279,"Bromo-dragonFLY","브로모-드라곤플라이",[],"d",1],[280,"Bronchodilators","기관지확장제",[],"c",5],[281,"Budesonide","부데소니드",[],"d",1],[282,"Bupivacaine","부피바카인",[],"d",1],[283,"Bupleurum","시호",[],"d",1],[284,"Buspirone","부스피론",[],"c",3],[285,"Busulfan","부설판",[],"d",1],[286,"Butyric acid","낙산",[],"d",1],[287,"Caffeine","카페인",[],"d",17],[288,"Calcipotriene","칼시포트리엔",[],"d",1],[289,"Calcitriol","칼시트리올",[],"d",2],[290,"Calcium","칼슘",[],"d",1],[291,"Calcium channel blockers","칼슘통로차단제",["verapamil"],"c",23],[292,"Calcium salts","칼슘염",[],"c",13],[293,"Cannabinoid CB1 receptor antagonists","칸나비노이드CB1수용체길항제",[],"c",1],[294,"Cannabinoid receptor antagonists","대마초제제수용체길항제",[],"c",1],[295,"Cannabinoids","카나비노이드",[],"c",4],[296,"Capsazepine","Capsazepine",[],"d",1],[297,"Carbamazapine","카르바마제핀",[],"d",1],[298,"Carbamazepine","카르바마제핀",[],"d",12],[299,"Carbenicillin","카르베니실린",[],"d",1],[300,"Carbenoxolone analog","카르베녹솔론 유사",["BX24"],"d",1],[301,"Carbidopa / levodopa","카르비도파/레보도파",["Sinemet"],"c",1],[302,"Carbon tetrachloride","사염화탄소",[],"d",1],[303,"Carbonic anhydrase inhibitors","탄산탈수효소억제제",[],"c",2],[304,"Carboplatin","카보플라틴",[],"d",1],[305,"Cardiac glycosides","강심배당체",["digitoxin","digoxin"],"c",20],[306,"Cardiac glycosides, digoxin","심장 글리코시드, 디곡신",[],"c",1],[307,"Cardioactive agents","심장작용제",[],"c",1],[308,"Cardiovascular agents","심장혈관 제제",[],"c",80],[309,"Cardiovascular drugs","심혈관제",[],"c",7],[310,"Cardiovascular herbs and supplements","심혈관성 허브와 식이보충제",[],"c",1],[311,"Carmustine","카무스틴",[],"d",2],[312,"Cathartics","설사제",[],"c",1],[313,"Cefdinir","세프디니르",[],"d",1],[314,"Cefepime","세페핌",[],"d",1],[315,"Ceftriaxone","세프트리악손",[],"d",1],[316,"Celecoxib","셀리콕시브",[],"d",5],[317,"Central nervous system (CNS) depressants","중추신경계억제제",[],"c",2],[318,"Central nervous system stimulants","중추 신경계 자극제",[],"c",1],[319,"Cephalosporins","세팔로스포린",[],"c",2],[320,"Cetuximab","세툭시맙",["Erbitux"],"d",1],[321,"Charcoal","숯",[],"d",1],[322,"Chelating agents","킬레이트제",[],"c",1],[323,"Chemoprotectants","화학요법보호제",[],"c",1],[324,"Chemotherapeutic agents","화학요법제제",[],"c",1],[325,"Chitosan","키토산",[],"d",1],[326,"Chloramphenicol","클로람페니콜",[],"d",2],[327,"Chloroquine","클로로퀸",[],"d",2],[328,"Chlorzoxazone","클로르족사존",["Paraflex","Parafon Forte","Relaxazone","Remular-S"],"d",2],[329,"Cholera vaccine","콜레라백신",[],"d",1],[330,"Cholesterol-lowering agents","콜레스테롤 강하제",[],"c",1],[331,"Cholesterol-lowering drugs","콜레스테롤 강하제",[],"c",1],[332,"Cholestyramine","콜레스티라민",["Questran"],"d",4],[333,"Cholestyramine resin","콜레스티라민 수지",[],"d",1],[334,"Cholinergic agonists","콜린성 작용제",[],"c",5],[335,"Cholinergic herbs and supplements","콜린성 허브와 보충제",[],"c",1],[336,"Cholinesterase inhibitors","콜린에스테라아제 억제제",[],"c",17],[337,"Chromium","크롬",[],"d",1],[338,"Chronotropes","변시성약제",["positive"],"c",2],[339,"Chronotropics","심장박동수 변동제",[],"c",1],[340,"Cigarettes","담배",[],"c",1],[341,"Cilostazol","사일로스타졸",[],"d",1],[342,"Cimetidine","시메티딘",[],"d",4],[343,"Cinacalcet","시나칼세트",[],"d",1],[344,"Cinnoxicam","시녹시캄",[],"d",1],[345,"Ciprofloxacin","시프로플록사신",["Cipro"],"d",3],[346,"Cisplatin","시스플라틴",[],"d",12],[347,"Clarithromycin","클라리트로마이신",[],"d",2],[348,"Clobetasol","클로베타졸",[],"d",1],[349,"Clofibrate","클로피브레이트",[],"d",2],[350,"Clofibric acid","클로피브릭산",[],"d",1],[351,"Clonidine","클로니딘",[],"d",1],[352,"Clopidogrel","클로피도그렐",[],"d",1],[353,"Clozapine","클로자핀",[],"d",6],[354,"CNS agents","중추신경계제제",[],"c",1],[355,"CNS depressants","중추신경억제제",[],"c",37],[356,"CNS depressants / Sedatives","중추신경계 억제제/진정제",[],"c",6],[357,"CNS Stimulants","중추신경계 자극제",["amphetamines","methylphenidate"],"c",27],[358,"Cobalt","코발트",[],"d",1],[359,"Cocaine","코카인",[],"d",5],[360,"Cognitive agents","인지제",[],"c",4],[361,"Cognitive improvement agents","인지향상제제",[],"c",2],[362,"Colchicine","콜히친",[],"d",3],[363,"Cold and flu agents","감기 몸살제",[],"c",1],[364,"Colestipol","콜레스티폴",[],"d",3],[365,"Colonoscopy preparation","대장 내시경 전처리",[],"d",1],[366,"Conjugated estrogens","복합에스트로겐",[],"c",1],[367,"Contraceptives","피임제",[],"c",21],[368,"Copper oxide","산화구리",[],"d",1],[369,"Corticoids","코르티코이드",[],"c",1],[370,"Corticosteroids","부신피질호르몬",[],"c",21],[371,"COX inhibitors","COX 억제제",[],"c",1],[372,"COX-2 inhibitors","COX-2 억제제",[],"c",2],[373,"Creatine","크레아틴",[],"d",1],[374,"Cyanocobalamin","시아노코발라민",[],"d",1],[375,"Cyclodextrin","사이클로덱스트린",[],"d",1],[376,"Cyclooxygenase (COX)-2 inhibitors","COX-2 억제제",[],"c",1],[377,"Cyclophosphamide","시클로포스파미드",[],"d",9],[378,"Cycloserine","사이클로세린",[],"d",2],[379,"Cyclosporin A","사이클로스포린A",[],"d",2],[380,"Cyclosporine","사이클로스포린",[],"d",18],[381,"CYP2D6 substrates","CYP2D6 기질",[],"c",1],[382,"CYP2E1 substrates","CYP2E1 기질",[],"c",1],[383,"CYP3A substrates","CYP3A 기질",[],"c",1],[384,"CYP450 inhibitors","CYP450 억제제",[],"c",1],[385,"CYP450 metabolized agents","CYP450대사작용제제",[],"c",1],[386,"CYP450-modifying agents","CYP450대사조절제",[],"c",1],[387,"Cystic fibrosis transmembrane conductance regulator (CFTR) agents","낭포성 섬유증 막횡단 전도 조절 제제",[],"c",1],[388,"Cytochrome P450 2D6 substrates","시토크롬 P450 2D6 기질",[],"c",2],[389,"Cytochrome P450 3A(4,5,7) substrates","시토크롬 P450 3A 기질",[],"c",1],[390,"Cytochrome P450 enzyme affecting drugs","시토크롬 P450 대사제",[],"c",1],[391,"Cytochrome P450 inhibitors","시토크롬 P450 억제제",[],"c",1],[392,"Cytochrome P450 metabolized agents, cytochrome P450 3A(4,5,7) substrates","시토크롬 P450 대사제, 시토크롬 P450 3A 기질",[],"c",1],[393,"Cytochrome P450 metabolized herbs and supplements","시토크롬 P450 대사제",[],"c",1],[394,"Cytochrome P450 metabolizing agents","시토크롬 대사 제제",[],"c",1],[395,"Cytochrome P450 substrates","시토크롬 P450 기질",[],"c",2],[396,"Cytochrome P450-metabolized agents","시토크롬 P450 대사제",[],"c",61],[397,"Cytochrome P450-modifying agents","시토크롬P450조절제",[],"c",17],[398,"Cytochrome P450: substrates, inhibitors, inducers","시토크롬 P450: 기질, 억제제, 유발인자",[],"c",8],[399,"Cytotoxic / chemotherapeutic agents","세포독성/화학치료제",[],"c",1],[400,"Cytotoxins","세포독성",[],"c",1],[401,"Dactinomycin","닥티노마이신",[],"d",1],[402,"Danshen","단삼",[],"d",1],[403,"Darifenacin","다리페나신",[],"d",1],[404,"Decongestants","충혈제거제",[],"c",2],[405,"Deferoxamine","디페록사민",["Desferal"],"d",1],[406,"Demulcents","완화제",[],"c",1],[407,"Dental agents","치아제제",[],"c",7],[408,"Dental and peridontal agents","치아 및 치주제",[],"c",1],[409,"Dental and periodontal agents","치과치주제",[],"c",9],[410,"Dermatologic agents","피부제제",[],"c",46],[411,"Dermatological agents","피부제제",[],"c",5],[412,"Dexamethasone","덱사메타손",[],"d",4],[413,"Dexrazoxane","덱스라족산",[],"d",1],[414,"Dextromethorphan","덱스트로메토르판",[],"d",4],[415,"Dextrose","덱스트로오스",[],"d",1],[416,"Diarrhetics","지사제",[],"c",1],[417,"Diazepam","다이아제팜",[],"d",1],[418,"Dichloroacetate","다이클로로아세테이트",[],"d",1],[419,"Diclofenac","디클로페낙",[],"d",2],[420,"Diclofenac sodium","디클로페낙 나트륨",[],"d",2],[421,"Digoxin","디곡신",[],"d",13],[422,"Digoxin, digitoxin","디곡신, 디기톡신",[],"c",1],[423,"Diltiazem","딜티아젬",[],"d",3],[424,"Dimercaprol","디메르카프롤",[],"d",1],[425,"Dimercaptosuccinic acid","디메르캅토호박산",["DMSA"],"d",1],[426,"Dimethyl sulfoxide","디메틸 슬폭시드",["DMSO"],"d",1],[427,"Dimethylsulphoxide","디메틸설팍사이드",[],"d",1],[428,"Dioxin-detoxifying drugs","다이옥신해독제",[],"c",1],[429,"Diphenoxylate","지사제",[],"d",1],[430,"Dipyridamole","디피리다몰",[],"d",2],[431,"Disease-modifying antirheumatic drugs","질병완화제인항류마티스제",["DMARDs"],"c",1],[432,"Disulfiram","디술피람",["Antabuse"],"d",17],[433,"Diuretics","이뇨제",[],"c",60],[434,"Diuretics, loop","이뇨제, 루프",[],"c",1],[435,"Diuretics, potassium sparing","칼륨 보존 이뇨제",[],"c",2],[436,"Diuretics, thiazide","이뇨제, 티아지드",[],"c",3],[437,"Docetaxel","도시탁셀",[],"d",2],[438,"Donepezil","도네페질",[],"d",2],[439,"Dopamine agonists","도파민작용물질",[],"c",7],[440,"Dopamine antagonists","도파민길항제",[],"c",5],[441,"Dopaminergic agents","도파민제",[],"c",1],[442,"Dovonex","Dovonex",[],"d",1],[443,"Doxorubicin","독소루비신",["Adriamycin"],"d",8],[444,"Doxylamine","독실아민",[],"d",1],[445,"Drugs metabolized by cytochrome P450","시토크롬P450에 의해 대사되는제제",[],"c",1],[446,"Drugs that affect GABA","GABA영향제",[],"c",7],[447,"Drugs that cause rhabdomyolysis","횡문근 융해증을 유발하는 약",[],"c",1],[448,"Drugs that effect GABA","GABA에 영향을 미치는 제제",[],"c",1],[449,"Drugs that may cause adverse dental effects","치아에유해효과를일으키는약",[],"c",1],[450,"Drugs that may cause rhabdomyolysis","횡문근융해제",[],"c",1],[451,"Drugs that may lower seizure threshold","발작역치저하제",[],"c",11],[452,"Drugs that may lower the seizure threshold","발작역치저하제",[],"c",1],[453,"Drugs used for osteoporosis","골다공증제",[],"c",28],[454,"Ecstasy","엑스터시",[],"d",1],[455,"Edoxaban","에독사반",[],"d",2],[456,"Efavirenz","에파비렌즈",[],"d",1],[457,"Eletriptan","일레트립탄",[],"d",1],[458,"Emetics","구토제",[],"c",1],[459,"Energy enhancing agents","에너지 향상제",[],"c",1],[460,"Enoxacin","이녹사신",[],"d",1],[461,"Ephedrine","에페드린",[],"d",2],[462,"Epithalamin","에피딸라민",[],"d",1],[463,"Eplerenone","에플레레논",[],"d",1],[464,"Ergot derivatives","맥각 유도체",[],"c",6],[465,"Eritadenine","에리타데닌",[],"d",1],[466,"Erythromycin","에리트로마이신",[],"d",1],[467,"Erythropoietin","에리스로포엔틴",["EPO"],"d",3],[468,"Erythropoietin stimulating agents","에리스로포엔틴자극제",[],"c",1],[469,"Escitalopram","에스시탈로프람",[],"d",2],[470,"Esomeprazole","에스오메프라졸",[],"d",1],[471,"Estrogen","에스트로겐",[],"d",2],[472,"Estrogen / oral contraceptives","에스트겐/ 경구 피임약",[],"c",1],[473,"Estrogen and progestin combination","에스트로겐, 프로게스틴 배합물",[],"c",2],[474,"Estrogen and progestin combinations","에스트로겐, 프로게스틴 배합물",[],"c",1],[475,"Estrogens","에스트로겐",[],"c",41],[476,"Eszopiclone","에스조플리클론",[],"d",1],[477,"Ethambutol","에탐부톨",["Myambutol"],"d",2],[478,"Ethanol","에탄올",["alcohol"],"d",5],[479,"Ethosuximide","에토숙시마이드",[],"d",1],[480,"Etizolam","에티졸람",[],"d",1],[481,"Etoposide","에토포사이드",[],"d",2],[482,"Exchange resins","교환 수지",[],"c",1],[483,"Exercise agents","운동제제",[],"c",1],[484,"Exercise performance agents","운동성능제",[],"c",3],[485,"Exercise performance enhancement agents","운동수행능력향상제",[],"c",3],[486,"Exercise performance enhancers","운동수행능력향상제",[],"c",2],[487,"Expectorants","거담제",[],"c",6],[488,"Ezetimibe","에제티미브",[],"d",1],[489,"Faslodex","Faslodex",[],"d",1],[490,"Felbamate","펠바메이트",[],"d",1],[491,"Felodipine","펠로디핀",[],"d",1],[492,"Fenofibrate","페노피브레이트",[],"d",1],[493,"Fertility agents","가임제",[],"c",41],[494,"Fever reducers","해열제",[],"c",1],[495,"Fexofenadine","펙소페나딘",[],"d",3],[496,"Flubendiamide","플루벤디아미드",[],"d",2],[497,"Fluconazole","플루코나졸",[],"d",3],[498,"Fludrocortisone","플루드로코티손",[],"d",1],[499,"Flumazenil","플루마제닐",[],"d",2],[500,"Fluoride","불소",[],"d",4],[501,"Fluoroquinolones","플루오로퀴놀론",[],"c",2],[502,"Fluoxetine","플루옥세틴",[],"d",1],[503,"Fluphenazine","플루페나진",[],"d",2],[504,"Flutamide","플루타미드",[],"d",1],[505,"Fluvoxamine","플루복사민",[],"d",2],[506,"Folate analogs","엽산유사체",[],"c",2],[507,"Folic acid","엽산",[],"d",1],[508,"Folic acid antagonists","엽산길항제",[],"c",1],[509,"Foscarnet","포스카르네트",["Foscavir"],"d",1],[510,"Furafylline","프라필린",[],"d",2],[511,"Furazolidone","푸라졸리돈",[],"d",1],[512,"Furosemide","푸로세마이드",[],"d",2],[513,"Gadoversetamide","가도베르세타미드",[],"d",1],[514,"Galactagogues","최유제",[],"c",4],[515,"Gallium nitrate","갈륨 질산염",[],"d",1],[516,"Gamma-aminobutyric acid","감마-아미노부티르산",["GABA"],"d",1],[517,"Gastric acid-reducing agents and antiulcer agents","위산감소제와 항궤양제",[],"c",2],[518,"Gastrointestinal agents","위장관제제",[],"c",93],[519,"Gastrointestinal agents, miscellaneous","위장관제제, 기타",[],"c",7],[520,"Gastrointestinal agents, prokinetic","위장관 제제, 프로키네틱",[],"c",1],[521,"Gastrointestinal irritant drugs","위장관 자극제",[],"c",1],[522,"Gefitinib","게피티니브",[],"d",1],[523,"Gemcitabine","젬시타빈",[],"d",1],[524,"Gemfibrozil","겜피브로질",[],"d",1],[525,"General","일반",[],"c",48],[526,"Genitourinary tract agents","비뇨생식관 제제",[],"c",4],[527,"Gentamicin","젠타마이신",[],"d",4],[528,"Ginger","생강",[],"d",1],[529,"Glaucoma agents","녹내장제",[],"c",4],[530,"Glimepiride","글리메피리드",[],"d",1],[531,"Glucagon","글루카곤",[],"d",1],[532,"Glucagon-like peptide-1 (GLP-1) analogues","글루카곤유사펩티드-1유사체",[],"c",1],[533,"Glucocorticoids","당질코르티코이드",[],"c",2],[534,"Glutamate inhibitors","글루타메이트 억제제",[],"c",1],[535,"Glycosides","글리코사이드",[],"c",1],[536,"Gonadotropin-releasing hormone agonists","생식샘 자극 호르몬 방출 호르몬 작용제",[],"c",1],[537,"Growth agents","성장제제",[],"c",1],[538,"Growth hormone","성장호르몬",[],"c",2],[539,"Growth hormones","성장호르몬",[],"c",4],[540,"H2 antagonists","H2차단제",[],"c",1],[541,"H2-blockers","H2차단제",[],"c",5],[542,"Hair agents","모발제",[],"c",1],[543,"Hair growth agents","모발성장제",[],"c",1],[544,"Hair loss prevention agents","탈모 방지제",[],"c",1],[545,"Hallucinogenic agents","환각제",[],"c",1],[546,"Haloperidol","할로페리돌",[],"d",3],[547,"Halothane","할로탄",[],"d",1],[548,"Headache agents","두통 제제",[],"c",1],[549,"Heart rate-regulating agents","심박조절제",[],"c",20],[550,"Heart-regulating agents","심장조절제",[],"c",1],[551,"Heavy metal antagonists / chelating agents","중금속길항제/킬레이트제",[],"c",6],[552,"Hematologic agents","혈액학제제",[],"c",3],[553,"Hematological agents","혈액제제",[],"c",6],[554,"Hematologics","혈액제",[],"c",11],[555,"Hemorrhoid agents","치핵제제",[],"c",1],[556,"Heparin","헤파린",[],"d",3],[557,"Hepatic agents","간제제",[],"c",2],[558,"Hepatics","간",[],"c",1],[559,"Hepatoprotective agents","간보호제",[],"c",4],[560,"Hepatotoxic agents","간독성제",[],"c",37],[561,"Hepatotoxics","간독성물질",[],"c",1],[562,"Hepatotoxins","간독성물질",[],"c",28],[563,"Hexobarbital","헥소바비탈",[],"d",1],[564,"Histamine2-receptor antagonist","히스타민2-수용체길항제",["H2 blocker"],"c",1],[565,"Histone deacetylase (HDAC) inhibitors","히스톤탈아세틸화효소억제제",[],"c",1],[566,"HMG-CoA reductase inhibitors","HMG-CoA 환원효소 억제제",["statins"],"c",2],[567,"Homocysteine-lowering agents","호모시스테인저하제",[],"c",2],[568,"Hormonal agents","호르몬제",[],"c",83],[569,"Hormone replacement therapy","호르몬대체요법",["HRT"],"d",2],[570,"Human recombinant erythropoietin","사람 재조합 에리트로포이에틴",["EPO"],"d",1],[571,"Hydralazine","하이드랄라진",[],"d",1],[572,"Hydrazines","하이드라진",[],"c",1],[573,"Hydrochlorothiazide","히드로클로로티아지드",[],"d",1],[574,"Hydrocortisone","하이드로코티손",[],"d",3],[575,"Hydrophilic agents","친수성 작용물질",[],"c",2],[576,"Hydrophilic drugs","친수성약물",[],"c",1],[577,"Hydroxyurea","수산화요소",[],"d",1],[578,"Hypercholesterolemic drugs","고콜레스테롤혈증 치료제",[],"c",1],[579,"Hyperglycemics","고혈당제",[],"c",1],[580,"Hypertensive drugs","고혈압제",[],"c",2],[581,"Hypertensives","고혈압제",[],"c",1],[582,"Hypnotic agents","최면제",[],"c",1],[583,"Hypnotics","수면제",[],"c",1],[584,"Hypoglycemic agents","저혈당제",[],"c",3],[585,"Hypoglycemics","저혈당제",[],"c",4],[586,"Hypoglycemics / hyperglycemics","저혈당제/고혈당제",[],"c",1],[587,"Hypotensive agents","혈압강하제",[],"c",1],[588,"Hypotensives","혈압강하제",[],"c",3],[589,"Ibuprofen","이부프로펜",[],"d",3],[590,"Ifosfamide","이포스파미드",[],"d",3],[591,"Imatinib","이마티닙",[],"d",1],[592,"Immune agents","면역제제",[],"c",1],[593,"Immunoglobulins","면역글로불린",[],"c",4],[594,"Immunomodulating agents","면역조절제",[],"c",3],[595,"Immunomodulators","면역억제제",[],"c",5],[596,"Immunomodulatory agents","면역제",[],"c",2],[597,"Immunostimulants","면역자극제",[],"c",29],[598,"Immunosuppresants","면역억제제",[],"c",1],[599,"Immunosuppressants","면역억제제",[],"c",116],[600,"Impotence agents","발기부전제",[],"c",8],[601,"Indinavir","인디나비어",[],"d",2],[602,"Indole-3-acetic acid","인돌-3-아세트산",[],"d",1],[603,"Indomethacin","인도메타신",[],"d",9],[604,"Inositol","이노시톨",[],"d",1],[605,"Inotropes","근수축제",["positive"],"c",8],[606,"Insect repellants","곤충기피제",[],"c",3],[607,"Insecticides","살충제",[],"c",5],[608,"Insulin","인슐린",[],"d",3],[609,"Insulin preparations","인슐린정제",[],"c",8],[610,"Interferon-alpha","인터페론-알파",[],"d",2],[611,"Interferon-beta","인터페론-베타",[],"d",1],[612,"Interferons","인터페론",[],"c",2],[613,"Interleukins","인터루킨",[],"c",3],[614,"Intranasal agents","비강내 제제",[],"c",1],[615,"Intraocular pressure-altering agents","안압변화제제",[],"c",1],[616,"Iodine","요오드",[],"d",3],[617,"Ion exchange phosphate binding resins","이온교환인산염결합수지",[],"c",1],[618,"Ipecac","토근",[],"d",1],[619,"Iridium","이리듐",[],"d",1],[620,"Irinotecan hydrochloride","이리노테칸 히드로클로라이드",[],"d",1],[621,"Iron","철분",[],"c",11],[622,"Iron chelators","철환제",[],"c",1],[623,"Iron salts","철염",[],"c",23],[624,"Iron-containing agents","철분 함유제",[],"c",3],[625,"Irradiation","방사선 조사",[],"d",1],[626,"Isoniazid","이소나이아지드",[],"d",6],[627,"Isopropyl alcohol","이소프로필 알코올",[],"c",1],[628,"Isoproterenol","이소프로테레놀",[],"d",1],[629,"Isotretinoin","이소트레티노인",[],"d",1],[630,"Kayexalate","케이엑살레이트",["sodium polystyrene"],"d",1],[631,"Ketoconazole","케토코나졸",[],"d",1],[632,"Ketoprofen","케토프로펜",[],"d",1],[633,"Labetalol","라베탈롤",[],"d",1],[634,"Lactulose","락툴로스",[],"d",2],[635,"Lansoprazole","란소프라졸",[],"d",1],[636,"Larvicidals","살유충제",[],"c",1],[637,"Laxatives","완하제",[],"c",44],[638,"Laxatives, stimulant","자극성 완하제",[],"c",1],[639,"Letrozole","레트로졸",[],"d",1],[640,"Leukotriene receptor antagonists","류코트리엔수용체길항제",[],"c",2],[641,"Leupeptin","류펩틴",[],"d",1],[642,"Levamisole","레바미솔",[],"d",1],[643,"Levodopa","레보도파",[],"d",6],[644,"Levofloxacin","레보플록사신",[],"d",1],[645,"Levomethadyl","레보메타딜",[],"d",1],[646,"Levothyroxine","레보티록신",[],"d",3],[647,"Libido-enhancing agents","성욕증강제",[],"c",1],[648,"Lipid-lowering agents","지질강하제",[],"c",1],[649,"Lipoxygenase inhibitors","리폭시게나아제 억제제",[],"c",2],[650,"Lithium","리튬",[],"d",16],[651,"Lithium carbonate","탄산 리튬",[],"d",3],[652,"Lithium salts","리튬 염",[],"c",1],[653,"Liver-metabolized agents","간 대사작용제",[],"c",1],[654,"Lofepramine","로페프라민",[],"d",1],[655,"Loperamide","로페라마이드",["Imodium"],"d",1],[656,"Lorazepam","로라제팜",[],"d",1],[657,"Losartan","로자탄",[],"d",1],[658,"Lovastatin","로바스타틴",[],"d",1],[659,"Low-molecular-weight heparins","저분자량 헤파린",["LMWHs"],"c",1],[660,"Lymphoblastoid interferon-alpha","림프아구성 인터페론-알파",[],"d",1],[661,"Macrolides","마크로라이드",[],"c",1],[662,"Magnesium","마그네슘",[],"d",4],[663,"Magnesium supplements","마그네슘보충제",[],"c",2],[664,"Magnetic fields","자기장",[],"c",1],[665,"Mannitol","만니톨",[],"d",1],[666,"MAOI drugs","MAOI 약물",[],"c",1],[667,"Marijuana","마리화나",[],"d",1],[668,"Mast cell stabilizers, inhaled","비만세포안정제, 흡입식",[],"c",1],[669,"Mecamylamine","메카밀아민",[],"d",1],[670,"Medications that affect seizure threshold","발작역치에영향을미치는제제",[],"d",1],[671,"Memory agents","기억제제",[],"c",2],[672,"Memory-enhancing agents","기억 향상제",[],"c",1],[673,"Memory-enhancing drugs","기억력증가제",[],"c",1],[674,"Menopausal agents","갱년기제제",[],"c",1],[675,"Mercury","수은",[],"d",1],[676,"Metabolic enzymes","대사효소",[],"c",1],[677,"Metformin","메트포르민",[],"d",5],[678,"Methamphetamine","메타암페타민",[],"d",1],[679,"Methamphetamines","메탐페타민",[],"c",1],[680,"Methotrexate","메토트렉사트",[],"d",8],[681,"Methoxamine","메톡사민",[],"d",1],[682,"Methoxsalen","메톡살렌",[],"d",2],[683,"Methyldopa","메틸도파",[],"d",2],[684,"Methylenedioxymethamphetamine","메틸렌디옥시메타암페타민",["\"Ecstasy\"","MDMA"],"d",1],[685,"Methylenedioxymethamphetamine (MDMA,","메틸렌디옥시메타암페타민",[],"c",1],[686,"Methylphenidate","메틸페니데이트",[],"d",5],[687,"Methylprednisolone","메틸프레드니솔론",[],"d",1],[688,"Methylprednisolone sodium succinate","메틸프레드니솔론나트륨숙시네이트",["Solu-Medrol"],"d",1],[689,"Methylxanthines","메틸잔틴",["caffeine","theophylline"],"c",4],[690,"Metoclopramide","메토클로프라미드",[],"d",1],[691,"Metronidazole","메트로니다졸",["Flagyl"],"d",15],[692,"Mexiletine","멕실레틴",[],"d",2],[693,"mFOLFOX6, FOLFIRI","폴폭스, 폴피리",[],"c",1],[694,"Midazolam","미다졸람",[],"d",3],[695,"Mifepristone","미페프리스톤",[],"d",1],[696,"Mildronate","밀드로네이트",[],"d",1],[697,"Mineral oil","광물성기름",[],"d",4],[698,"Mineralocorticoids","광물코르티코이드",[],"c",1],[699,"Mitomycin C","미토마이신C",[],"d",2],[700,"Mitoxantrone","미토산트론",[],"d",1],[701,"Molluscicidal drugs","살충제",[],"c",1],[702,"Monoamine oxidase inhibitor drugs","모노아민 산화효소 억제제",[],"c",1],[703,"Monoamine oxidase inhibitors","모노아민 옥시다제 억제제",["MAOIs"],"c",1],[704,"Mood stabilizers","기분안정제",[],"c",3],[705,"Mood-altering agents","기분전환제",[],"c",1],[706,"Morphine","모르핀",[],"d",6],[707,"Mosquito repellants","모기퇴치제",[],"c",2],[708,"Mosquito-repelling agents","모기퇴치제",[],"c",1],[709,"Multiple drugs","복합 제제",[],"c",1],[710,"Muscle relaxants","근육이완제",[],"c",5],[711,"Muscle strengthening agents","근력 향상제",[],"c",1],[712,"Musculoskeletal agents","근골격제",[],"c",8],[713,"Mycophenolate mofetil","마이코페놀레이트 모페틸",[],"d",1],[714,"Nalbuphine","날부핀",[],"d",1],[715,"Naloxone","날록손",[],"d",2],[716,"Naltrexone","날트렉손",[],"d",1],[717,"Naproxen","나프록센",[],"d",1],[718,"Nasal decongestants","비강 충혈완화제",[],"c",1],[719,"Natalizumab","나탈리주마브",[],"d",1],[720,"Neomycin","네오마이신",[],"d",1],[721,"Neostigmine","네오스티그민",[],"d",2],[722,"Nephrotoxic agents","신독성제제",[],"c",17],[723,"Nephrotoxins","신세포독소",[],"c",6],[724,"Neuroleptics","신경이완제",[],"c",1],[725,"Neurologic agents","신경제제",[],"c",79],[726,"Neurologic herbs and supplements","신경학적허브와 식이보충제",[],"c",1],[727,"Neurological agents","신경제제",[],"c",1],[728,"Neurological blocking agents","신경학 블로킹제",[],"c",1],[729,"Neuromuscular blockers","신경근육 차단제",[],"c",3],[730,"Neuromuscular blocking agents","신경근육차단제",[],"c",1],[731,"Neuroprotective agents","신경보호제",[],"c",5],[732,"Nevirapine","네비라핀",[],"d",2],[733,"Niacin","니아신",[],"d",1],[734,"Niacin / nicotinic acid","니아신/니코틴산",[],"c",1],[735,"Nicardipine","니카르디핀",[],"d",1],[736,"Nicotine","니코틴",["tobacco"],"d",21],[737,"Nicotine agonists and antagonists","니코틴작용제와 길항제",[],"c",1],[738,"Nicotine replacement therapy","니코틴대체요법",["NRT"],"d",1],[739,"Nicotinic acid","니코틴산",[],"d",1],[740,"Nicotinic antagonists","니코틴길항제",[],"c",1],[741,"Nifedipine","니페디핀",[],"d",7],[742,"Nimodipine","니모디핀",[],"d",2],[743,"Nipecotic acid","니페코틱 산",[],"d",1],[744,"Nitrates","질산염",["nitroprusside"],"c",6],[745,"Nitrendipine","니트렌디핀",[],"d",2],[746,"Nitroderivatives","니트로유도체",[],"c",2],[747,"Nitrofurantoin","니트로푸란토인",[],"d",1],[748,"Nitroglycerin","니트로글리세린",[],"d",2],[749,"Nitroglycerine","니트로글리세리",[],"d",1],[750,"Nitrous oxide","아산화질소",[],"d",1],[751,"NMDA receptor antagonists","NMDA 수용체 길항제",[],"c",1],[752,"Non-potassium-sparing diuretics","비칼륨보존이뇨제",["loop diuretics","thiazide diuretics"],"c",1],[753,"Nonsteroidal anti-inflammatories","비스테로이드성 항염증제",["NSAIDs"],"c",3],[754,"Nonsteroidal anti-inflammatory drugs","비스테로이드성 소염진통제",["NSAIDS","NSAIDs"],"c",2],[755,"Nonsteroidal antiinflammatory agents","비스테로이드성항염증제",["NSAIDs"],"c",19],[756,"Nonsteroidal antiinflammatory agents (NSAIDs), COX 2 inhibitors","비스테로이드성 소염제, COX 2 억제제",[],"c",2],[757,"Nootropic agents","항정신제",[],"c",1],[758,"Noradrenaline","노르아드레날린",[],"c",1],[759,"Norepinephrine","노르에피네프린",[],"d",1],[760,"Norfloxacin","노르플록사신",[],"d",1],[761,"Nortriptyline","노르트립틸린",[],"d",1],[762,"Note","참고",[],"d",1],[763,"NSAIDs","비스테로이드항염증제",[],"c",2],[764,"Nucleoside analogs","뉴클레오시드 유사체",[],"c",1],[765,"OCTN2 inhibitors","OCTN2 억제제",[],"c",1],[766,"Ocular agents","안구제제",[],"c",1],[767,"Olanzapine","안구제제",[],"d",1],[768,"Omega-3 fatty acids","오메가-3 지방산",[],"c",1],[769,"Omeprazole","오메프라졸",[],"d",4],[770,"Ondansetron","온단세트론",[],"d",2],[771,"Ophthalmic agents","안과제제",[],"c",17],[772,"Opiate agonists","마약성진통제",[],"c",1],[773,"Opiates","아편제",[],"c",10],[774,"Opioid analgesics","아편계진통제",[],"c",1],[775,"Opioid antagonists","아편 길항제",[],"c",1],[776,"Opioid receptor antagonists","아편유사제 수용체 길항제",[],"c",1],[777,"Opioids","오피오이드",[],"c",5],[778,"Opipramol","오피르라몰",[],"d",1],[779,"Optic agents","안구제제",[],"c",1],[780,"Oral agents","경구제제",[],"c",3],[781,"Oral contraceptives","경구피임제",[],"c",4],[782,"Oral corticosteroids, oral hydrocortisone","경구코르티코스테로이드, 경구하이드로코르티손",[],"c",1],[783,"Oral diabetes drugs","경구당뇨병치료제",[],"c",1],[784,"Oral drugs","경구 약물",[],"c",6],[785,"Oral medications","경구 제제",[],"c",1],[786,"Orally administered agents","경구투여제",[],"c",1],[787,"Organic anion-transporting polypeptide B substrates","유기적 음이온 수송 폴리펩티드 B기질",[],"c",1],[788,"Orlistat","오르리스타트",["Xenical"],"d",10],[789,"Oseltamivir","오셀타미비르",[],"d",3],[790,"Osteoporosis agents","골다공증제제",[],"c",7],[791,"Osteoporosis drugs","골다공증제제",[],"c",9],[792,"Other agents","기타 제제",[],"c",1],[793,"Otic agents","귀 제제",[],"c",3],[794,"Oxalic acid","옥살산",[],"d",1],[795,"Oxaliplatin","옥살리플라틴",[],"d",1],[796,"Oxazepam","옥사제팜",[],"d",7],[797,"Oxiplatin","옥시플라틴",[],"d",1],[798,"Oxybutynin","옥시뷰티닌",[],"d",1],[799,"Oxytetracycline","옥시테트라사이클린",[],"d",1],[800,"Oxytocics","자궁수축제",[],"c",2],[801,"Oxytocin","옥시토신",[],"d",1],[802,"P-glycoprotein regulated drugs","P-당단백조절제",[],"c",7],[803,"P-glycoprotein-regulated agents","P-당단백조절제",[],"c",7],[804,"P-glycoprotein-related drugs","P-당단백질제제",[],"c",1],[805,"P-glycoprotein-transported agents","P-당단백 전달 약물",[],"c",1],[806,"P450 enzyme affecting drugs","P450 효소에 영향을 미치는 제제",[],"c",1],[807,"P450 system","P450 시스템",[],"d",1],[808,"Paclitaxel","파클리탁셀",[],"d",7],[809,"Pancreatic enzyme replacements","췌장의 효소 대체제",[],"c",1],[810,"Pancreatic enzymes","췌장 효소",[],"c",1],[811,"Pancreatic extracts","췌장추출물",[],"c",1],[812,"Panitumumab","패니투무맵",["Vectibix"],"d",1],[813,"Para-aminosalicylic acid","파라-아미노살리실릭산",[],"d",1],[814,"Paracetamol","파라세타몰",[],"d",1],[815,"Parasympathomimetics","부교감신경작용제",[],"c",1],[816,"Parathyroid agents","부갑상선제제",[],"c",1],[817,"Parkinson's agents","파킨슨병제제",[],"c",2],[818,"Pazopanib","파조파닙",[],"d",1],[819,"PDE5 selective inhibitors","PDE5 선택적 억제제",[],"c",1],[820,"Pemetrexed disodium","페메트렉세드인산나트륨",[],"d",1],[821,"Penicillamine","페니실라민",["Cuprimine","Depen"],"d",5],[822,"Penicillin","페니실린",[],"d",1],[823,"Penicillin G","페니실린G",[],"d",1],[824,"Penicillins","페니실린",[],"c",2],[825,"Pentamidine","펜타미딘",["NebuPent","Pentacarinat","Pentam 300"],"d",2],[826,"Pentobarbital","펜토바르비탈",[],"d",3],[827,"Pentobarbitone","펜토바르비톤",[],"d",1],[828,"Pentoxifylline","펜톡시필린",["Pentoxil"],"d",1],[829,"Pentylenetetrazol","펜틸렌테트라졸",[],"d",1],[830,"Perazine","페라진",[],"d",2],[831,"Perchlorate","과염소산염",[],"d",1],[832,"Performance enhancement agents","운동능력향상제",[],"c",1],[833,"Performance-enhancing agents","경기력-향상 제제",[],"c",1],[834,"Performance-enhancing herbs and supplements","경기력 향상 허브 및 식이보충제",[],"c",1],[835,"Peroxisome proliferator-activated receptor-gamma (PPAR-gamma) agonists","페록시솜증식체활성화수용체-감마작용제",[],"c",1],[836,"Pesticides","살충제",[],"c",1],[837,"Phenacetin","페나세틴",[],"d",1],[838,"Phenazopyridine","페나조피리딘",[],"d",1],[839,"Phenelzine","페넬진",[],"d",1],[840,"Phenobarbital","페노바비탈",[],"d",3],[841,"Phenothiazine","페토티아진",[],"d",1],[842,"Phenothiazines","페노티아진",[],"c",4],[843,"Phenylephrine","페닐에프린",[],"d",2],[844,"Phenylpropanolamine","페닐프로판올아민",["PPA","removed from the U.S. market"],"d",2],[845,"Phenytoin","페니토인",["Dilantin","DilantinTM"],"d",13],[846,"Phosphate salts","인산염",[],"c",1],[847,"Phosphates","인산염",[],"c",1],[848,"Phosphodiesterase inhibitors","포스포디에스테라제 억제제",[],"c",4],[849,"Phosphorus","인",[],"d",1],[850,"Photosensitizers","감광제",[],"c",10],[851,"Photosensitizing agents","감광제",[],"c",18],[852,"Photosensitizing drugs","광민감제",[],"c",1],[853,"Phototoxic agents","광독성제",[],"c",3],[854,"Phytoestrogens","식물에스트로겐",[],"c",1],[855,"Phytonadione","피토나디온",[],"d",1],[856,"Pimozide","피모자이드",[],"d",1],[857,"Pioglitazone","피오글리타존",[],"d",1],[858,"Piroxicam","피록시캄",[],"d",1],[859,"Polyethylene glycosylated curcumin","폴리에틸렌당화성커큐민",[],"d",1],[860,"Potassium","칼륨",[],"c",3],[861,"Potassium chloride","염화 칼륨",[],"c",1],[862,"Potassium depleting agents","칼륨 결핍제",[],"c",1],[863,"Potassium depleting drugs","칼륨 결핍제",[],"c",5],[864,"Potassium dichromate","중크롬산 칼륨",[],"c",1],[865,"Potassium salts","칼륨염",[],"c",10],[866,"Potassium-depleting diuretics","칼륨 결핍 이뇨제",[],"c",1],[867,"Potassium-sparing diuretics","칼륨 보존 이뇨제",[],"c",2],[868,"Praziquantel","프라지퀀텔",[],"d",1],[869,"Prednisolone","프레드니솔론",[],"d",2],[870,"Prednisone","프레드니손",[],"d",2],[871,"Prednisone, prednisolone","프레드니손, 프레드니솔론",[],"c",1],[872,"Primaquine","프리마퀸",[],"d",2],[873,"Probenecid","프로베네시드",[],"d",2],[874,"Probucol","프로부콜",["available in Canada"],"d",1],[875,"Procarbazine","프로카바진",[],"d",1],[876,"Prochlorperazine","프로클로르페라진",[],"d",1],[877,"Progesterone","프로게스테론",[],"d",3],[878,"Progesterones","프로게스테론",[],"c",1],[879,"Progestins","프로게스틴",[],"c",3],[880,"Prokinetic agents","위장운동촉진제",[],"c",1],[881,"Propafenone","프로파페논",[],"d",1],[882,"Propanolol","프로파놀롤",[],"d",1],[883,"Propantheline","프로판텔린",[],"d",2],[884,"Propiconazole","프로피코나졸",[],"d",1],[885,"Propionate","프로피온산",[],"d",1],[886,"Propofol","프로포폴",[],"d",3],[887,"Propoxyphene","프로폭시펜",[],"d",1],[888,"Propranolol","프로프라놀롤",["InderalTM"],"d",5],[889,"Protein sparing agents","단백질 보존제",[],"c",1],[890,"Protein-bound drugs","단백질결합제",[],"c",1],[891,"Proteinase inhibitors","단백질분해효소 억제제",[],"c",1],[892,"Proton pump inhibitors","양성자펌프억제제",["PPIs"],"c",10],[893,"Proton pump inhibitors and H2 blockers","프로톤 펌프 억제제와 H2 차단제",[],"c",1],[894,"Prulifloxacin","프룰리플록사신",[],"d",1],[895,"Psoralens","소랄렌",[],"c",1],[896,"Psychiatric agents","정신과 제제",[],"c",2],[897,"Psychological agents","정신과제제",[],"c",1],[898,"Pulmonary agents","폐 작용제",[],"c",7],[899,"Pulpal devitalizing agents","치수 실활제",[],"c",1],[900,"QT prolonging agents","QT연장증후군제제",["Loratadine","Terfenadine"],"c",1],[901,"QT-prolonging drugs","QT연장증후군제제",[],"c",1],[902,"Quazepam","쿠아제팜",[],"d",1],[903,"Quinine","퀴닌",[],"d",2],[904,"Quinines","퀴닌",[],"c",1],[905,"Quinolines","퀴놀린",[],"c",1],[906,"Quinolones","퀴놀론",[],"c",7],[907,"Rabeprazole","라베프라졸",[],"d",1],[908,"Radiation","방사선",[],"d",1],[909,"Radiation therapy","방사선 치료",[],"d",1],[910,"Radioactive pharmaceuticals","방사성 제제",[],"c",1],[911,"Radiocontrast agents","조영제",[],"c",1],[912,"Radioprotective agents","방사선보호물질",[],"c",7],[913,"Radioprotective drugs","방사선 방호 제제",[],"c",4],[914,"Radiotherapy","방사선 치료",[],"c",3],[915,"Raloxifene","랄록시펜",[],"d",1],[916,"Ramipril","라미프릴",[],"d",1],[917,"Ranitidine","라니티딘",[],"d",2],[918,"Ranolazine","라놀라진",[],"d",1],[919,"Rapamycin","라파마이신",[],"d",1],[920,"Remicade","레미케이드",[],"d",1],[921,"Remifentanil","레미펜타닐",[],"d",2],[922,"Renal agents","신장제제",[],"c",10],[923,"Renal agentss","신장제제",[],"d",1],[924,"Renal protective agents","신장 보호 제제",[],"c",1],[925,"Renally eliminated agents","신장제거제제",[],"c",9],[926,"Renally eliminated drugs","신장 제거제",[],"c",3],[927,"Renoprotective agents","신장보호제",[],"c",1],[928,"Repaglinide","레파글리나이드",[],"d",1],[929,"Reproductive agents","생식제제",[],"c",1],[930,"Reserpine","레세르핀",[],"d",1],[931,"Resiniferatoxin","Resiniferatoxin",[],"d",1],[932,"Respiratory agents","호흡기 제제",[],"c",25],[933,"Respiratory-depressing agents","호흡기-억제제",[],"c",1],[934,"Retinoid-containing agents","레티노이드 함유제",[],"c",1],[935,"Retinoids","레티노이드",[],"c",2],[936,"Retinol","레티놀",[],"d",1],[937,"Rhabdomyolysis inducers","횡문근변성 유도체",[],"c",1],[938,"Rhizoma Ligustici Chuanxiong","천궁",[],"d",1],[939,"Ribavirin","리바비린",[],"d",1],[940,"Rifamipicin","리파미피신",["rifampin"],"d",1],[941,"Rifampin","리팜핀",[],"d",5],[942,"Riluzole","릴루졸",[],"d",2],[943,"Risperidone","리스페리돈",[],"d",1],[944,"Ritonavir","리토나비어",[],"d",1],[945,"Rofecoxib","로페콕시브",[],"d",1],[946,"Rosiglitazone","로시글리타존",[],"d",1],[947,"Rosuvastatin","루소바스타틴",[],"d",3],[948,"Salbutamol","살부타몰",[],"d",1],[949,"Salicylate-containing agents","살리실산염 함유제",["aspirin","e.g."],"c",1],[950,"Salicylates","살리실산염",[],"c",16],[951,"Sapropterin dihydrochloride","사프로프테린 중염산염",["Medi-Span"],"d",1],[952,"Saquinavir","사퀴나비어",[],"d",1],[953,"Satiety agents","포만제",[],"c",1],[954,"Scopolamine","스코폴라민",[],"d",5],[955,"Sedative agents","진정제",[],"c",1],[956,"Sedatives","진정제",[],"c",33],[957,"Sedatives / hypnotics / anxiolytics","진정제/수면유도제/항불안제",[],"c",2],[958,"Seizure threshold-lowering agents","발작역치저하제",[],"c",1],[959,"Seldane","셀데인",[],"d",1],[960,"Selective estrogen receptor modifiers","선택적에스트로겐수용체조절제",["SERMs"],"c",3],[961,"Selective estrogen receptor modulators","선택적에스트로겐수용체조절제",["SERMs"],"c",1],[962,"Selective serotonin reuptake inhibitor (SSRI) antidepressant agents","선택적세로토닌재흡수억제제와 항우울제",[],"c",1],[963,"Selective serotonin reuptake inhibitors","선택적세로토닌재흡수억제제",["SSRIs"],"c",2],[964,"Serotonergic agents","세로토닌축진제",[],"c",1],[965,"Serotonin receptor antagonists","세로토닌수용기길항제",[],"c",1],[966,"Sertraline","세르트랄린",[],"d",1],[967,"Sevelamer","세벨라머",[],"d",1],[968,"Sevoflurane","세보프루렌",[],"d",2],[969,"Sexual enhancement agents","성적능력강하제",[],"c",1],[970,"Sexual enhancing agents","성기능 향상제",[],"c",1],[971,"Sexual performance agents","성기능제",[],"c",1],[972,"Sickle cell agents","겸상적 혈구성 빈혈 치료제",[],"c",1],[973,"Sildenafil","실데나필",[],"d",1],[974,"Silver acetate","초산은",[],"d",1],[975,"Simvastatin","심바스타딘",[],"d",5],[976,"Skeletal muscle relaxants","골격근이완제",[],"c",5],[977,"Skin products","피부제품",[],"c",1],[978,"Sleep enhancement agents","수면개선제",[],"c",1],[979,"Sleep inducers","수면유도제",[],"c",2],[980,"Sleeping aids","수면제",[],"c",1],[981,"Smoking cessation agents","금연제",[],"c",1],[982,"Smooth muscle stimulants","평활근 자극제",[],"c",1],[983,"Sodium","나트륨",[],"d",2],[984,"Sodium bicarbonate","중탄산염나트륨",[],"d",3],[985,"Sodium butyrate","나트륨낙산염",[],"d",1],[986,"Sodium monoketocholate","소디움 모노케토콜레이트",["MKC"],"d",1],[987,"Sodium polystyrene sulfonate","폴리스티렌 술폰산 나트륨",["Kayexalate"],"d",1],[988,"Somatostatin","소마토스타틴",[],"d",1],[989,"Spironolactone","스피로놀락톤",[],"c",2],[990,"Statins","스타틴",[],"c",1],[991,"Steroids","스테로이드",[],"c",15],[992,"Stimulant laxatives","자극성 완화제",[],"c",1],[993,"Stimulants","자극제",[],"c",9],[994,"Succinylcholine","석시닐콜린",[],"d",2],[995,"Sucralfate","수크랄페이트",[],"d",2],[996,"Sulfasalazine","설파살라진",[],"d",1],[997,"Sulfinosine","Sulfinosine",[],"d",1],[998,"Sulfinpyrazone","설핀피라존",[],"d",1],[999,"Sulfonamides","술폰아미드",[],"c",1],[1000,"Sulfonylureas","술포닐요소",[],"c",2],[1001,"Sulfotransferase 1A3 (SULT1A3) substrates","술포전달효소1A3(SULT1A3기질",[],"c",1],[1002,"Sulindac sulfone","설린닥설포",[],"d",1],[1003,"Sulpiride","설프라이드",[],"d",1],[1004,"SULT1A3-metabolized agents","SULT1A3-대사제",[],"c",1],[1005,"Sunitinib","수니티닙",[],"d",1],[1006,"Sunscreen","자외선차단제",[],"d",2],[1007,"Sunscreens","자외선차단제",[],"c",2],[1008,"Sympathomimetics","교감신경흥분제",[],"c",6],[1009,"Synthetic cannabinoids","합성칸나비노이드",[],"c",1],[1010,"Tacrine","타크린",[],"d",2],[1011,"Tacrolimus","타크로리무스",["FK506","Prograf"],"d",8],[1012,"Tadalafil","타다라필",[],"d",1],[1013,"Talinolol","탈리노롤",[],"d",1],[1014,"Taltrimide","탈트리마이드",[],"d",1],[1015,"Tamoxifen","타목시펜",[],"d",9],[1016,"Tamoxifen, raloxifene","타목시펜, 랄록시펜",[],"c",1],[1017,"Tannin-containing agents","탄닌 함유제",[],"c",1],[1018,"Tar-based shampoo","타르함유샴푸",[],"d",1],[1019,"Taxol","택솔",[],"d",1],[1020,"Temozolomide","테모졸로마이드",[],"d",1],[1021,"Teniposide","테니포시드",[],"d",1],[1022,"Terbinafine","테르비나핀",[],"d",2],[1023,"Terfenadine","터페나딘",[],"d",3],[1024,"Testosterone","테스토스테론",[],"d",3],[1025,"Tetracaine","테트라카인",[],"d",1],[1026,"Tetracycline","테트라사이클린",[],"d",2],[1027,"Tetracyclines","테트라사이클린",[],"c",6],[1028,"Tetradecylthioacetic acid","테트라데실티오 초산",["TTA"],"d",1],[1029,"Tetrahydrocannabinol","테트라하이드로카나비놀",[],"d",1],[1030,"Thalidomide","탈리도마이드",[],"d",1],[1031,"Theophylline","테오필린",[],"d",7],[1032,"Thermoregulating agents","체온조절제",[],"c",1],[1033,"Thiazolidinediones","치아졸리딘디온",[],"c",1],[1034,"Thyroid agents","갑상선 호르몬",[],"c",2],[1035,"Thyroid drugs","갑상선제제",[],"c",2],[1036,"Thyroid hormone","감상선호르몬",[],"d",1],[1037,"Thyroid hormone antagonists","갑상샘 호르몬 길항제",[],"c",1],[1038,"Thyroid hormones","갑상선 호르몬",["liothyroxine (T3)","methimazole","propylthiouracil (PTU)","thyroxine (T4)"],"c",29],[1039,"Thyroid hormones, iodine","갑상선 호르몬, 아이오딘",[],"c",1],[1040,"Thyroxine","타이로신",[],"d",1],[1041,"Tiagabine","티아가빈",[],"d",1],[1042,"Tibolone","티볼론",[],"d",1],[1043,"Ticlopidine","티클로피딘",[],"d",2],[1044,"Tilisolol","틸리솔롤",[],"d",1],[1045,"Tilmicosin","틸미코신",[],"d",1],[1046,"Timolol","티몰롤",[],"d",1],[1047,"Tinidazole","티니다졸",[],"d",1],[1048,"Tiratricol","티라트리콜",[],"d",1],[1049,"Tobacco","담배",[],"d",5],[1050,"Tolterodine","톨테로딘",[],"d",1],[1051,"Topical acne agents","국부 여드름 제제",[],"c",1],[1052,"Topical agents","국소제",[],"c",2],[1053,"Topical drying agents","국부적건조제",[],"c",1],[1054,"Topical hydrocortisone","국소하이드로코르티손",[],"d",1],[1055,"Topical ophthalmic antibiotics","국소안구항생제",[],"c",1],[1056,"Topical steroids","국소 스테로이드",[],"c",1],[1057,"TPF induction chemotherapy","TPF 유도 화학요법",[],"c",1],[1058,"Tramadol","트리마돌",[],"d",1],[1059,"Trazodone","트라조돈",[],"d",3],[1060,"Triamcinolone","트리암시놀론",[],"d",1],[1061,"Triazolam","트리아졸람",[],"d",2],[1062,"Trichostatin A","트리코스타틴 A",[],"d",1],[1063,"Tricyclic antidepressants","심환계 항우울제",[],"c",1],[1064,"Trientine","트리엔틴",["Syprine","Trien"],"d",2],[1065,"Triglyceride-lowering agents","중성지방 저하제",[],"c",1],[1066,"Triheptanoin","트리헵타노인",[],"d",1],[1067,"Triiodothyronine","트리요오드티로닌",[],"d",1],[1068,"Trimethoprim","트리메토프림",[],"d",1],[1069,"Triptans","트립탄",[],"c",1],[1070,"Tumor necrosis factor inhibitors","종양괴사인자억제제",[],"c",1],[1071,"Tween 20 / Tween 80","트윈20/트윈80",[],"c",1],[1072,"Tyrosinase inhibitors","티로시나아제억제제",[],"c",2],[1073,"Tyrosine kinase inhibitors","타이로신 키나아제 억제제",[],"c",1],[1074,"UDP substrates","UDP기질",[],"c",2],[1075,"UDP-glucuronosyl transferase (UGT) enzymes","UDP-glucuronosyl transferase 효소",[],"c",1],[1076,"UDP-glucuronosyltransferase substrates","UDP-글루쿠로노실트랜스페라제 기질",[],"c",1],[1077,"Urethane","우레탄",[],"d",1],[1078,"Uridine diphosphate glucuronosyl transferase (UGT) substrates","우리딘2인산루쿠로노실전이효소기질",[],"c",1],[1079,"Ursodeoxycholic acid","우르소데옥시콜 산",[],"d",1],[1080,"Uterine stimulants","자궁자극제",[],"c",1],[1081,"Uterotrophic agents","자궁비대 제제",[],"c",1],[1082,"Vaccinations","예방접종",[],"c",1],[1083,"Vaccines","백신",[],"c",9],[1084,"Valacyclovir","발라사이클로비르",[],"d",1],[1085,"Valdecoxib","발레콕십",[],"d",1],[1086,"Valproic acid","밸프로산",[],"d",8],[1087,"Vancomycin","반코마이신",[],"d",2],[1088,"Vascular agents","혈관 제제",[],"c",1],[1089,"Vasoconstrictors","혈관수축제",[],"c",3],[1090,"Vasodilator herbs and supplements","혈관확장허브와 식이보충제",[],"c",1],[1091,"Vasodilators","혈관확장제",[],"c",49],[1092,"Vasopressors","혈관수축제",["vasoconstrictors"],"c",9],[1093,"Vasorelaxant agents","혈관완화제",[],"c",1],[1094,"Vasorelaxants","혈관완화제",[],"c",1],[1095,"Vasosuppressors","혈관억제제",[],"c",1],[1096,"Venlafaxine","벤라팍신",[],"d",2],[1097,"Verapamil","베라파밀",[],"d",3],[1098,"Viagra","비아그라",[],"d",1],[1099,"Vinblastine","빈블라스틴",[],"d",1],[1100,"Vincristine","빈크리스틴",[],"d",2],[1101,"Vinorelbine","비노렐빈",[],"d",1],[1102,"Vitamin A","비타민 A",[],"c",2],[1103,"Vitamin B12","비타민 B12",[],"c",1],[1104,"Vitamin D","비타민 D",[],"c",3],[1105,"Vitamin D receptor agonists","비타민D수용체작용제",[],"c",1],[1106,"Vitamin E","비타민 E",[],"c",1],[1107,"Vitamin K antagonists","비타민 K 길항제",[],"c",1],[1108,"Vulnerary agents","외상치료제",[],"c",2],[1109,"Warfarin","와파린",[],"d",15],[1110,"Weight loss agents","체중감량제",[],"c",8],[1111,"Wormwood","웜우드",[],"d",1],[1112,"Wound healing agents","상처치유제",[],"c",15],[1113,"Xanthine oxidase inhibitors","잔틴 옥시다제 억제제",[],"c",1],[1114,"Zaleplon","잘레프론",[],"d",1],[1115,"Zidovudine","지도부딘",["AZT","Retrovir"],"d",6],[1116,"Zinc","아연",[],"d",1],[1117,"Zolpidem","졸피뎀",[],"d",3],[1118,"Zopiclone","조피클론",[],"d",1],[1119,"Zwitterionic drugs","쌍성이온제",["levofloxacin and grepafloxacin"],"c",1]];
+// ===== v14 의약품 DB 보강 =====
+// 제품 → 성분 연결의 검증 상태(ver)를 따로 관리해요. ver가 없으면 '작성자 정리 · 식약처 미검증'이에요.
+// 검증 출처: 약학정보원(health.kr) 제품 페이지 (페이지에 '자료출처: 식품의약품안전처'로 표시됨). 식약처(nedrug) 원본 페이지를 직접 대조한 것은 아니에요.
+const DRUGDB={
+ meta:{version:'14.0',built:'2026-11-23',scope:'작성자 정리 제품 목록 + KMCRIC 상호작용 대상 이름 (식약처 전체 DB가 아니에요)',verifiedVia:'약학정보원(health.kr) 제품 페이지, 확인일 2026-11-23'},
+ nmEn:{"p05": "Lasix", "p08": "Norvasc", "p10": "Aspirin Protect", "p11": "Plavix", "p13": "Azilect", "p17": "Amaryl", "p18": "Prograf", "q01": "Tylenol 500mg Tab.", "q02": "Brufen", "q03": "Easyen 6", "q04": "Naxen", "q05": "Voltaren", "q06": "Celebrex", "q07": "Ultra Set Tab.", "q08": "Zyrtec", "q09": "Pradaxa", "q10": "Eliquis", "q11": "Xarelto", "q12": "Lixiana", "q13": "Pletal", "q14": "Cozaar", "q15": "Diovan", "q16": "Amosartan", "q17": "Olmetec", "q18": "Micardis", "q19": "Concor", "q20": "Tenormin", "q21": "Aldactone", "q22": "Lipitor", "q23": "Crestor", "q24": "Zocor", "q25": "Livalo", "q26": "Zetia", "q27": "Glucophage", "q28": "Januvia", "q29": "Janumet", "q30": "Trajenta", "q31": "Forxiga", "q32": "Augmentin", "q33": "Zithromax", "q34": "Klacid", "q35": "Ciprobay", "q36": "Cravit", "q37": "Zoloft", "q38": "Lexapro", "q39": "Stilnox", "q40": "Xanax", "q41": "Tegretol", "q42": "Lamictal", "q43": "Nexium", "q44": "Losec", "q45": "Gasmotin", "q46": "Dexamethasone Tab.", "q47": "Neoral", "q48": "CellCept", "q49": "Methotrexate Tab.", "q50": "Viagra", "q51": "Zyloric"},
+ ver:{
+  p02:{url:'https://health.kr/drug/A11AJJJJJ0729',at:'2026-11-23',note:'복합제: 펙소페나딘염산염 60mg + 슈도에페드린염산염 120mg',str:[{ing:'펙소페나딘',amt:60,unit:'mg'},{ing:'슈도에페드린',amt:120,unit:'mg'}]},
+  q07:{url:'https://health.kr/drug/2020052200012',at:'2026-11-23',note:'복합제: 아세트아미노펜 325mg + 트라마돌염산염 37.5mg (1정)',str:[{ing:'아세트아미노펜',amt:325,unit:'mg'},{ing:'트라마돌',amt:37.5,unit:'mg'}]},
+  q52:{url:'https://health.kr/drug/2022032300004',at:'2026-11-23',note:'복합제: 트라마돌염산염 18.75mg + 아세트아미노펜 162.5mg (1정)',str:[{ing:'아세트아미노펜',amt:162.5,unit:'mg'},{ing:'트라마돌',amt:18.75,unit:'mg'}]},
+  q53:{url:'https://health.kr/drug/2022032500002',at:'2026-11-23',note:'서방정: 아세트아미노펜(속방 260mg+서방 390mg), 트라마돌염산염은 속방 17mg만 확인(총량 미확인)',strPartial:true,str:[{ing:'아세트아미노펜',amt:650,unit:'mg'},{ing:'트라마돌',amt:null,unit:'mg'}]},
+  q54:{url:'https://www.health.kr/drug/A11AHHHHH0324',at:'2026-11-23',note:'단일 성분: 펙소페나딘염산염 30mg (알레그라디정과 다른 제품)',str:[{ing:'펙소페나딘',amt:30,unit:'mg'}]}
+ },
+ extra:[
+  {id:'q52',cat:'pain',nm:'울트라셋세미정',ing:'트라마돌, 아세트아미노펜',cls:[],desc:'진통제 (복합제, 함량이 울트라셋정의 절반)',chk:1},
+  {id:'q53',cat:'pain',nm:'울트라셋이알서방정',ing:'트라마돌, 아세트아미노펜',cls:[],desc:'진통제 (서방정 복합제)',chk:1},
+  {id:'q54',cat:'cold',nm:'알레그라정30mg',ing:'펙소페나딘',cls:['항히스타민제'],desc:'알레르기 비염 (단일 성분)',chk:1}
+ ],
+ alias:{'아세트아미노펜':['파라세타몰','paracetamol','APAP'],'아스피린':['아세틸살리실산','acetylsalicylic acid'],'와파린':['쿠마딘','coumadin'],'메트포르민':['메트포민'],'사이클로스포린':['시클로스포린','ciclosporin'],'레보티록신':['티록신','T4'],'슈도에페드린':['pseudoephedrine hcl'],'트라마돌':['트라마돌염산염','tramadol hydrochloride']},
+ clsAlias:{'혈압약':['고혈압약','항고혈압제','혈압강하제'],'항응고제':['혈액희석제'],'항혈소판제':['혈전예방약'],'이뇨제':['이뇨약'],'당뇨약':['혈당강하제','당뇨병약'],'소염진통제':['NSAIDs','소염제','nsaid'],'고지혈증약':['스타틴','콜레스테롤약'],'항생제':['항균제'],'항우울제':['SSRI'],'스테로이드':['부신피질호르몬'],'항히스타민제':['알레르기약'],'수면진정제':['수면제','신경안정제'],'항경련제':['항간질제'],'위산억제제':['제산제','PPI'],'교감신경흥분제':['비충혈제거제','코막힘약']}
+};
 const CATS=[{k:'cold',ic:'🤧',nm:'감기약·비염약',sub:'콧물·코막힘·기침·열'},{k:'pain',ic:'🩹',nm:'진통·소염제',sub:'두통·근육통·관절염'},{k:'blood',ic:'🩸',nm:'혈액응고·혈전',sub:'항응고제·항혈소판제'},{k:'cv',ic:'❤️',nm:'혈압·심장',sub:'혈압·심장·이뇨'},{k:'lip',ic:'🧈',nm:'고지혈증',sub:'콜레스테롤·중성지방'},{k:'dm',ic:'🍬',nm:'당뇨병',sub:'혈당 조절'},{k:'abx',ic:'🦠',nm:'항생제',sub:'세균 감염'},{k:'cns',ic:'🧠',nm:'정신신경계',sub:'우울·불안·수면·경련'},{k:'gi',ic:'🥣',nm:'위장관계',sub:'위산·소화'},{k:'hor',ic:'⚗️',nm:'호르몬·스테로이드',sub:'염증·알레르기'},{k:'imm',ic:'🛡️',nm:'면역억제제',sub:'이식·자가면역'},{k:'chr',ic:'💊',nm:'기타 만성질환',sub:'갑상선·파킨슨 등 장기 복용약'},{k:'misc',ic:'🔹',nm:'그 밖의 약',sub:'통풍·기타'}];
-const SEED={base:'',clinics:[
- {id:'c1',name:'샘플한의원 (성남)',addr:'',formulas:[
-  {id:'f1',name:'쌍화탕',base:null,baseName:'',herbs:[['백작약',6],['숙지황',4],['황기',4],['당귀',4],['천궁',4],['계지',3],['감초',3],['생강',3],['대추',3]]},
-  {id:'f2',name:'갈근탕',base:null,baseName:'',herbs:[['갈근',8],['마황',4],['계지',3],['백작약',3],['감초',3],['생강',3],['대추',3]]},
-  {id:'f4',name:'쌍화탕 가감',base:'f1',baseName:'쌍화탕',herbs:[['백작약',6],['숙지황',4],['황기',4],['당귀',4],['천궁',4],['계지',3],['생강',3],['대추',3]]}]},
- {id:'c2',name:'예시한의원 (분당)',addr:'',formulas:[
-  {id:'f3',name:'십전대보탕',base:null,baseName:'',herbs:[['인삼',4],['백출',4],['복령',4],['감초',4],['당귀',4],['천궁',4],['백작약',4],['숙지황',4],['황기',4],['계지',2]]}]}
-]};
+// ===== 기본 처방 목록 (표준 구성 예시 · 한의원마다 실제 처방이 달라 수정해서 써야 해요) =====
+const FORMULA_LIB=[{"id":"L01","name":"사물탕","use":"혈을 보하는 기본 처방","herbs":[["당귀",4],["천궁",4],["백작약",4],["숙지황",4]]},{"id":"L02","name":"사군자탕","use":"기를 보하는 기본 처방","herbs":[["인삼",4],["백출",4],["복령",4],["감초",4]]},{"id":"L03","name":"팔물탕","use":"기와 혈을 함께 보하는 처방","herbs":[["인삼",4],["백출",4],["복령",4],["감초",4],["당귀",4],["천궁",4],["백작약",4],["숙지황",4]]},{"id":"L04","name":"십전대보탕","use":"기혈이 허약할 때 쓰는 처방","herbs":[["인삼",4],["백출",4],["복령",4],["감초",4],["당귀",4],["천궁",4],["백작약",4],["숙지황",4],["황기",4],["계지",2]]},{"id":"L05","name":"보중익기탕","use":"기운이 처지고 피로할 때 쓰는 처방","herbs":[["황기",6],["인삼",4],["백출",4],["감초",4],["당귀",4],["진피",2],["승마",2],["시호",2],["생강",3],["대추",2]]},{"id":"L06","name":"쌍화탕","use":"피로·허약 회복에 쓰는 처방","herbs":[["백작약",6],["숙지황",4],["황기",4],["당귀",4],["천궁",4],["계지",3],["감초",3],["생강",3],["대추",3]]},{"id":"L07","name":"갈근탕","use":"감기 초기(오한·뒷목 뻣뻣함)에 쓰는 처방","herbs":[["갈근",8],["마황",4],["계지",3],["백작약",3],["감초",3],["생강",3],["대추",3]]},{"id":"L08","name":"계지탕","use":"땀이 나는 감기에 쓰는 처방","herbs":[["계지",6],["백작약",6],["감초",4],["생강",4],["대추",4]]},{"id":"L09","name":"마황탕","use":"땀이 없는 감기에 쓰는 처방","herbs":[["마황",6],["계지",4],["행인",6],["감초",2]]},{"id":"L10","name":"소청룡탕","use":"묽은 콧물·기침에 쓰는 처방","herbs":[["마황",4],["백작약",4],["세신",2],["건강",2],["감초",4],["계지",4],["오미자",4],["반하",6]]},{"id":"L11","name":"소시호탕","use":"오한과 열이 오가는 증상에 쓰는 처방","herbs":[["시호",8],["황금",4],["반하",4],["인삼",4],["감초",3],["생강",3],["대추",3]]},{"id":"L12","name":"평위산","use":"소화불량·더부룩함에 쓰는 처방","herbs":[["창출",8],["후박",6],["진피",6],["감초",3],["생강",3],["대추",2]]},{"id":"L13","name":"이진탕","use":"가래가 있을 때 쓰는 기본 처방","herbs":[["반하",6],["진피",4],["복령",4],["감초",2],["생강",3]]},{"id":"L14","name":"오령산","use":"부종·소변이 시원치 않을 때 쓰는 처방","herbs":[["택사",6],["저령",4],["백출",4],["복령",4],["계지",2]]},{"id":"L15","name":"육미지황탕","use":"몸이 마르고 허약할 때 쓰는 처방","herbs":[["숙지황",16],["산수유",8],["산약",8],["택사",6],["목단피",6],["복령",6]]},{"id":"L16","name":"소요산","use":"스트레스·답답함에 쓰는 처방","herbs":[["시호",4],["당귀",4],["백작약",4],["백출",4],["복령",4],["감초",2],["박하",2],["생강",3]]},{"id":"L17","name":"가미소요산","use":"소요산에 열 증상을 더한 처방","herbs":[["당귀",4],["백작약",4],["시호",4],["백출",4],["복령",4],["감초",2],["목단피",3],["치자",3],["박하",2],["생강",3]]},{"id":"L18","name":"반하사심탕","use":"명치 답답함·소화기 증상에 쓰는 처방","herbs":[["반하",6],["황금",4],["건강",4],["인삼",4],["감초",4],["황련",2],["대추",4]]},{"id":"L19","name":"황련해독탕","use":"열이 몰려 답답할 때 쓰는 처방","herbs":[["황련",4],["황금",4],["황백",4],["치자",4]]}];
+const SEED={v:3,base:'',clinics:[{"id":"c1","name":"샘플한의원 (성남)","addr":"","formulas":[{"id":"f1","name":"쌍화탕","base":null,"baseName":"","herbs":[["백작약",6],["숙지황",4],["황기",4],["당귀",4],["천궁",4],["계지",3],["감초",3],["생강",3],["대추",3]]},{"id":"f2","name":"갈근탕","base":null,"baseName":"","herbs":[["갈근",8],["마황",4],["계지",3],["백작약",3],["감초",3],["생강",3],["대추",3]]},{"id":"f4","name":"쌍화탕 가감","base":"f1","baseName":"쌍화탕","herbs":[["백작약",6],["숙지황",4],["황기",4],["당귀",4],["천궁",4],["계지",3],["생강",3],["대추",3]]},{"id":"f5","name":"보중익기탕","base":null,"baseName":"","herbs":[["황기",6],["인삼",4],["백출",4],["감초",4],["당귀",4],["진피",2],["승마",2],["시호",2],["생강",3],["대추",2]]},{"id":"f6","name":"사물탕","base":null,"baseName":"","herbs":[["당귀",4],["천궁",4],["백작약",4],["숙지황",4]]},{"id":"f7","name":"계지탕","base":null,"baseName":"","herbs":[["계지",6],["백작약",6],["감초",4],["생강",4],["대추",4]]},{"id":"f8","name":"마황탕","base":null,"baseName":"","herbs":[["마황",6],["계지",4],["행인",6],["감초",2]]},{"id":"f9","name":"소시호탕","base":null,"baseName":"","herbs":[["시호",8],["황금",4],["반하",4],["인삼",4],["감초",3],["생강",3],["대추",3]]}]},{"id":"c2","name":"예시한의원 (분당)","addr":"","formulas":[{"id":"f3","name":"십전대보탕","base":null,"baseName":"","herbs":[["인삼",4],["백출",4],["복령",4],["감초",4],["당귀",4],["천궁",4],["백작약",4],["숙지황",4],["황기",4],["계지",2]]},{"id":"f10","name":"팔물탕","base":null,"baseName":"","herbs":[["인삼",4],["백출",4],["복령",4],["감초",4],["당귀",4],["천궁",4],["백작약",4],["숙지황",4]]},{"id":"f11","name":"사군자탕","base":null,"baseName":"","herbs":[["인삼",4],["백출",4],["복령",4],["감초",4]]},{"id":"f12","name":"소청룡탕","base":null,"baseName":"","herbs":[["마황",4],["백작약",4],["세신",2],["건강",2],["감초",4],["계지",4],["오미자",4],["반하",6]]},{"id":"f13","name":"평위산","base":null,"baseName":"","herbs":[["창출",8],["후박",6],["진피",6],["감초",3],["생강",3],["대추",2]]},{"id":"f14","name":"육미지황탕","base":null,"baseName":"","herbs":[["숙지황",16],["산수유",8],["산약",8],["택사",6],["목단피",6],["복령",6]]}]},{"id":"c3","name":"예시한의원 (수원)","addr":"","formulas":[{"id":"f15","name":"오령산","base":null,"baseName":"","herbs":[["택사",6],["저령",4],["백출",4],["복령",4],["계지",2]]},{"id":"f16","name":"이진탕","base":null,"baseName":"","herbs":[["반하",6],["진피",4],["복령",4],["감초",2],["생강",3]]},{"id":"f17","name":"소요산","base":null,"baseName":"","herbs":[["시호",4],["당귀",4],["백작약",4],["백출",4],["복령",4],["감초",2],["박하",2],["생강",3]]},{"id":"f18","name":"가미소요산","base":null,"baseName":"","herbs":[["당귀",4],["백작약",4],["시호",4],["백출",4],["복령",4],["감초",2],["목단피",3],["치자",3],["박하",2],["생강",3]]},{"id":"f19","name":"반하사심탕","base":null,"baseName":"","herbs":[["반하",6],["황금",4],["건강",4],["인삼",4],["감초",4],["황련",2],["대추",4]]},{"id":"f20","name":"황련해독탕","base":null,"baseName":"","herbs":[["황련",4],["황금",4],["황백",4],["치자",4]]}]}]};
 
 // ===== 저장/상태 =====
 const $=id=>document.getElementById(id);
 const esc=s=>String(s).replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
 const uid=()=>Math.random().toString(36).slice(2,8)+Date.now().toString(36).slice(-3);
 function load(){
- try{const a=JSON.parse(localStorage.getItem('hdc2')||'null');if(a&&a.clinics)return a}catch(e){}
+ try{const a=JSON.parse(localStorage.getItem('hdc2')||'null');if(a&&a.clinics){
+  if((a.v||0)<SEED.v){SEED.clinics.forEach(sc=>{const c=a.clinics.find(x=>x.id===sc.id);if(!c)a.clinics.push(JSON.parse(JSON.stringify(sc)));else sc.formulas.forEach(sf=>{if(!c.formulas.some(x=>x.id===sf.id))c.formulas.push(JSON.parse(JSON.stringify(sf)))})});a.v=SEED.v}
+  return a}}catch(e){}
  try{const o=JSON.parse(localStorage.getItem('hdc')||'null');if(Array.isArray(o))return {base:'',clinics:o.map(c=>({id:c.id,name:c.name,addr:'',formulas:c.formulas.map(f=>({id:'f'+uid(),name:f.name,base:null,baseName:'',herbs:f.herbs}))}))}}catch(e){}
  return JSON.parse(JSON.stringify(SEED));
 }
 let S=load();
 function save(){try{localStorage.setItem('hdc2',JSON.stringify(S))}catch(e){}}
-let V='p',locked=false,PC=null,PF=null,MEDS=[],OPEN={},AC=null,EDIT=null,DEL=null;
+let V='c',locked=false,PC=null,PF=null,MEDS=[],OPEN={},AC=null,EDIT=null,DEL=null,ADM=null,DELC=null,QRC=null,QRID=null,QRTID='aQr',DOSE={},SNAP=null;
+try{AC=localStorage.getItem('hdc_ac')}catch(e){}
+function setAC(id){AC=id;try{localStorage.setItem('hdc_ac',id||'')}catch(e){}}
 const CL=id=>S.clinics.find(c=>c.id===id);
 const F=()=>{const c=CL(PC);return c&&c.formulas.find(f=>f.id===PF)};
 function dn(c,f){const same=c.formulas.filter(x=>x.name===f.name);return same.length>1?`${f.name} (구성 ${same.indexOf(f)+1}번)`:f.name}
@@ -390,6 +438,9 @@ Object.assign(ING,ING2);
 const CLS2={"소염진통제": "nsaid|non-?steroidal|소염|비스테로이드", "고지혈증약": "statin|hmg|lipid|cholesterol|스타틴|지질|콜레스테롤", "항생제": "antibiotic|antibacterial|항생|항균", "항우울제": "antidepress|항우울|ssri|serotonin", "수면진정제": "sedative|hypnotic|benzodiazepine|수면|진정", "항경련제": "anticonvuls|antiepilep|항경련|항간질", "위산억제제": "proton pump|ppi|antacid|제산|위산|프로톤"};
 Object.keys(CLS2).forEach(k=>{CLSQ[k]=new RegExp(CLS2[k],'i')});
 PRODUCTS2.forEach(p=>PRODUCTS.push(p));
+DRUGDB.extra.forEach(p=>PRODUCTS.push(p));
+PRODUCTS.forEach(p=>{p.nmEn=DRUGDB.nmEn[p.id]||'';const v=DRUGDB.ver[p.id];p.ver=v||null;p.str=v?v.str:null});
+Object.keys(DRUGDB.alias).forEach(k=>{ING[k]=(ING[k]||[]).concat(DRUGDB.alias[k]).filter((x,i,a)=>a.indexOf(x)===i)});
 function ingTerms(p){if(p.terms)return p.terms;const t=[];String(p.ing).split(/,\s*/).forEach(n=>{if(ING[n]){t.push(n.toLowerCase());ING[n].forEach(e=>t.push(e))}});return t}
 function kmcMatch(f,p){
  const terms=ingTerms(p),res={direct:[],cls:[],body:[]},seen=new Set();
@@ -400,10 +451,11 @@ function kmcMatch(f,p){
    const tgRaw=r[3]+' '+r[4],tg=tgRaw.toLowerCase(),bd=(r[5]+' '+r[6]).toLowerCase();
    let how=null;
    const hasT=(tx,t)=>t.length<=3?tx.split(/[^a-z0-9가-힣]+/).includes(t):tx.includes(t);
-   if(terms.some(t=>hasT(tg,t)))how=p.entKind==='c'?'cls':'direct';
+   const mt=terms.find(t=>hasT(tg,t));
+   if(mt)how=p.entKind==='c'?'cls':'direct';
    else if(p.cls.some(c=>CLSQ[c]&&CLSQ[c].test(tgRaw)))how='cls';
    else if(terms.some(t=>t.length>2&&bd.includes(t)))how='body';
-   if(how){seen.add(r[0]);res[how].push({r,how,h,m})}
+   if(how){seen.add(r[0]);res[how].push({r,how,h,m,term:how==='direct'?mt:null})}
   });
  });
  res.body=res.body.slice(0,5);
@@ -432,8 +484,8 @@ const RULES={
  outcomeKinds:['human','rct','review','case']
 };
 const ST={
- high:{label:'높은 주의',icon:'🚨',cls:'st-high',msg:'병용 시 건강에 문제가 생길 가능성이 보고되어 있어요. 복용 전에 처방한 의료진이나 약사에게 확인해 주세요.',rule:'성분명이 직접 일치하는 자료에 병용 회피 권고가 있고, 사람 대상 연구·무작위시험·체계적 고찰이 뒷받침하며, 상충하는 자료나 자료원 간 차이가 없을 때'},
- caution:{label:'주의',icon:'⚠️',cls:'st-caution',msg:'함께 복용할 때 영향을 줄 가능성이 보고되어 있어요. 현재 복용 중인 약과 한약 처방을 의료진에게 알려주세요.',rule:'병용 회피·모니터링·용량 조절 권고가 있고 사람·증례·2차 자료가 근거로 제시되었거나, 성분명이 직접 일치하는 자료에서 사람·증례의 임상적 결과(출혈, 부정맥 등)가 보고된 경우. 약물군 수준 자료는 여기까지만 가능'},
+ high:{label:'높은 주의',icon:'🚨',cls:'st-high',msg:'병용 시 건강에 문제가 생길 가능성이 보고되어 있어요. 복용 전에 처방한 의료진이나 약사에게 확인해 주세요.',rule:'성분명이 직접 일치하는 자료에서 중증 결과(출혈·부정맥·장기 손상·중추신경 이상·거부반응·사망 등)가 사람 대상 연구·무작위시험·체계적 고찰로 서술되고, 보강 근거(병용 회피·모니터링 권고, 제조사 문구, 고찰, 독립된 근거 2건 이상)가 있으며 상충이 없을 때. ‘avoid’ 문구가 없어도 해당돼요. 약물군 수준·종 차이·상충이 있으면 주의까지만'},
+ caution:{label:'주의',icon:'⚠️',cls:'st-caution',msg:'함께 복용할 때 영향을 줄 가능성이 보고되어 있어요. 현재 복용 중인 약과 한약 처방을 의료진에게 알려주세요.',rule:'중증 결과가 증례·2차 자료 수준으로 보고되었거나, 임상적 의미가 있는 결과(출혈·INR, 혈압, 혈당, 독성, 치료 효과 변화 등)가 사람·증례로 보고되었거나, 치료역이 좁은 약물의 농도 변화가 사람에서 보고되었거나, 회피·모니터링 권고가 있고 근거가 제시된 경우'},
  limited:{label:'근거 제한적',icon:'ℹ️',cls:'st-limited',msg:'관련 가능성이 제시되어 있지만 실제 환자에게 미치는 영향은 명확하지 않아요.',rule:'관련 자료는 있지만 동물·시험관·이론적 가능성 수준이거나, 권고·임상 결과가 확인되지 않거나, 부위·종·가공이 다른 자료라 임상적 중요성을 판단하기 어려운 경우'},
  none:{label:'확인된 상호작용 없음',icon:'✅',cls:'st-none',msg:'현재 확인된 자료에서는 이 조합의 상호작용이 확인되지 않았어요.',sub:'상호작용이 확인되지 않았다는 것이 병용 안전성이 완전히 입증되었다는 의미는 아니에요.',rule:'해당 조합을 직접 평가한 검증된 자료가 충분하고, 평가 범위가 명확하며, 임상적으로 의미 있는 상호작용이 없었다는 결론을 뒷받침하고, 반대 결과·중요한 제한점이 없을 때만. 현재는 이 조건을 충족하는 검증 자료가 없어 부여하지 않아요'},
  insufficient:{label:'판단할 자료 부족',icon:'🔍',cls:'st-insufficient',msg:'현재 자료만으로는 상호작용 여부를 판단하기 어려워요. 관련 기록이 없다는 것이 안전하다는 의미는 아니에요.',rule:'관련 기록을 찾지 못했거나, 성분·약재 정보가 불완전하거나, “영향이 없다”는 내용만 있어 판단 근거가 부족한 경우'}
@@ -498,10 +550,8 @@ function clauseScan(r){
  return out;
 }
 function featKmc(x){
- const r=x.r,txt=r[6]+' '+r[5],cs=clauseScan(r);
- return {src:'kmcric',id:r[0],label:'KMCRIC '+r[0],direct:x.how==='direct',kinds:new Set(r[7].map(t=>RULES.kindMap[t]).filter(Boolean)),
-  rec:RULES.avoid.test(txt)?'avoid':RULES.monitor.test(txt)?'monitor':null,conflict:RULES.conflict.test(txt),
-  nullOnly:RULES.nullRes.test(txt)&&!RULES.effect.test(txt),outcome:false,sh:cs.sh,shAny:cs.shAny,authority:cs.authAvoid,herb:x.h,diff:!!x.m.diff,srcDiff:false,overlap:false};
+ const r=x.r,sc=l14Scan(r);
+ return {src:'kmcric',id:r[0],label:'KMCRIC '+r[0],direct:x.how==='direct',kinds:new Set(sc.labelKinds),rec:sc.rec,conflict:sc.conflict,nullOnly:sc.nullOnly,outcome:false,sh:0,shAny:0,authority:sc.auth,herb:x.h,diff:!!x.m.diff,srcDiff:false,overlap:false,scan:sc,r,term:x.term||null,target:r[4]+' '+r[3]};
 }
 function featInter(i,direct){
  const f=FEAT[i.id];
@@ -512,8 +562,8 @@ function unitStatus(u){
  const has=a=>a.some(k=>u.kinds.has(k));
  let st,why;
  if(u.nullOnly&&!u.rec){st='insufficient';why='“영향이 없었다”는 내용만 있어 충분한 근거로 볼 수 없어요.'}
- else if(u.direct&&u.rec==='avoid'&&has(RULES.strong)&&!u.conflict&&!u.srcDiff){st='high';u.review=u.src==='kmcric';why='병용 회피 권고가 있고 사람 대상 근거가 뒷받침하며, 상충하는 자료가 없어요.'+(u.src==='kmcric'?' (문구 기반 자동 감지 · 검토 필요)':'')}
- else if(u.direct&&u.rec==='avoid'&&u.authority&&u.shAny>0&&!u.conflict&&!u.srcDiff){st='high';u.review=true;why='제조사·허가 수준으로 보이는 병용 회피 문구가 있고 중대한 결과가 서술돼요. 사람 대상 연구는 요약에 없어요 (자동 감지 · 검토 필요).'}
+ else if(u.direct&&u.rec==='avoid'&&has(RULES.strong)&&!u.conflict&&!u.srcDiff){st='high';u.review=u.src==='kmcric';why='병용 회피 권고가 있고 사람 대상 근거가 뒷받침하며, 상충하는 자료가 없어요.'+(u.src==='kmcric'?' (전문가 검토 필요)':'')}
+ else if(u.direct&&u.rec==='avoid'&&u.authority&&u.shAny>0&&!u.conflict&&!u.srcDiff){st='high';u.review=true;why='제조사 수준의 병용 회피 안내와 심각한 결과가 적혀 있어요. 사람 대상 연구는 요약에 없어요 (전문가 검토 필요).'}
  else if(u.rec&&has(RULES.clinical)){
   st='caution';const why2=[];
   if(u.rec==='avoid'){
@@ -524,7 +574,7 @@ function unitStatus(u){
   }
   why=(u.rec==='avoid'?'병용 회피':'모니터링·용량 조절 등 확인')+' 권고가 있고 사람·증례·2차 자료가 근거로 제시돼요.'+(why2.length?' ('+why2.join(', ')+')':'');
  }
- else if(u.sh>0&&!u.nullOnly&&!u.overlap&&!u.rec){st='caution';u.review=true;why='요약문에서 사람·증례의 중대한 결과 후보('+u.sh+'개 문장)가 자동 감지됐어요. 문구 기반 자동 판정이라 검토가 필요해요.'+(u.direct?'':' (약물군 수준 자료예요)')}
+ else if(u.sh>0&&!u.nullOnly&&!u.overlap&&!u.rec){st='caution';u.review=true;why='요약에 사람 대상 연구나 증례에서 심각한 결과가 있었다는 내용이 있어요. 전문가의 확인이 필요해요.'+(u.direct?'':' (약물군 수준 자료예요)')}
  else if(u.direct&&u.outcome&&has(RULES.outcomeKinds)&&!u.overlap&&!u.nullOnly){st='caution';why='사람·증례에서 임상적 결과(출혈, 부정맥 등)가 보고됐어요. 권고 문구는 확인되지 않았어요.'}
  else{
   st='limited';
@@ -537,6 +587,156 @@ function unitStatus(u){
  else if(u.diff&&st==='limited')why+=' 부위·종·가공이 다를 수 있는 자료예요.';
  return [st,why];
 }
+// ===== v14 판정 로직 (tools/kmcric_logic.js와 동일 소스) =====
+// ===== v14 KMCRIC 판정 로직 (단일 소스: HTML에 그대로 내장하고, 감사 스크립트도 이 파일을 읽어요) =====
+// 원칙: 문구 하나(예: '피해야')가 아니라 [중증도 × 근거 신뢰도 × 직접성 × 권고 × 상충 × 보강근거]를 종합해요.
+// 기준이나 문구는 이 설정 객체(L14)만 고치면 바뀌어요.
+const L14={
+ version:'14.1',
+ kindMap:{'인체연구 언급':'human','무작위시험 언급':'rct','증례·증례군 언급':'case','체계적 고찰·메타분석 언급':'review','일화적 보고':'anecdote','동물실험 언급':'animal','시험관·세포실험 언급':'invitro','이론적 가능성':'theory','2차 자료 언급':'secondary'},
+ kindKo:{human:'사람 대상 연구',rct:'무작위시험',case:'증례',review:'체계적 고찰·메타분석',anecdote:'일화적 보고',animal:'동물실험',invitro:'시험관·세포실험',theory:'이론적 가능성',secondary:'2차 자료(교재·제조사 등)',popHuman:'환자 대상 서술'},
+ // 근거 신뢰도 등급: 3=명시적 사람 대상 연구·무작위시험·체계적 고찰, 2=증례·2차 자료·제조사 문구·환자 대상 서술, 1=동물·시험관·이론
+ evRank:{rct:3,review:3,human:3,case:2,anecdote:2,secondary:2,authority:2,popHuman:2,animal:1,invitro:1,theory:1},
+ // 문장 안의 근거 유형 표지 (한 문장 안에서만 봐요. 레코드 상단 라벨은 '언급'일 뿐이라 높은 주의의 근거로 쓰지 않아요)
+ mk:{
+  rct:/무작위|이중 ?맹검|위약 ?대조/,
+  review:/체계적 (문헌 )?고찰|메타 ?분석|고찰에 따르면|리뷰/,
+  human:/임상 ?(연구|시험|기록|실험)|인체|대조 (시험|연구)|코호트|관찰 연구|건강한 (자원자|지원자)|지원자|[123]상/,
+  case:/증례|사례 ?(보고|가 보고)|(\d+|두|세|네|다섯)\s?명의?\s?(환자|남성|여성|남자|여자|어린이|아이)|\d+세 ?(남성|남자|여성|여자)/,
+  popHuman:/환자(에게서|를 대상| 대상|에서|군|들)|사람에서/,
+  secondary:/2차|이차적|교재|전문가 의견/,
+  authority:/제조사|제조업체|허가|라벨|첨부 ?문서|식약처|FDA|처방 정보|회사 웹사이트/,
+  animal:/동물|모돈|돼지|쥐|랫|래트|마우스|토끼|개에서|개의 (연구|실험)|햄스터|고양이/,
+  invitro:/시험관|세포|in vitro|실험실|효소 억제/,
+  theory:/이론(상|적)|가능성이 있|잠재/
+ },
+ // 중증도 3 (생명·장기·심장·중추신경): 명시적 사람 근거가 뒷받침하면 '높은 주의' 후보
+ sev3:{
+  death:/사망|생명을 위협|치명|급사/,
+  seizureThr:/(발작|경련) ?(역치|임계)[^;,]{0,8}(낮|감소|저하)/,
+  bleed3:/(뇌|위장관|소화기|두개내|심각한|중대한|중증|치명적) ?출혈|출혈성 (뇌졸중|쇼크)/,
+  arrhythmia:/(?<!항 ?)부정맥|QT|토르사드|심실 ?(빈맥|세동)|심정지|서맥|심장 ?차단/,
+  cardio3:/고혈압성 ?(위기|응급)|뇌졸중|심근경색|심부전 ?악화/,
+  organ:/간부전|급성 ?간|간독성|간 ?손상|신독성|신장 ?손상|급성 ?신부전|신부전[이가] ?(발생|유발|악화)|횡문근융해|근병증|세뇨관 ?(손상|괴사)|골수 ?억제|무과립구/,
+  cns:/세로토닌 ?증후군|혼수|호흡 ?억제|발작|경련|과도한 ?진정|의식 ?저하/,
+  reject:/거부 ?반응|이식편? ?(거부|실패)/,
+  hypo3:/(중증|심한|심각한) ?저혈당|저혈당성 ?(혼수|발작)/,
+  severe:/아나필락시스|스티븐스|독성 ?표피/
+ },
+ // 중증도 2 (임상적으로 의미 있으나 중증 표현은 없음). 'eff'(효과 감소)는 감소류 표현, 나머지는 증가류 동사와 함께 있어야 해요
+ sev2:{
+  bleed:/출혈|INR|국제정상화|프로트롬빈|응고 ?(시간|수치|저해)|혈종|항응고 ?효과/,
+  tox:/독성|중독/,
+  bp:/혈압 ?(상승|저하|하강|증가|감소)|저혈압|혈류역학/,
+  glyc:/저혈당|혈당 ?(저하|감소)/,
+  lytes:/저칼륨|고칼륨|저나트륨/,
+  psych:/조병|조증|환각|정신 ?병적/,
+  cnsdep:/(CNS|중추신경) ?억제제?[^;,]{0,12}(강화|증가|증강)|진정[^;,]{0,8}(강화|증가)|무기력|방향 ?감각/
+ },
+ eff:/(치료|약물|항|약) ?(효과|효능|활성)[을를이가]? ?(감소|저하|약화|상실|억제)|치료 ?실패|INR[^;,]{0,12}(감소|낮|저하)|항응고 ?효과[^;,]{0,8}(감소|저하)/,
+ pk:/(혈중|혈장)? ?(농도|수치)|AUC|Cmax|청소율|생체이용률|반감기/,
+ mag:/(\d+(\.\d+)?) ?(%|퍼센트)|(\d+(\.\d+)?) ?배|두 ?배|상당한|유의적?인?/,
+ pos:/증가|높|상승|유발|초래|발생|악화|연장|위험|관련|이르|야기|일으|늘|보고|나타났|관찰|있었/,
+ chg:/증가|높|상승|감소|저하|낮|늘|줄/,
+ benefit:/(독성|출혈|위험|부작용|부정맥|증상|사망률|발생|경련|횡문근융해|손상)[^;,]{0,12}(감소|완화|줄|낮|예방|보호|억제|개선|해결|최소화)|지혈|출혈을 ?(멈추|제어)|치료 ?계획|보존적 치료|치료에 (사용|도움)|(치료|완화)(했|하였|할 수 있)|효과적/,
+ neg:/않았|없었|없다|없음|관찰되지|보고되지|영향을 미치지|차이가 없|유의하지|입증되었다/,
+ split:/그러나|하지만|그렇지만|반면|대조적|(?:었|였|했|됐|았|있)(?:으나|지만)|으나[ ,]|지만[ ,]/,
+ avoid:/피해야|병용을 피|병용 금기|병용 금지|사용하지 말|사용하면 안|병용하면 안|사용해서는 안|복용해서는 안|피하는 것이|(사용|복용|투여|병용)(이|은|을)? ?(금지|금기)|금지되어|금기이다|금기로|피하도록|피할 것|삼가|반하도록 권고|하지 않는 것이 (좋|바람)/,
+ monitor:/모니터링|관찰이 필요|검사가 필요|용량 ?(조절|조정)|용량을 (조절|조정)|주의 ?깊|간격을 두/,
+ // 치료역이 좁은 약물(농도가 조금만 달라져도 임상 영향이 큰 약물). 일반 약리학 지식 기반 · 작성자 정리 · 임상 검수 필요
+ nti:/warfarin|digoxin|cyclospor|ciclospor|tacrolimus|sirolimus|everolimus|lithium|phenytoin|theophylline|aminophylline|carbamazepine|methotrexate|levothyroxine|와파린|디곡신|사이클로스포린|타크로리무스|리튬|페니토인|테오필린|카바마제핀|메토트렉세이트|레보티록신/i
+};
+const L14_NEAR=(p,noun,verb,win)=>{const m=p.match(noun);if(!m)return false;const i=m.index,seg=p.slice(Math.max(0,i-win),i+m[0].length+win);return verb.test(seg)};
+function l14Kinds(c){
+ const k=new Set();for(const n in L14.mk)if(L14.mk[n].test(c))k.add(n);
+ const strong=['rct','review','human','case'].some(x=>k.has(x));
+ if(k.has('theory')&&!strong)k.delete('popHuman');
+ if((k.has('secondary')||k.has('authority'))&&!strong)k.delete('popHuman');
+ if(k.has('animal')&&!['rct','review','human'].some(x=>k.has(x))){k.delete('popHuman');k.delete('case')}
+ return k;
+}
+function l14Piece(p){
+ const out=[];
+ if(L14.benefit.test(p)||L14.neg.test(p))return {out,opp:true};
+ for(const f in L14.sev3)if(f==='death'||f==='seizureThr'?L14.sev3[f].test(p):L14_NEAR(p,L14.sev3[f],L14.pos,16))out.push({sev:3,fam:f==='seizureThr'?'cns':f});
+ if(!out.length){
+  if(L14.eff.test(p))out.push({sev:2,fam:'eff'});
+  else if(/INR[^;,]{0,14}(>|≥|초과|이상)\s?\d|국제 ?표준화 ?비율[^;,]{0,24}(>|≥|초과|이상)\s?\d/.test(p))out.push({sev:2,fam:'bleed'});
+  else for(const f in L14.sev2)if(L14_NEAR(p,L14.sev2[f],L14.pos,16)){out.push({sev:2,fam:f});break}
+ }
+ if(!out.length&&L14.pk.test(p)&&L14.chg.test(p)){const m=p.match(L14.mag);out.push({sev:1,fam:'pk',mag:m?m[0]:null})}
+ return {out,opp:false};
+}
+function l14Scan(r){
+ const txt=r[6]+';'+(r[5]||''),seen=new Set(),hits=[];let oppo=false,rec=null,auth=false,n=0;
+ const labelKinds=new Set((r[7]||[]).map(t=>L14.kindMap[t]).filter(Boolean));
+ txt.split(/[;；\n]/).map(c=>c.trim()).filter(Boolean).forEach(c=>{
+  if(seen.has(c))return;seen.add(c);n++;
+  if(L14.avoid.test(c))rec='avoid';else if(!rec&&L14.monitor.test(c))rec='monitor';
+  if(L14.mk.authority.test(c)&&L14.avoid.test(c))auth=true;
+  const ck=l14Kinds(c),pieces=c.split(L14.split).map(s=>s.trim()).filter(s=>s.length>3),had=pieces.length>1;
+  let any=false,opp=false;
+  pieces.forEach((p,i)=>{
+   const pk=l14Kinds(p),kinds=pk.size?pk:(i===0?ck:new Set());
+   const res=l14Piece(p);if(res.opp)opp=true;
+   res.out.forEach(h=>{any=true;hits.push({sev:h.sev,fam:h.fam,mag:h.mag||null,kinds:[...kinds],text:p.slice(0,170),explicit:kinds.size>0})});
+  });
+  if(had&&any&&opp)oppo=true;
+ });
+ const best=hits.slice().sort((a,b)=>b.sev-a.sev)[0]||null;
+ return {hits,rec,auth,conflict:oppo,labelKinds,clauses:n,best,
+  nullOnly:!hits.length&&L14.neg.test(txt)&&!/증가|감소|상승|저하|위험|독성|출혈|악화|부작용|유발|초래|발생|일으|관련|향상|효능|억제|유익|사망|보고/.test(txt)};
+}
+function l14Ev(h,labelKinds,auth){
+ if(h.kinds.length){
+  const ks=h.kinds;
+  if(ks.includes('animal')&&!ks.some(k=>['human','rct','review','case'].includes(k)))return {rank:1,explicit:true};
+  let r=0;ks.forEach(k=>{r=Math.max(r,L14.evRank[k]||0)});
+  if(auth&&r<2)r=2;
+  return {rank:r||1,explicit:true};
+ }
+ let r=0;labelKinds.forEach(k=>{r=Math.max(r,L14.evRank[k]||0)});
+ return {rank:Math.min(r||1,2),explicit:false};
+}
+// 근거 단위 하나의 단계 판정. u={direct:개별 약물 직접 일치, classVerified:약물군 소속 검증, diff:종·부위 다름, scan, target}
+function l14Status(u){
+ const sc=u.scan,hits=sc.hits;let st='limited',basis='';
+ const famKo={death:'사망·생명 위협',bleed3:'중증 출혈',arrhythmia:'부정맥·QT 연장',cardio3:'심혈관 중대 사건',organ:'간·신장 등 장기 손상',cns:'중추신경 이상(경련·진정 등)',reject:'이식 거부반응',hypo3:'중증 저혈당',severe:'중증 과민·피부 반응',bleed:'출혈·응고 이상',tox:'독성',bp:'혈압·혈류역학 변화',glyc:'혈당 변화',lytes:'전해질 이상',psych:'정신 증상(조병 등)',cnsdep:'진정·중추신경 억제 강화',eff:'치료 효과 변화',pk:'약물 농도 변화'};
+ const rk=h=>Object.assign({h},l14Ev(h,sc.labelKinds,sc.auth));
+ const pick=a=>a.map(rk).sort((x,y)=>y.rank-x.rank||(y.explicit-x.explicit))[0];
+ const s3=pick(hits.filter(h=>h.sev===3)),s2=pick(hits.filter(h=>h.sev===2)),pkh=pick(hits.filter(h=>h.sev===1));
+ const direct=u.direct||u.classVerified;
+ // 높은 주의: 명시적 사람 근거(등급 3)의 중증 결과 + 보강(권고·제조사 문구·무작위시험/고찰·독립된 근거 2건 이상) + 직접성 + 상충 없음
+ let corro=false;
+ if(s3)corro=!!(sc.rec||sc.auth||s3.h.kinds.includes('rct')||s3.h.kinds.includes('review')||hits.some(h=>h!==s3.h&&h.sev>=2&&rk(h).rank>=2&&rk(h).explicit));
+ const canHigh=direct&&!u.diff&&!sc.conflict;
+ if(u.nullOnly&&!hits.length&&!sc.rec){st='insufficient';basis='“영향이 없었다”는 내용만 있어 충분한 근거로 볼 수 없어요.'}
+ else if(s3&&s3.rank>=3&&s3.explicit&&canHigh&&corro){st='high';basis=famKo[s3.h.fam]+' — 사람 대상 근거와 보강 근거(권고·제조사 문구·고찰·복수 근거)가 함께 있어요.'}
+ else if(s3&&s3.rank===2&&canHigh&&sc.rec==='avoid'&&sc.auth){st='high';basis=famKo[s3.h.fam]+' — 제조사 수준의 병용 회피 안내와 함께 서술돼요.'}
+ else if(s3&&s3.rank>=2){st='caution';basis=famKo[s3.h.fam]+' 보고가 있어요 ('+(s3.rank>=3?'사람 대상 근거':'증례·2차 자료 수준')+').';
+  const why=[];if(s3.rank>=3){if(!direct)why.push('약물군 수준 자료');if(u.diff)why.push('종·부위가 다를 수 있는 자료');if(sc.conflict)why.push('상충하는 내용');if(direct&&!u.diff&&!sc.conflict&&!corro)why.push('보강 근거 부족')}
+  if(why.length)basis+=' 높은 주의로 올리지 않은 이유: '+why.join(', ')+'.'}
+ else if(s2&&s2.rank>=2){st='caution';basis=famKo[s2.h.fam]+' 보고가 있어요 ('+(s2.rank>=3?'사람 대상 근거':'증례·2차 자료 수준')+').'}
+ else if(pkh&&pkh.rank>=2&&pkh.explicit&&(u.nti||L14.nti.test(u.target||''))){st='caution';basis='치료역이 좁은 약물의 농도 변화가 사람에서 보고됐어요'+(pkh.h.mag?'('+pkh.h.mag+')':'')+'. 임상 영향은 기록에 없어요.'}
+ else if(sc.rec&&(['human','rct','review','case','secondary'].some(k=>sc.labelKinds.has(k))||sc.auth)){st='caution';basis=(sc.rec==='avoid'?'병용 회피':'모니터링·용량 조절 등 확인')+' 권고가 있고 사람·증례·2차 자료가 근거로 제시돼요.'}
+ else{
+  st='limited';const b=s3||s2;
+  if(b)basis=famKo[b.h.fam]+' 언급이 있지만 근거가 동물·시험관·이론 수준이거나 문장에서 확인되지 않아 임상적 중요성을 판단하기 어려워요.';
+  else if(pkh)basis='약물 농도 변화'+(pkh.h.mag?'('+pkh.h.mag+')':'')+'만 보고돼 임상적 중요성을 판단하기 어려워요.';
+  else if(sc.rec)basis='권고 문구는 있지만 뒷받침하는 근거가 확인되지 않아요.';
+  else basis=sc.labelKinds.size?'근거 유형이 '+[...sc.labelKinds].map(k=>L14.kindKo[k]).join(' · ')+' 수준이고 병용 권고·임상 결과가 확인되지 않아요.':'근거 유형을 확인할 수 없어 임상적 중요성을 판단하기 어려워요.';
+ }
+ if(sc.conflict&&st!=='insufficient')basis+=' 상충하는 내용이 있어 한쪽 결과만으로 결론짓지 않았어요.';
+ if(u.diff&&(st==='high'||st==='caution')){st='limited';basis+=' 부위·종·가공이 다를 수 있는 자료라 참고 수준(근거 제한적)으로 낮췄어요.'}
+ if(!direct&&st==='high'){st='caution'}
+ return {status:st,basis,top:s3||s2||pkh||null,review:(st==='high'||st==='caution')&&hits.length>0};
+}
+if(typeof module!=='undefined')module.exports={L14,l14Scan,l14Status,l14Ev};
+
+function byIngredient(f,p){
+ const names=String(p.ing).split(/,\s*/).filter(n=>n&&n!=='확인 불가'&&n!=='미확인');
+ return names.map(n=>{const pp={id:p.id+'#'+n,nm:n,ing:n,cls:[],desc:'',chk:p.chk,ver:null};const j=classify(f,pp);return {ing:n,en:(ING[n]||[])[0]||'',status:j.status,why:j.why}});
+}
 // 약재·양약 조합 전체 판정 (판정 사유를 함께 반환)
 function classify(f,p){
  const herbs=f.herbs.map(h=>h[0]),nokmc=herbs.filter(h=>!HM[h]);
@@ -548,7 +748,7 @@ function classify(f,p){
   const dIng=(i.match.ing||[]).concat(FEAT[i.id].dirIng||[]),direct=dIng.some(g=>p.ing.includes(g)),cl=(i.match.cls||[]).some(c=>p.cls.includes(c));
   if(direct||cl){units.push(featInter(i,direct));hit.push(i)}
  });
- units.forEach(u=>{const s=unitStatus(u);u.status=s[0];u.why=s[1]});
+ units.forEach(u=>{if(u.src==='kmcric'){const s=l14Status({direct:u.direct,classVerified:false,diff:u.diff,scan:u.scan,nullOnly:u.nullOnly,target:u.target});u.status=s.status;u.why=s.basis;u.review=s.review;u.top=s.top}else{const s=unitStatus(u);u.status=s[0];u.why=s[1]}});
  units.sort((a,b)=>SORD[a.status]-SORD[b.status]||(b.direct-a.direct));
  // 시범 데이터는 판정에 쓰지 않고 따로 보여줘요
  const hh=new Set(hit.map(i=>i.herb)),sm=[];
@@ -560,7 +760,7 @@ function classify(f,p){
  if(units.some(u=>u.conflict||u.srcDiff))flags.push('상충하는 내용이 있어, 한쪽 결과만으로 결론을 정하지 않았어요.');
  if(units.some(u=>!u.direct))flags.push('약물군 수준 자료가 포함돼 있어요. 이 약에 직접 평가된 것은 아니에요.');
  if(units.some(u=>u.diff))flags.push('부위·종·가공이 다를 수 있는 자료가 포함돼 있어요.');
- if(units.some(u=>u.review))flags.push('문구 기반으로 자동 감지한 판정이 있어 임상 전문가의 검토가 필요해요 (검토 필요).');
+ if(units.some(u=>u.review))flags.push('일부 판정은 전문가의 확인이 더 필요해요.');
  if(p.chk===-3)flags.push('이 제품은 외부 허가정보 목록(drug_extra.js)에서 왔고, 약물군 연결은 하지 않았어요.');
  if(p.chk===-2&&p.entKind==='d')flags.push('이 성분이 속한 약물군은 연결하지 않아, 약물군 수준 기록은 포함되지 않았어요.');
  if(p.chk===-2&&p.entKind==='c')flags.push('선택한 항목이 약물군이라, 같은 약물군 이름의 기록만 연결했어요 (약물군 수준 근거).');
@@ -587,34 +787,36 @@ function maskTxt(t,r,sh,h){
  return String(t).replace(new RegExp([r[1],r[2],h].filter(Boolean).map(esc2).join('|'),'gi'),'이 생약');
 }
 function kmcHtml(x,sh){
- const r=x.r,how={direct:'성분명이 대상에 직접 나와요',cls:'약물군 기록이에요 (약물군 연결은 검수 전)',body:'본문에서 이름이 언급돼요 (대상은 다른 항목)'}[x.how];
- const ty=r[7].length?r[7].join(' · '):'미식별 (근거가 없다는 뜻이 아니에요)';
- const lim=['정식 근거 등급은 원문에서 확인되지 않았어요 (원문 등급 미기재).'];
- if(r[10]>0)lim.push('요약에서 원문 문장 '+r[10]+'개가 빠졌어요.');
- if(!r[5])lim.push('기전 문장을 분리하지 못했어요 (기전이 없다는 뜻이 아니에요).');
- if(!r[8])lim.push('참고문헌 번호가 기재되지 않았어요.');
- if(/동물|시험관/.test(ty))lim.push('동물·시험관 결과는 사람에게 그대로 적용할 수 없어요.');
- if(x.m.n)lim.push(x.m.n);
+ const r=x.r,how={direct:'성분명 직접 일치',cls:'약물군 수준 자료 (이 약에 직접 평가된 것은 아니에요)',body:'본문에서 이름만 언급'}[x.how];
+ const ty=r[7].length?r[7].join(' · '):'적혀 있지 않아요';
+ const pat=[];
+ if(/동물|시험관/.test(ty))pat.push('동물·시험관 결과는 사람에게 그대로 적용할 수 없어요.');
+ if(x.m.n)pat.push(x.m.n);
+ const partial=r[10]>0||!r[5]||!r[8];
+ const tech=['근거 등급: 원문에서 확인되지 않음','요약에서 빠진 원문 문장: '+(r[10]>0?r[10]+'개':'없음'),'기전 설명: '+(r[5]?'있음':'요약에 없음'),'참고문헌 번호: '+(r[8]||'없음')];
  return `<div class="src" style="border-style:solid"><div class="sub">📚 ${esc(r[0])} · ${how}${sh?' · 관련 생약: '+esc(r[1]):''}${x.m.diff?' · ⚠️ 부위·종·가공이 다른 자료':''}</div>
  <p style="margin:4px 0"><b>대상</b>: ${esc(r[3]||r[4])}${r[3]&&r[4]?' ('+esc(r[4])+')':''}</p>
- <p style="margin:4px 0"><b>상호작용·영향 요약</b>: ${esc(maskTxt(r[6],r,sh,x.h))}</p>
- <p style="margin:4px 0"><b>기전</b>: ${r[5]?esc(maskTxt(r[5],r,sh,x.h)):'미확인'}</p>
- <p style="margin:4px 0"><b>근거 유형(원문 표기)</b>: ${esc(ty)}<br><span class="sub">참고문헌 번호: ${r[8]?esc(r[8]):'미기재'}</span></p>
- <h4>한계</h4><ul>${lim.map(l=>`<li>${esc(l)}</li>`).join('')}</ul>
- ${lnk(r[9]||SITES.kmcric.url,r[9]?'KMCRIC 약재 페이지 ↗':'KMCRIC 검색 페이지 ↗')}<div class="sub">${r[9]?'약재 단위 페이지이고 이 기록의 직접 링크는 아니에요.':'이 약재는 페이지 링크가 수집되지 않아 검색 페이지로 연결해요.'} 요약본이라 원문·참고문헌 확인이 필요해요.</div></div>`;
+ <p style="margin:4px 0"><b>내용</b>: ${esc(maskTxt(r[6],r,sh,x.h))}</p>
+ ${r[5]?`<p style="margin:4px 0"><b>기전</b>: ${esc(maskTxt(r[5],r,sh,x.h))}</p>`:''}
+ <p style="margin:4px 0"><b>근거 유형</b>: ${esc(ty)}</p>
+ ${pat.length?`<ul class="sub" style="margin:4px 0">${pat.map(l=>`<li>${esc(l)}</li>`).join('')}</ul>`:''}
+ ${partial?'<div class="sub">📄 요약본이라 일부 내용이 빠졌을 수 있어요. 원문을 확인해 주세요.</div>':''}
+ <details class="ex"><summary>자료 정보 (전문가용) ⌄</summary><ul class="sub" style="margin:4px 0">${tech.map(l=>`<li>${esc(l)}</li>`).join('')}</ul></details>
+ ${lnk((sh&&r[9])||SITES.kmcric.url,(sh&&r[9])?'KMCRIC 약재 페이지 ↗':'KMCRIC 검색 페이지 ↗')}<div class="sub">${(sh&&r[9])?'약재 단위 페이지예요 (이 기록의 직접 링크는 아니에요).':(r[9]?'약재 구성 비공개 설정이라 검색 페이지로 연결해요. 검색 페이지에서 직접 찾아보세요.':'이 약재는 페이지 링크가 없어 검색 페이지로 연결해요.')}</div></div>`;
 }
 
 // ===== 라우팅 =====
 function route(){
  const m=/^#p\/([^\/]+)$/.exec(location.hash);
- if(m){locked=true;V='p';PC=decodeURIComponent(m[1]);PF=null;MEDS=[]}else locked=false;
+ if(m){locked=true;V='p';PC=decodeURIComponent(m[1]);PF=null;restorePt()}
+ else{locked=false;V=location.hash==='#admin'?'a':'c'}
  render();
 }
 function setV(v){V=v;render()}
 function render(){
- $('tabs').hidden=locked;$('v-p').hidden=V!=='p';$('v-c').hidden=V!=='c';
- $('t-p').className=V==='p'?'on':'';$('t-c').className=V==='c'?'on':'';
- V==='p'?rP():rA();
+ $('v-p').hidden=V!=='p';$('v-c').hidden=V!=='c';$('v-a').hidden=V!=='a';
+ $('nav').innerHTML=V==='c'?'<a href="#admin">관리자 화면</a>':V==='a'?'<a href="#">← 한의원 화면</a>':'';
+ if(V==='p')rP();else if(V==='a')rAdmin();else rC();
 }
 function exitLock(){location.hash=''}
 window.addEventListener('hashchange',route);
@@ -626,8 +828,8 @@ function rP(){
  if(c)PC=c.id;
  let h='';
  if(locked){
-  h=c?`<h2>📍 ${esc(c.name)}</h2><div class="sub">QR로 연결된 한의원이에요. <a href="#" onclick="exitLock();return false">← 시연 화면으로</a></div>`
-     :`<h2>한의원을 찾을 수 없어요</h2><p class="sub">이 기기(브라우저)에는 이 한의원 데이터가 없어요. 이 프로토타입은 데이터를 기기별 localStorage에 저장해서, 다른 기기에서 QR을 스캔해도 처방 데이터가 공유되지 않아요. 서버·DB를 연결해야 가능해요.</p><a href="#" onclick="exitLock();return false">← 시연 화면으로</a>`;
+  h=c?`<h2>📍 ${esc(c.name)}</h2><div class="sub">QR로 연결된 한의원이에요. <a href="#" onclick="exitLock();return false">← 한의원 화면으로 (시연)</a></div>`
+     :`<h2>한의원을 찾을 수 없어요</h2><p class="sub">이 기기(브라우저)에는 이 한의원 데이터가 없어요. 이 프로토타입은 데이터를 기기별 localStorage에 저장해서, 다른 기기에서 QR을 스캔해도 처방 데이터가 공유되지 않아요. 서버·DB를 연결해야 가능해요.</p><a href="#" onclick="exitLock();return false">← 한의원 화면으로 (시연)</a>`;
  }else{
   h=`<h2>1. 한의원 선택 <span class="sub">(실제로는 QR로 자동 연결)</span></h2><select onchange="PC=this.value;PF=null;rP()">${S.clinics.map(x=>`<option value="${x.id}" ${x.id===PC?'selected':''}>${esc(x.name)}</option>`).join('')}</select>`;
  }
@@ -657,19 +859,21 @@ function searchDrugs(raw){
  const sc=(names,ex,st,inc)=>{let b=0;names.forEach(n=>{n=nrm(n);if(!n)return;if(n===q)b=Math.max(b,ex);else if(n.startsWith(q))b=Math.max(b,st);else if(n.includes(q))b=Math.max(b,inc)});return b};
  PRODUCTS.forEach(p=>{
   const ings=String(p.ing).split(/,\s*/),en=[];ings.forEach(i=>(ING[i]||[]).forEach(x=>en.push(x)));
-  const s1=sc([p.nm],100,90,70),s2=sc(ings,85,75,60),s3=sc(en,85,75,58),m=Math.max(s1,s2,s3);
-  if(m)out.push({s:m,t:'p',p,why:s1>=m?'제품명 일치':'성분명 일치'});
+  const cl=[];(p.cls||[]).forEach(c=>{cl.push(c);(DRUGDB.clsAlias[c]||[]).forEach(x=>cl.push(x))});
+  const s1=sc([p.nm],100,90,70),s1b=sc([p.nmEn],96,86,66),s2=sc(ings,85,75,60),s3=sc(en,85,75,58),s4=sc(cl,62,58,50),m=Math.max(s1,s1b,s2,s3,s4);
+  if(m)out.push({s:m,t:'p',p,why:s1>=m?'제품명 일치':s1b>=m?'영문 제품명 일치':s4>=m&&s4>Math.max(s1,s1b,s2,s3)?'약물 계열 일치':'성분명 일치'});
  });
  ENT.forEach(e=>{const m=sc([e[1],e[2]].concat(e[3]),95,80,55)-(e[4]==='c'?5:0);if(m>0)out.push({s:m,t:'e',e,why:'DB 대상 이름 일치'})});
  out.sort((a,b)=>b.s-a.s||(a.t===b.t?0:(a.t==='p'?-1:1))||(a.t==='p'?a.p.nm.length-b.p.nm.length:a.e[1].length-b.e[1].length));
  return out;
 }
+function mapChip(p){return p.ver?'<span class="chip" style="color:var(--gr)">성분 연결 확인됨</span>':(p.chk===0?'<span class="chip t">성분 연결 미검증</span>':'')}
 function resItem(r){
  const f=F(),pp=r.t==='p'?r.p:entP(r.e),j=f?classify(f,pp):null,has=MEDS.includes(pp.id);
  let head,sub;
  if(r.t==='p'){
-  const ing=String(pp.ing).split(/,\s*/).map(i=>i+((ING[i]||[])[0]?' ('+ING[i][0]+')':'')).join(' + ');
-  head=`<b>${esc(pp.nm)}</b> <span class="chip">제품</span>`;sub=`성분: ${esc(ing)}${String(pp.ing).includes(',')?' · 복합제':''}`;
+  const ing=String(pp.ing).split(/,\s*/).map(i=>{const st=(pp.str||[]).find(x=>x.ing===i);return i+((ING[i]||[])[0]?' ('+ING[i][0]+')':'')+(st&&st.amt?' '+st.amt+st.unit:'')}).join(' + ');
+  head=`<b>${esc(pp.nm)}</b> <span class="chip">제품</span>${mapChip(pp)}`;sub=`${pp.nmEn?esc(pp.nmEn)+' · ':''}성분: ${esc(ing)}${String(pp.ing).includes(',')?' · 복합제':''}${r.why==='약물 계열 일치'?' · 계열: '+esc((pp.cls||[]).join(', ')):''}`;
  }else{
   const e=r.e;head=`<b>${esc(e[2]||e[1])}</b> <span class="chip">${e[4]==='c'?'약물군':'성분'}</span>`;
   sub=`${esc(e[1])} · KMCRIC 기록 ${e[5]}건`;
@@ -685,10 +889,49 @@ function rSearch(){
 }
 function addMed(id){if(!MEDS.includes(id))MEDS.push(id);afterMed()}
 function addCustom(){const n=$('q').value.trim();if(!n)return;const id='u:'+n;if(!MEDS.includes(id))MEDS.push(id);$('q').value='';afterMed()}
-function delMed(i){MEDS.splice(i,1);afterMed()}
-function afterMed(){rCats();rSearch();rMy();$('pRes').innerHTML='';$('chkMsg').textContent=''}
+function delMed(i){delete DOSE[MEDS[i]];MEDS.splice(i,1);afterMed()}
+function afterMed(){rCats();rSearch();rMy();savePt();$('pRes').innerHTML='';$('chkMsg').textContent=''}
+function ptKey(){return 'hdc_pt_'+PC}
+function savePt(){try{if(PC)localStorage.setItem(ptKey(),JSON.stringify({meds:MEDS,dose:DOSE}))}catch(e){}}
+function restorePt(){MEDS=[];DOSE={};try{const o=JSON.parse(localStorage.getItem(ptKey())||'null');if(o&&Array.isArray(o.meds)){MEDS=o.meds.filter(id=>PRODUCTS.some(p=>p.id===id)||(/^e\d+$/.test(id)&&ENT[+id.slice(1)])||/^u:/.test(id));DOSE=o.dose||{}}}catch(e){}}
+const DUNITS=['정','캡슐','mL','포','패치','방울','회(흡입)'];
+const DTIMES=['아침','점심','저녁','취침 전'];
+function doseLine(d){
+ if(!d||!d.set)return '';
+ const u=d.unit||'정',a=[];
+ if(d.amt)a.push('1회 '+d.amt+u);
+ if(d.prn)a.push('필요할 때만 복용');else if(d.freq)a.push('하루 '+d.freq+'회');
+ if(d.times&&d.times.length)a.push(d.times.join('·'));
+ if(d.days)a.push(d.days+'일간');else if(d.start)a.push(d.start+'부터');
+ return a.join(' · ');
+}
+function setDose(i,k,v){
+ const id=MEDS[i];if(!id)return;const d=DOSE[id]=DOSE[id]||{};
+ if(k==='time'){d.times=d.times||[];const j=d.times.indexOf(v);if(j>=0)d.times.splice(j,1);else d.times.push(v);d.times.sort((x,y)=>DTIMES.indexOf(x)-DTIMES.indexOf(y))}
+ else d[k]=v;
+ d.set=!!(d.amt||d.freq||(d.times&&d.times.length)||d.days||d.start||d.prn);
+ savePt();const el=$('ds'+i);if(el)el.textContent=doseLine(d)||'선택 사항';
+}
+// 함량이 확인된 제품에 한해 1일 총량을 단순 곱셈으로 보여줘요 (위험도 계산이 아니에요)
+function dailyTotals(p,d){
+ if(!d||!d.set||d.prn||!p.str||(p.ver&&p.ver.strPartial)||!(+d.amt>0)||!(+d.freq>0))return [];
+ if(!['정','캡슐'].includes(d.unit||'정'))return [];
+ if(p.str.some(s=>!s.amt))return [];
+ return p.str.map(s=>({ing:s.ing,amt:+(s.amt*(+d.amt)*(+d.freq)).toFixed(2),unit:s.unit}));
+}
 function rMy(){
- const f=F();$('my').innerHTML=MEDS.length?MEDS.map((id,i)=>{const p=getP(id),j=f?classify(f,p):null;return `<span class="chip${j?' s-'+j.status:''}">${j?ST[j.status].icon+' ':''}${esc(p.nm)}${j?' · '+ST[j.status].label:''} <a href="#" onclick="delMed(${i});return false" aria-label="삭제">✕</a></span>`}).join(''):'<p class="sub">아직 등록한 약이 없어요.</p>';
+ const f=F();
+ $('my').innerHTML=MEDS.length?MEDS.map((id,i)=>{
+  const p=getP(id),j=f?classify(f,p):null,d=DOSE[id]||{};
+  return `<div class="rc${j?' s-'+j.status:''}" style="padding:8px"><div style="display:flex;justify-content:space-between;gap:8px;align-items:flex-start"><div><b>${esc(p.nm)}</b> ${mapChip(p)}${j?stLine(j.status):''}</div><a href="#" onclick="delMed(${i});return false" aria-label="삭제">삭제 ✕</a></div>
+  <details class="ex"${d.set?' open':''}><summary>복용 정보 입력 ⌄ <span class="sub" id="ds${i}">${esc(doseLine(d))||'선택 사항'}</span></summary>
+   <div class="row"><input type="number" inputmode="decimal" min="0" step="0.5" placeholder="1회 복용량" value="${esc(d.amt||'')}" oninput="setDose(${i},'amt',this.value)"><select onchange="setDose(${i},'unit',this.value)" aria-label="복용 단위">${DUNITS.map(u=>`<option${(d.unit||'정')===u?' selected':''}>${u}</option>`).join('')}</select></div>
+   <div class="row"><select onchange="setDose(${i},'freq',this.value)" aria-label="1일 복용 횟수"><option value="">1일 복용 횟수</option>${[1,2,3,4,5,6].map(n=>`<option value="${n}"${String(d.freq)===String(n)?' selected':''}>하루 ${n}회</option>`).join('')}</select></div>
+   <div style="margin:6px 0">${DTIMES.map(t=>`<label class="tchip"><input type="checkbox"${(d.times||[]).includes(t)?' checked':''} onchange="setDose(${i},'time','${t}')">${t}</label>`).join('')}</div>
+   <div class="row"><input type="number" min="0" placeholder="복용 기간(일)" value="${esc(d.days||'')}" oninput="setDose(${i},'days',this.value)"><input type="date" value="${esc(d.start||'')}" onchange="setDose(${i},'start',this.value)" title="복용 시작일" style="max-width:150px"></div>
+   <label class="sub"><input type="checkbox" style="width:auto;margin-right:6px"${d.prn?' checked':''} onchange="setDose(${i},'prn',this.checked)">필요할 때만 복용해요</label>
+   <div class="sub">입력한 복용 정보는 참고 정보예요. 상호작용 판정에는 반영되지 않아요.</div>
+  </details></div>`}).join(''):'<p class="sub">아직 등록한 약이 없어요.</p>';
 }
 function josa(w,t){const c=w.charCodeAt(w.length-1),f=c>=0xAC00&&c<=0xD7A3&&(c-0xAC00)%28>0;return {'가':f?'이':'가','는':f?'은':'는','와':f?'과':'와','를':f?'을':'를'}[t]}
 function fill(t,i,sh){return t.replace(/\{H(가|는|와|를)?\}/g,(m,p)=>{const w=sh?i.herb:'처방 속 생약';return w+(p?josa(w,p):'')})}
@@ -714,60 +957,156 @@ function interHtml(i,sh){
  <h4>근거 및 출처</h4>${i.src.map(id=>srcHtml(id,sh)).join('')}</div>`;
 }
 function stLine(s){const t=ST[s];return `<div class="stl stt-${s}">${t.icon} ${t.label}</div>`}
+const NOTE_DOSE='입력한 복용 정보는 참고 정보이며, 현재 확보된 근거만으로 개인별 위험도를 정량적으로 계산할 수 없습니다.';
+const pad2=n=>String(n).padStart(2,'0');
+function unitSnap(u,sh){
+ const r=u.r;
+ if(u.src!=='kmcric')return {id:u.id,label:u.label,status:u.status,statusLabel:ST[u.status].label,basis:u.why,rec:null};
+ return {id:u.id,label:u.label,status:u.status,statusLabel:ST[u.status].label,direct:u.direct,ing:u.term||'',herb:sh?u.herb:'',kinds:[...u.kinds].map(k=>L14.kindKo[k]||k),basis:u.why,review:!!u.review,
+  rec:{target:(r[3]||r[4])+(r[3]&&r[4]?' ('+r[4]+')':''),impact:maskTxt(r[6],r,sh,u.herb),mech:r[5]?maskTxt(r[5],r,sh,u.herb):'',evidence:r[7].slice(),refs:r[8]||'',link:sh?(r[9]||''):'',linkNote:r[9]?(sh?'약재 단위 페이지 (이 기록의 직접 링크 아님)':'약재 구성 비공개 설정이라 약재 페이지 주소는 생략했어요. KMCRIC 검색 페이지에서 확인해 주세요'):'KMCRIC 검색 페이지 (이 약재는 페이지 링크 없음)',omitted:r[10],doseNote:/고용량|저용량|용량 ?(의존|에 따라)|일일 ?용량/.test(r[6])}};
+}
+function buildSnap(f,c,rows,sh){
+ const now=new Date();
+ const meds=rows.map(({p,j,d,bi})=>({
+  id:p.id,nm:p.nm,nmEn:p.nmEn||'',compound:String(p.ing).includes(','),
+  ing:String(p.ing).split(/,\s*/).map(n=>{const s=(p.str||[]).find(x=>x.ing===n);return {ko:n,en:(ING[n]||[])[0]||'',amt:s?s.amt:null,unit:s?s.unit:''}}),
+  mapping:p.ver?{verified:true,url:p.ver.url,at:p.ver.at,note:p.ver.note}:{verified:false,note:p.chk===-2?'KMCRIC 상호작용 대상 이름(제품이 아님)':p.chk===-1?'직접 입력한 약(성분 정보 없음)':'작성자 정리 · 식약처 미검증'},
+  dose:{amt:d.amt||'',unit:d.unit||'정',freq:d.prn?'필요시':(d.freq||''),times:(d.times||[]).slice(),days:d.days||'',start:d.start||'',prn:!!d.prn,line:doseLine(d),entered:!!d.set,reflected:false,totals:dailyTotals(p,d)},
+  status:j.status,statusLabel:ST[j.status].label,msg:ST[j.status].msg,sub:ST[j.status].sub||'',why:j.why,flags:j.flags.slice(),
+  byIng:bi.map(x=>({ing:x.ing,en:x.en,status:x.status,statusLabel:ST[x.status].label,why:x.why})),
+  units:j.units.slice(0,5).map(u=>unitSnap(u,sh)),unitCount:j.units.length}));
+ const cnt={};meds.forEach(m=>cnt[m.status]=(cnt[m.status]||0)+1);
+ return {id:'R'+now.getTime().toString(36),createdAt:now.toISOString(),
+  dateLabel:now.getFullYear()+'-'+pad2(now.getMonth()+1)+'-'+pad2(now.getDate())+' '+pad2(now.getHours())+':'+pad2(now.getMinutes()),
+  clinic:{id:c?c.id:'',name:c?c.name:''},formula:{name:c?dn(c,f):f.name},showHerb:sh,meds,counts:cnt,
+  top:meds[0]?{nm:meds[0].nm,status:meds[0].status,statusLabel:meds[0].statusLabel}:null,
+  engine:{site:'v14',logic:L14.version,kmcricRecords:KMC.length,dbVersion:DRUGDB.meta.version,dbScope:DRUGDB.meta.scope,productCount:PRODUCTS.length,verifiedProducts:PRODUCTS.filter(p=>p.ver).length}};
+}
+function saveHist(s){try{const a=JSON.parse(localStorage.getItem('hdc_hist')||'[]');a.unshift(s);localStorage.setItem('hdc_hist',JSON.stringify(a.slice(0,10)))}catch(e){}}
+function rHist(){
+ let a=[];try{a=JSON.parse(localStorage.getItem('hdc_hist')||'[]')}catch(e){}
+ if(!$('hist'))return;
+ $('hist').innerHTML=a.length?a.map((s,i)=>`<div class="rc" style="padding:8px"><b>${esc(s.dateLabel)}</b> · ${esc(s.formula.name)}<div class="sub">${esc(s.clinic.name)} · 양약 ${s.meds.length}개 · ${esc(s.top?s.top.statusLabel:'')}</div><button class="b g" onclick="previewReport(${i})">보기</button> <button class="b g" onclick="printReport(${i})">PDF로 저장</button></div>`).join(''):'<p class="sub">저장된 결과가 없어요. 결과를 확인하면 이 기기에 자동으로 남아요.</p>';
+}
+function histSnap(i){if(i==null)return SNAP;try{return JSON.parse(localStorage.getItem('hdc_hist')||'[]')[i]||null}catch(e){return null}}
+// ---- 리포트 HTML (스냅샷만 읽어요: 화면에 보인 결과와 같은 데이터)
+function reportHtml(s){
+ const E=esc,st=k=>`<span class="rs rs-${k}">${ST[k].icon} ${ST[k].label}</span>`;
+ const ingStr=m=>m.ing.map(i=>E(i.ko)+(i.en?' ('+E(i.en)+')':'')+(i.amt?' '+i.amt+i.unit:'')).join(' + ');
+ const present=['high','caution','limited','insufficient','none'].filter(k=>s.counts[k]);
+ const cited=[],seen=new Set();s.meds.forEach(m=>m.units.forEach(u=>{if(u.rec&&!seen.has(u.id)){seen.add(u.id);cited.push(u)}}));
+ return `<div class="rp">
+ <header class="rp-h"><div class="rp-t">한약–양약 상호작용 확인 결과</div><div class="rp-s">검사일 ${E(s.dateLabel)} · 리포트 번호 ${E(s.id)}</div></header>
+ <section class="blk"><h2>① 기본 정보</h2><table class="kv"><tr><th>검사 날짜</th><td>${E(s.dateLabel)}</td></tr><tr><th>한의원</th><td>${E(s.clinic.name)}</td></tr><tr><th>한약 처방</th><td>${E(s.formula.name)}${s.showHerb?'':' <span class="muted">(약재 구성은 표시하지 않아요)</span>'}</td></tr><tr><th>등록한 양약</th><td>${s.meds.map(m=>E(m.nm)).join(', ')}</td></tr></table></section>
+ <section class="blk"><h2>② 복용 정보</h2><table class="dose"><thead><tr><th>양약</th><th>성분(함량)</th><th>1회 복용량</th><th>1일 횟수</th><th>복용 시점</th><th>기간</th></tr></thead><tbody>${s.meds.map(m=>`<tr><td>${E(m.nm)}</td><td>${ingStr(m)}${m.mapping.verified?'':'<div class="muted">성분 연결 미검증</div>'}</td><td>${m.dose.entered&&m.dose.amt?E(m.dose.amt+m.dose.unit):'-'}</td><td>${m.dose.entered?(m.dose.prn?'필요시':(m.dose.freq?'하루 '+E(m.dose.freq)+'회':'-')):'-'}</td><td>${m.dose.times.length?E(m.dose.times.join(' · ')):'-'}</td><td>${m.dose.days?E(m.dose.days)+'일':(m.dose.start?E(m.dose.start)+'부터':'-')}</td></tr>`).join('')}</tbody></table>
+ <p class="muted">${E(NOTE_DOSE)} 복용 정보의 판정 반영 여부: 반영하지 않음.</p>${s.meds.some(m=>m.dose.totals.length)?'<p class="muted">성분 함량이 확인된 제품의 1일 총량(단순 곱셈): '+s.meds.filter(m=>m.dose.totals.length).map(m=>E(m.nm)+' → '+m.dose.totals.map(t=>E(t.ing)+' '+t.amt+t.unit).join(', ')).join(' / ')+'</p>':''}</section>
+ <section class="blk"><h2>③ 종합 결과</h2><p>${['high','caution','limited','insufficient','none'].filter(k=>s.counts[k]).map(k=>st(k)+' '+s.counts[k]+'건').join(' &nbsp; ')||'결과 없음'}</p>
+ <p><b>가장 주의가 필요한 항목:</b> ${s.top?E(s.top.nm)+' — '+st(s.top.status):'-'}</p>
+ <p><b>확인된 주의사항</b></p><ul>${present.map(k=>`<li>${st(k)} ${E(ST[k].msg)}${ST[k].sub?' '+E(ST[k].sub):''}</li>`).join('')}</ul></section>
+ <section><h2>④ 개별 상호작용 분석</h2>${s.meds.map(m=>`<div class="blk"><h3>${E(m.nm)} ${st(m.status)}</h3>
+  <p class="muted">${ingStr(m)}${m.compound?' · 복합제':''} · 성분 연결: ${m.mapping.verified?'확인됨 ('+E(m.mapping.note)+')':E(m.mapping.note)}</p>
+  <p>${E(m.msg)}</p>
+  ${m.byIng.length>1?`<table><thead><tr><th>구성 성분</th><th>성분별 판정(직접 일치 기준)</th></tr></thead><tbody>${m.byIng.map(x=>`<tr><td>${E(x.ing)}${x.en?' ('+E(x.en)+')':''}</td><td>${st(x.status)}</td></tr>`).join('')}</tbody></table>`:''}
+  <table class="an"><thead><tr><th>관련 한약</th><th>관련 양약 성분</th><th>판정</th><th>예상되는 영향 (자료 요약)</th><th>근거 요약</th></tr></thead><tbody>${m.units.length?m.units.map(u=>`<tr><td>${u.herb?E(u.herb):'처방 속 생약 성분'}</td><td>${E(u.ing||m.ing.map(i=>i.ko).join(', '))}${u.direct===false?'<div class="muted">약물군 수준</div>':''}</td><td>${st(u.status)}</td><td>${u.rec?E(u.rec.impact.slice(0,200))+(u.rec.impact.length>200?'…':''):'-'}</td><td>${E(u.basis)}${u.kinds&&u.kinds.length?'<div class="muted">근거 유형: '+E(u.kinds.join(' · '))+'</div>':''}${u.review?'<div class="muted">전문가 확인 필요</div>':''}</td></tr>`).join(''):`<tr><td colspan="5">${E(m.why)}</td></tr>`}</tbody></table>
+  ${m.unitCount>m.units.length?`<p class="muted">그 밖에 ${m.unitCount-m.units.length}건의 기록이 더 있어요.</p>`:''}</div>`).join('')}</section>
+ <section class="blk"><h2>⑤ 근거 및 참고자료</h2>${cited.length?`<table><thead><tr><th>출처</th><th>자료명(상호작용 대상)</th><th>연구 유형(원문 표기)</th><th>링크</th><th>근거의 한계</th></tr></thead><tbody>${cited.map(u=>`<tr><td>KMCRIC 약물상호작용 DB<br>${E(u.id)}</td><td>${E(u.rec.target)}</td><td>${u.rec.evidence.length?E(u.rec.evidence.join(', ')):'적혀 있지 않음'}${u.rec.refs?'<div class="muted">참고문헌 번호 '+E(u.rec.refs)+'</div>':''}</td><td class="lk">${E(u.rec.link||'https://www.kmcric.com/database/interact_search')}<div class="muted">${E(u.rec.linkNote)}</div></td><td>요약본으로 원문·참고문헌 미검증, 근거 등급 원문 미기재${u.rec.omitted>0?', 요약에서 빠진 원문 문장 '+u.rec.omitted+'개':''}${u.rec.doseNote?', 용량 관련 서술 있음(원문 확인)':''}</td></tr>`).join('')}</tbody></table>`:'<p>인용한 KMCRIC 기록이 없어요. 기록이 없다는 것이 안전하다는 뜻은 아니에요.</p>'}</section>
+ <section class="blk"><h2>⑥ 안내 사항</h2><ul><li>이 결과는 참고용 정보이며 진단이나 처방을 대체하지 않아요.</li><li>복용 중인 약이나 한약을 임의로 중단하거나 변경하지 마세요.</li><li>병용이 걱정되거나 여러 약을 복용 중이라면 한의사, 의사 또는 약사와 상담해 주세요.</li><li>관련 기록이 없다는 것이 안전성이 입증되었다는 의미는 아니에요.</li></ul>
+ <p class="muted">5단계 분류는 이 사이트의 내부 분류이며 검증된 임상 위험도 척도가 아니에요. 자료: KMCRIC 약물상호작용 DB 요약본(비영리 조별과제용, 공식 서비스 아님) ${s.engine.kmcricRecords}건 내장 · 판정 로직 ${E(s.engine.logic)} · 사이트 ${E(s.engine.site)} · 의약품 목록 ${s.engine.productCount}개(성분 연결 확인 ${s.engine.verifiedProducts}개, 식약처 전체 DB 아님).</p></section></div>`;
+}
+function reportDoc(s){return '<!DOCTYPE html><html lang="ko"><head><meta charset="utf-8"><title>한약-양약 상호작용 확인 결과</title><style>'+$('reportCss').textContent+'</style></head><body>'+reportHtml(s)+'</body></html>'}
+function printReport(i){
+ const s=histSnap(i);if(!s){const m=$('chkMsg');if(m)m.textContent='먼저 결과를 확인해 주세요.';return}
+ let root=$('printRoot');if(!root){root=document.createElement('div');root.id='printRoot';document.body.appendChild(root)}
+ root.innerHTML=reportHtml(s);document.body.classList.add('printing');
+ setTimeout(()=>{try{window.print()}catch(e){}},50);
+}
+window.addEventListener('afterprint',()=>document.body.classList.remove('printing'));
+function previewReport(i){
+ const s=histSnap(i);if(!s)return;let o=$('rpOverlay');if(!o){o=document.createElement('div');o.id='rpOverlay';document.body.appendChild(o)}
+ o.innerHTML='<div class="rpbar"><button class="b" onclick="printReport('+(i==null?'':i)+')">📄 PDF로 저장</button> <button class="b g" onclick="closePreview()">닫기</button><span class="sub">브라우저 인쇄 창에서 ‘PDF로 저장’을 고르세요.</span></div><div class="rpbody">'+reportHtml(s)+'</div>';o.hidden=false;
+}
+function closePreview(){const o=$('rpOverlay');if(o)o.hidden=true}
 function stBadge(s){const t=ST[s];return `<span class="bd ${t.cls}">${t.icon} ${t.label}</span>`}
 function check(){
  const f=F(),m=$('chkMsg'),c=CL(PC),sh=!!(c&&c.showHerb);
  if(!f){m.textContent='먼저 2단계에서 처방받은 한약을 선택해 주세요.';return}
  if(!MEDS.length){m.textContent='복용 중인 양약을 1개 이상 추가해 주세요.';return}
  m.textContent='';
- const rows=MEDS.map(id=>{const p=getP(id);return {p,j:classify(f,p)}}).sort((a,b)=>SORD[a.j.status]-SORD[b.j.status]);
+ const rows=MEDS.map(id=>{const p=getP(id);return {id,p,j:classify(f,p),d:DOSE[id]||{},bi:byIngredient(f,p)}}).sort((a,b)=>SORD[a.j.status]-SORD[b.j.status]);
+ SNAP=buildSnap(f,c,rows,sh);saveHist(SNAP);rHist();
  const safety='<li>이 결과는 참고용이며, 개인의 건강 상태와 실제 처방을 모두 반영한 의학적 판단은 아니에요.</li><li>관련 기록이 없다는 것이 안전성이 입증되었다는 의미는 아니에요.</li><li>이 결과만으로 복용 중인 약이나 한약을 임의로 중단하거나 용량을 변경하지 마세요.</li><li>병용이 걱정되거나 여러 약을 복용 중이라면 처방한 의료진이나 약사에게 확인해 주세요.</li>';
- $('pRes').innerHTML='<div class="card"><h2>확인 결과</h2>'+explainHtml()+'<details class="ex"><summary>안전 안내 ⌄</summary><ul style="margin:6px 0;padding-left:18px;font-size:13px">'+safety+'</ul></details>'+rows.map(({p,j})=>{
-  const t=ST[j.status];
-  const ingNote=p.chk===1?'성분은 다른 약품정보 사이트에서 일치를 확인했어요 (의약품안전나라 직접 확인은 아니에요)':p.chk===-1?'직접 입력한 약이라 성분 정보가 없어요':p.chk===-2?'KMCRIC 상호작용 대상 이름이에요 (제품이 아니에요)':'제품→성분 연결은 아직 검증하지 못했어요';
+ $('pRes').innerHTML='<div class="card"><h2>확인 결과</h2><div class="row"><button class="b" style="margin:0" onclick="printReport()">📄 PDF로 저장</button><button class="b g" style="margin:0" onclick="previewReport()">리포트 보기</button></div>'+explainHtml()+'<details class="ex"><summary>안전 안내 ⌄</summary><ul style="margin:6px 0;padding-left:18px;font-size:13px">'+safety+'</ul></details>'+rows.map(({p,j,d,bi},ri)=>{
+  const t=ST[j.status],sm=SNAP.meds[ri];
   const shown=j.kmc.direct.concat(j.kmc.cls).slice(0,10);
+  const map=p.ver?`성분 연결 확인됨: ${esc(p.ver.note)} <a class="lk" style="margin:0;padding:2px 8px" href="${esc(p.ver.url)}" target="_blank" rel="noopener noreferrer">약품정보 확인 ↗</a><span class="sub"> (약학정보원 · 확인일 ${p.ver.at})</span>`:(p.chk===-2?'KMCRIC 상호작용 대상 이름이에요 (제품이 아니에요)':p.chk===-1?'직접 입력한 약이라 성분 정보가 없어요':'제품→성분 연결은 작성자가 정리한 것으로, 식약처 자료로 검증하기 전이에요');
+  const tot=sm.dose.totals.length?'<br><span class="sub">성분 함량이 확인된 제품의 1일 총량(단순 곱셈): '+sm.dose.totals.map(x=>esc(x.ing)+' '+x.amt+x.unit).join(', ')+'</span>':'';
+  const doseNote=j.units.some(u=>u.src==='kmcric'&&u.r&&/고용량|저용량|용량 ?(의존|에 따라)|일일 ?용량/.test(u.r[6]));
   const det=`<p style="margin:0 0 6px">${esc(t.msg)}${t.sub?' <span class="sub">'+esc(t.sub)+'</span>':''}</p>
-   <h4>판정 이유</h4><ul>${j.units.slice(0,5).map(u=>`<li>${ST[u.status].icon} <b>${ST[u.status].label}</b> · ${esc(u.label)} (${u.direct?'성분명 직접 일치':'약물군 수준'}${u.kinds.size?' · '+esc(kindsKo(u.kinds)):''})${sh?' · '+esc(u.herb):''}${u.review?' <span class="chip t">검토 필요</span>':''}<br><span class="sub">${esc(u.why)}</span></li>`).join('')||`<li>${esc(j.why)}</li>`}</ul>${j.units.length>5?`<div class="sub">그 밖에 ${j.units.length-5}건이 더 있어요.</div>`:''}
+   <h4>복용 정보</h4><p>${d.set?esc(doseLine(d)):'<span class="sub">입력하지 않았어요.</span>'}${tot}</p><div class="sub">${esc(NOTE_DOSE)} (복용 정보의 판정 반영: 아니오${doseNote?' · 일부 기록에 용량 관련 서술이 있어요, 원문 확인':''})</div>
+   <h4>판정 이유</h4><ul>${j.units.slice(0,5).map(u=>`<li>${ST[u.status].icon} <b>${ST[u.status].label}</b> · ${esc(u.label)} (${u.direct?'성분명 직접 일치':'약물군 수준'}${u.term?' · '+esc(u.term):''}${u.kinds.size?' · '+esc(kindsKo(u.kinds)):''})${sh?' · '+esc(u.herb):''}${u.review?' <span class="chip t">전문가 확인 필요</span>':''}<br><span class="sub">${esc(u.why)}</span></li>`).join('')||`<li>${esc(j.why)}</li>`}</ul>${j.units.length>5?`<div class="sub">그 밖에 ${j.units.length-5}건이 더 있어요.</div>`:''}
+   ${bi.length>1?`<h4>성분별 판정 (복합제 · 성분명 직접 일치 기준)</h4><ul>${bi.map(x=>`<li>${esc(x.ing)}${x.en?' ('+esc(x.en)+')':''}: ${ST[x.status].icon} ${ST[x.status].label}</li>`).join('')}</ul>`:''}
    <h4>자료의 제한점과 상충</h4><ul>${j.flags.map(x=>`<li>${esc(x)}</li>`).join('')}</ul>`
    +(shown.length?`<h4>📚 KMCRIC 기록</h4>${shown.map(x=>kmcHtml(x,sh)).join('')}${j.kmc.direct.length+j.kmc.cls.length>10?`<div class="sub">KMCRIC 기록 ${j.kmc.direct.length+j.kmc.cls.length-10}건이 더 있어요. KMCRIC에서 직접 확인해 주세요.</div>`:''}`:'<h4>📚 KMCRIC 기록</h4><p>이 조합에서 확인된 기록이 없어요. “기록 없음”은 “안전함”이 아니에요.</p>')
    +(j.kmc.body.length?`<h4>이름만 언급된 기록 (참고, 판정 제외)</h4>${j.kmc.body.map(x=>kmcHtml(x,sh)).join('')}`:'')
-   +`<h4>양약 성분</h4><p>${esc(p.nm)}: ${esc(p.ing)}<br><span class="sub">${ingNote}</span></p>
+   +`<h4>양약 성분</h4><p>${esc(p.nm)}${p.nmEn?' ('+esc(p.nmEn)+')':''}: ${esc(p.ing)}<br><span class="sub">${map}</span></p>
    <h4>직접 확인해 볼 곳</h4>${lnk(SITES.kmcric.url,'KMCRIC에서 직접 검색 ↗')} ${lnk(SITES.nedrug.url,'의약품 정보 확인 ↗')}<div class="sub">두 곳 모두 검색 페이지예요 (기록 직접 링크 아님).</div>
    <p class="sub">복용 중인 약을 임의로 중단하거나 용량을 바꾸지 마세요. 처방한 의료진이나 약사와 상의해 주세요.</p>`;
-  return `<div class="rc s-${j.status}"><button class="rh" style="align-items:flex-start" onclick="tgl(this)"><span style="flex:1;min-width:0"><b>${esc(p.nm)}</b>${stLine(j.status)}<span class="sub" style="display:block">${esc(t.short)}</span><span class="sub" style="display:block;color:var(--ac);margin-top:2px">근거와 출처 자세히 보기 ▾</span></span><span>▾</span></button><div class="rd" hidden>${det}</div></div>`;
+  return `<div class="rc s-${j.status}"><button class="rh" style="align-items:flex-start" onclick="tgl(this)"><span style="flex:1;min-width:0"><b>${esc(p.nm)}</b> ${mapChip(p)}${stLine(j.status)}<span class="sub" style="display:block">${esc(t.short)}</span>${d.set?`<span class="sub" style="display:block">복용: ${esc(doseLine(d))}</span>`:''}<span class="sub" style="display:block;color:var(--ac);margin-top:2px">근거와 출처 자세히 보기 ▾</span></span><span>▾</span></button><div class="rd" hidden>${det}</div></div>`;
  }).join('')+'</div>';
  $('pRes').scrollIntoView({behavior:'smooth',block:'nearest'});
 }
 function tgl(b){const d=b.nextElementSibling;d.hidden=!d.hidden;b.lastElementChild.textContent=d.hidden?'▾':'▴'}
 
 // ===== 한의원 관리 화면 =====
-function rA(){
- if(!CL(AC))AC=S.clinics[0]?S.clinics[0].id:null;
- rTop();rQr();rList();rData();rEdit();
-}
-function rTop(){
+function rC(){
+ $('aQr2').innerHTML='';$('aQr2').hidden=true;
+ if(!CL(AC))setAC(S.clinics[0]?S.clinics[0].id:null);
  const c=CL(AC);
- $('aTop').innerHTML=`<h2>한의원</h2><select onchange="AC=this.value;EDIT=null;DEL=null;rA()">${S.clinics.map(x=>`<option value="${x.id}" ${x.id===AC?'selected':''}>${esc(x.name)}</option>`).join('')}</select>
- <input id="cn" style="margin-top:8px" value="${esc(c.name)}" placeholder="한의원 이름"><input id="ca" style="margin-top:6px" value="${esc(c.addr||'')}" placeholder="주소·메모 (선택)">
- <label class="sub" style="display:block;margin-top:8px"><input type="checkbox" style="width:auto;margin-right:6px" ${c.showHerb?'checked':''} onchange="CL(AC).showHerb=this.checked;save()">환자 화면의 근거 목록에 생약명 표시 (끄면 약재 구성이 드러나지 않도록 생약명을 가려요)</label>
- <button class="b" onclick="saveInfo()">정보 저장</button> <span class="sub">한의원 ID: ${esc(c.id)} (변경되지 않아요)</span>
- <hr><div class="row"><input id="nn" placeholder="새 한의원 이름" style="max-width:none"><button class="b g" style="margin:0" onclick="newClinic()">+ 새 한의원</button></div>`;
+ if(!c){$('cTop').innerHTML='<h2>등록된 한의원이 없어요</h2><p class="sub">관리자 화면에서 한의원을 먼저 등록해 주세요.</p>';$('aQr').innerHTML='';$('aList').innerHTML='';$('aEdit').hidden=true;return}
+ $('cTop').innerHTML=`<h2>우리 한의원 선택 <span class="sub">(시연용 로그인)</span></h2><select onchange="setAC(this.value);EDIT=null;DEL=null;$('lib').hidden=true;rC()">${S.clinics.map(x=>`<option value="${x.id}" ${x.id===AC?'selected':''}>${esc(x.name)}</option>`).join('')}</select>
+ <div class="sub" style="margin-top:6px">${esc(c.addr||'')}${c.addr?' · ':''}처방 ${c.formulas.length}개</div>`;
+ rQr('aQr',AC);rList();rEdit();
+ if(!$('lib').hidden)rLib();
 }
-function saveInfo(){const c=CL(AC),n=$('cn').value.trim();if(!n)return;c.name=n;c.addr=$('ca').value.trim();save();rTop();rQr()}
-function newClinic(){const n=$('nn').value.trim();if(!n)return;const c={id:'c_'+uid(),name:n,addr:'',formulas:[]};S.clinics.push(c);AC=c.id;EDIT=null;save();rA()}
-function link(){return (S.base||location.href.split('#')[0])+'#p/'+AC}
-function rQr(){
- const c=CL(AC),l=link(),local=!S.base&&!/^https?:/.test(location.protocol)||!S.base&&/claude|blob/.test(location.href);
- $('aQr').innerHTML=`<h2>${esc(c.name)} QR코드</h2><div class="sub">한의원당 QR 1개예요. 처방을 추가·수정해도 QR은 그대로예요.</div><canvas id="qrc"></canvas>
+function toggleLib(){const b=$('lib');b.hidden=!b.hidden;if(!b.hidden)rLib()}
+function rLib(){
+ $('lib').innerHTML='<div class="sub" style="margin:8px 0">표준 구성 예시예요. 한의원마다 실제 처방이 다르니, 추가한 뒤 수정하거나 가감방으로 만들어 쓰세요.</div>'+FORMULA_LIB.map((f,i)=>`<div class="rc" style="padding:8px"><b>${esc(f.name)}</b> <span class="sub">${esc(f.use)}</span><div class="sub">${f.herbs.map(h=>esc(h[0])+' '+h[1]+'g').join(' · ')}</div><button class="b g" onclick="addLib(${i})">+ 우리 한의원에 추가</button></div>`).join('');
+}
+function addLib(i){const f=FORMULA_LIB[i],c=CL(AC);if(!c)return;c.formulas.push({id:'f'+uid(),name:f.name,base:null,baseName:'',herbs:f.herbs.map(h=>[h[0],h[1]]),lib:f.id});save();rC()}
+function herbNames(){return [...new Set(Object.keys(HERBS).concat(Object.keys(HM),FORMULA_LIB.flatMap(f=>f.herbs.map(h=>h[0]))))]}
+// 관리자 화면: 여러 한의원 관리
+function rAdmin(){
+ $('aQr').innerHTML='';
+ const n=S.clinics.reduce((a,c)=>a+c.formulas.length,0);
+ $('aSum').textContent=`한의원 ${S.clinics.length}곳 · 처방 ${n}개`;
+ $('aClinics').innerHTML=S.clinics.length?S.clinics.map(c=>`<div class="rc" style="padding:10px"><b>${esc(c.name)}</b> <span class="chip">ID ${esc(c.id)}</span><div class="sub">${esc(c.addr||'주소 미입력')} · 처방 ${c.formulas.length}개</div>
+  ${ADM===c.id?`<input id="cn" style="margin-top:6px" value="${esc(c.name)}" placeholder="한의원 이름"><input id="ca" style="margin-top:6px" value="${esc(c.addr||'')}" placeholder="주소·메모 (선택)"><label class="sub" style="display:block;margin-top:6px"><input type="checkbox" style="width:auto;margin-right:6px" ${c.showHerb?'checked':''} onchange="CL('${c.id}').showHerb=this.checked;save()">환자 화면의 근거에 생약명 표시</label><button class="b" onclick="saveInfo('${c.id}')">저장</button> <button class="b g" onclick="ADM=null;rAdmin()">취소</button>`:''}
+  <div><button class="b g" onclick="openClinic('${c.id}')">한의원 화면 열기</button> <button class="b g" onclick="showQr('${c.id}')">QR 보기</button> <button class="b g" onclick="ADM='${c.id}';rAdmin()">정보 수정</button> <button class="b ${DELC===c.id?'r':'g'}" onclick="delClinic('${c.id}')">${DELC===c.id?'정말 삭제? (처방도 함께 삭제)':'삭제'}</button></div></div>`).join(''):'<p class="sub">등록된 한의원이 없어요.</p>';
+ if(QRC&&CL(QRC)){$('aQr2').hidden=false;rQr('aQr2',QRC)}else{$('aQr2').hidden=true;$('aQr2').innerHTML=''}
+ rData();
+}
+function openClinic(id){setAC(id);EDIT=null;DEL=null;if(location.hash==='')location.hash='x';location.hash=''}
+function showQr(id){QRC=id;rAdmin();$('aQr2').scrollIntoView({behavior:'smooth',block:'nearest'})}
+function saveInfo(id){const c=CL(id),n=$('cn').value.trim();if(!n)return;c.name=n;c.addr=$('ca').value.trim();save();ADM=null;rAdmin()}
+function newClinic(){const n=$('nn').value.trim();if(!n)return;const c={id:'c_'+uid(),name:n,addr:'',formulas:[]};S.clinics.push(c);$('nn').value='';QRC=c.id;save();rAdmin()}
+function delClinic(id){
+ if(DELC===id){S.clinics=S.clinics.filter(c=>c.id!==id);if(AC===id)setAC(S.clinics[0]?S.clinics[0].id:null);if(QRC===id)QRC=null;if(ADM===id)ADM=null;DELC=null;save();rAdmin()}
+ else{DELC=id;rAdmin()}
+}
+function link(id){return (S.base||location.href.split('#')[0])+'#p/'+(id||QRID||AC)}
+function rQr(tid,cid){
+ tid=tid||'aQr';QRTID=tid;QRID=cid||AC;
+ const c=CL(QRID),l=link(QRID),local=!S.base&&!/^https?:/.test(location.protocol)||!S.base&&/claude|blob/.test(location.href);
+ $(tid).innerHTML=`<h2>${esc(c.name)} QR코드</h2><div class="sub">한의원당 QR 1개예요. 처방을 추가·수정해도 QR은 그대로예요.</div><canvas id="qrc"></canvas>
  <input id="lk" readonly value="${esc(l)}" onclick="this.select()">
- <button class="b" onclick="copyLink()">링크 복사</button> <button class="b" onclick="dlQr()">QR 이미지 다운로드</button> <button class="b g" onclick="location.hash='p/'+AC">QR 스캔 시뮬레이션</button>
+ <button class="b" onclick="copyLink()">링크 복사</button> <button class="b" onclick="dlQr()">QR 이미지 다운로드</button> <button class="b g" onclick="location.hash='p/'+QRID">QR 스캔 시뮬레이션 (환자 화면)</button>
  <div id="qmsg" class="sub"></div>
  ${local?'<div class="note" style="margin-top:8px">지금 주소는 다른 기기에서 열리지 않을 수 있어요. 웹사이트로 배포한 뒤, 아래에 그 주소를 넣고 QR을 다시 받아 주세요. 한의원 ID는 그대로라 QR 구조는 유지돼요.</div>':''}
  <div class="row" style="margin-top:8px"><input id="bu" value="${esc(S.base||'')}" placeholder="배포된 웹사이트 주소 (선택)" style="max-width:none"><button class="b g" style="margin:0" onclick="setBase()">적용</button></div>
  <div class="sub">※ QR은 주소만 담아요. 처방 데이터까지 다른 기기로 공유되려면 서버·DB가 필요해요.</div>`;
  drawQr($('qrc'),l,c.name);
 }
-function setBase(){let u=$('bu').value.trim();if(u)u=u.split('#')[0];S.base=u;save();rQr()}
+function setBase(){let u=$('bu').value.trim();if(u)u=u.split('#')[0];S.base=u;save();rQr(QRTID,QRID)}
 function drawQr(cv,text,cap){
  try{
   const qr=qrcode(0,'M');qr.addData(text);qr.make();
@@ -777,7 +1116,7 @@ function drawQr(cv,text,cap){
   x.font='bold 16px sans-serif';x.textAlign='center';x.fillText(cap,W/2,W+16);
  }catch(e){if($('qmsg'))$('qmsg').textContent='QR 생성에 실패했어요. 링크를 직접 복사해 주세요.'}
 }
-function dlQr(){const cv=document.createElement('canvas');drawQr(cv,link(),CL(AC).name);const a=document.createElement('a');a.href=cv.toDataURL('image/png');a.download='QR_'+AC+'.png';document.body.appendChild(a);a.click();a.remove()}
+function dlQr(){const cv=document.createElement('canvas');drawQr(cv,link(QRID),CL(QRID).name);const a=document.createElement('a');a.href=cv.toDataURL('image/png');a.download='QR_'+QRID+'.png';document.body.appendChild(a);a.click();a.remove()}
 function copyLink(){
  const i=$('lk'),ok=()=>{$('qmsg').textContent='링크를 복사했어요.'};i.select();
  if(navigator.clipboard&&navigator.clipboard.writeText)navigator.clipboard.writeText(i.value).then(ok,()=>{document.execCommand('copy');ok()});
@@ -817,7 +1156,7 @@ function rEdit(){
  ${!EDIT.id&&EDIT.base?`<div class="sub" style="margin-bottom:6px">원방 ‘${esc(EDIT.baseName)}’을 복사한 거예요. 저장하면 별개 처방으로 추가되고, 원방은 바뀌지 않아요.</div>`:''}
  <input value="${esc(EDIT.name)}" placeholder="처방명" oninput="EDIT.name=this.value">
  <div style="margin-top:8px">${EDIT.herbs.map((h,i)=>`<div class="row"><input list="hl" value="${esc(h[0])}" placeholder="약재명" oninput="EDIT.herbs[${i}][0]=this.value"><input type="number" min="0" step="0.5" value="${esc(h[1])}" placeholder="g" oninput="EDIT.herbs[${i}][1]=this.value"><button class="b g" style="margin:0" onclick="EDIT.herbs.splice(${i},1);rEdit()">✕</button></div>`).join('')}</div>
- <datalist id="hl">${Object.keys(HERBS).map(h=>`<option value="${h}">`).join('')}</datalist>
+ <datalist id="hl">${herbNames().map(h=>`<option value="${h}">`).join('')}</datalist>
  <button class="b g" onclick="EDIT.herbs.push(['','']);rEdit()">+ 약재 추가</button> <button class="b" onclick="saveEdit()">저장</button> <button class="b g" onclick="EDIT=null;rEdit()">취소</button>
  <div id="emsg" class="sub" style="margin-top:6px"></div>`;
 }
